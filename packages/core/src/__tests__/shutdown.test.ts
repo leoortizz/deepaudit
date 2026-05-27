@@ -32,7 +32,7 @@ function spawnShutdownChild(opts: {
     setInterval(() => {}, 1000);
   `;
   const child = spawn(TSX, ["-e", script], {
-    env: { ...process.env, DEEPSEC_DATA_ROOT: opts.dataRoot },
+    env: { ...process.env, DEEPAUDIT_DATA_ROOT: opts.dataRoot },
     stdio: ["ignore", "pipe", "pipe"],
   });
   const ready = new Promise<void>((resolve, reject) => {
@@ -89,7 +89,7 @@ describe("shutdown handler exit path", () => {
     // The regression this guards: attaching a SIGINT listener
     // suppresses Node's default termination. If the listener doesn't
     // call process.exit, the process hangs after Ctrl+C.
-    const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-shutdown-"));
+    const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-shutdown-"));
     const projectId = "test-proj";
     const runId = "20260101000000-aaaaaaaaaaaaaaaa";
     writeRunningMeta({ dataRoot, projectId, runId });
@@ -108,7 +108,7 @@ describe("shutdown handler exit path", () => {
   });
 
   it("exits the process on SIGTERM when no other handler is installed", async () => {
-    const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-shutdown-"));
+    const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-shutdown-"));
     const projectId = "test-proj";
     const runId = "20260101000000-bbbbbbbbbbbbbbbb";
     writeRunningMeta({ dataRoot, projectId, runId });
@@ -126,7 +126,7 @@ describe("shutdown handler exit path", () => {
     // async cleanup time and will exit itself. We simulate the
     // co-listener with a dummy that exits with a sentinel code so the
     // test can tell whose exit path fired.
-    const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-shutdown-"));
+    const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-shutdown-"));
     const projectId = "test-proj";
     const runId = "20260101000000-cccccccccccccccc";
     writeRunningMeta({ dataRoot, projectId, runId });
@@ -145,7 +145,7 @@ describe("shutdown handler exit path", () => {
       setInterval(() => {}, 1000);
     `;
     const child = spawn(TSX, ["-e", script], {
-      env: { ...process.env, DEEPSEC_DATA_ROOT: dataRoot },
+      env: { ...process.env, DEEPAUDIT_DATA_ROOT: dataRoot },
       stdio: ["ignore", "pipe", "pipe"],
     });
     await new Promise<void>((resolve, reject) => {

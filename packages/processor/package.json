@@ -1,5 +1,5 @@
 {
-  "name": "@deepsec/processor",
+  "name": "@deepaudit/processor",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.3.143",
-    "@deepsec/core": "workspace:*",
-    "@deepsec/scanner": "workspace:*",
+    "@deepaudit/core": "workspace:*",
+    "@deepaudit/scanner": "workspace:*",
     "@openai/codex": "^0.125.0",
     "@openai/codex-sdk": "^0.125.0"
   }

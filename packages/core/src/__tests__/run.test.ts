@@ -75,9 +75,9 @@ describe("isPidAlive", () => {
 
 describe("ensureProject", () => {
   it("does not print git errors for non-git roots", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-ensure-project-"));
-    const oldDataRoot = process.env.DEEPSEC_DATA_ROOT;
-    process.env.DEEPSEC_DATA_ROOT = path.join(tmp, "data");
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-ensure-project-"));
+    const oldDataRoot = process.env.DEEPAUDIT_DATA_ROOT;
+    process.env.DEEPAUDIT_DATA_ROOT = path.join(tmp, "data");
     const root = path.join(tmp, "project");
     fs.mkdirSync(root);
 
@@ -89,9 +89,9 @@ describe("ensureProject", () => {
     } finally {
       writeSpy.mockRestore();
       if (oldDataRoot === undefined) {
-        delete process.env.DEEPSEC_DATA_ROOT;
+        delete process.env.DEEPAUDIT_DATA_ROOT;
       } else {
-        process.env.DEEPSEC_DATA_ROOT = oldDataRoot;
+        process.env.DEEPAUDIT_DATA_ROOT = oldDataRoot;
       }
       fs.rmSync(tmp, { recursive: true, force: true });
     }

@@ -1,5 +1,5 @@
 {
-  "_comment": "Optional per-project config. Goes to data/webapp/config.json at runtime. Equivalent fields can be set on the ProjectDeclaration in deepsec.config.ts (priorityPaths, promptAppend); if both are present, this file wins.",
+  "_comment": "Optional per-project config. Goes to data/webapp/config.json at runtime. Equivalent fields can be set on the ProjectDeclaration in deepaudit.config.ts (priorityPaths, promptAppend); if both are present, this file wins.",
   "priorityPaths": [
     "src/api/admin/",
     "src/api/billing/",

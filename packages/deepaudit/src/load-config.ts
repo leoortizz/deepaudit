@@ -1,0 +1,74 @@
+import fs from "node:fs";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import type { DeepauditConfig } from "@deepaudit/core";
+import { setLoadedConfig } from "@deepaudit/core";
+import { createJiti } from "jiti";
+
+const CONFIG_FILENAMES = [
+  "deepaudit.config.ts",
+  "deepaudit.config.mjs",
+  "deepaudit.config.js",
+  "deepaudit.config.cjs",
+];
+
+/** Walk up from `start` looking for any of the supported config filenames. */
+function findConfigFile(start: string): string | undefined {
+  let dir = path.resolve(start);
+  while (true) {
+    for (const name of CONFIG_FILENAMES) {
+      const candidate = path.join(dir, name);
+      if (fs.existsSync(candidate)) return candidate;
+    }
+    const parent = path.dirname(dir);
+    if (parent === dir) return undefined;
+    dir = parent;
+  }
+}
+
+/**
+ * Discover and load `deepaudit.config.{ts,mjs,js,cjs}` starting from `cwd`.
+ * Returns `undefined` if no config file is present (operating in default mode).
+ *
+ * On success, also calls `setLoadedConfig` so `getRegistry()` / `getConfig()`
+ * return the merged state to the rest of the CLI.
+ */
+export async function loadConfig(
+  cwd: string = process.cwd(),
+): Promise<{ config: DeepauditConfig; path: string } | undefined> {
+  const file = findConfigFile(cwd);
+  if (!file) return undefined;
+
+  const ext = path.extname(file);
+  let mod: { default?: DeepauditConfig } | DeepauditConfig;
+  try {
+    if (ext === ".ts" || ext === ".cjs") {
+      const jiti = createJiti(import.meta.url, { interopDefault: true });
+      mod = (await jiti.import(file)) as { default?: DeepauditConfig } | DeepauditConfig;
+    } else {
+      mod = (await import(pathToFileURL(file).href)) as { default?: DeepauditConfig };
+    }
+  } catch (err) {
+    // The config file exists but its imports can't resolve (most often
+    // because the workspace hasn't been `pnpm install`-ed yet). Don't
+    // hard-fail — let workspace-management commands like `init-project`
+    // run. Commands that need the loaded config (scan, process, etc.)
+    // will error on their own when `findProject` returns undefined.
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`[deepaudit] could not load ${file}: ${msg}`);
+    console.error(`[deepaudit]   Run \`pnpm install\` to install dependencies, then retry.`);
+    return undefined;
+  }
+
+  const config: DeepauditConfig | undefined =
+    (mod as { default?: DeepauditConfig }).default ?? (mod as DeepauditConfig);
+
+  if (!config || !Array.isArray(config.projects)) {
+    throw new Error(
+      `${file}: config must export a default with at least a "projects" array. Use defineConfig() from @deepaudit/core for type help.`,
+    );
+  }
+
+  setLoadedConfig(config, file);
+  return { config, path: file };
+}

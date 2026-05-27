@@ -1,7 +1,7 @@
-import type { FileRecord, MatcherPlugin } from "@deepsec/core";
+import type { FileRecord, MatcherPlugin } from "@deepaudit/core";
 
-// Re-export for backwards compat with consumers that import from @deepsec/scanner.
-export type { MatcherPlugin, NoiseTier } from "@deepsec/core";
+// Re-export for backwards compat with consumers that import from @deepaudit/scanner.
+export type { MatcherPlugin, NoiseTier } from "@deepaudit/core";
 
 export interface ScanProgress {
   type: "file_scanned" | "matcher_started" | "matcher_done";

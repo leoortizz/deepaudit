@@ -1,5 +1,5 @@
 {
-  "name": "@deepsec/scanner",
+  "name": "@deepaudit/scanner",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@deepsec/core": "workspace:*",
+    "@deepaudit/core": "workspace:*",
     "glob": "^11.0.0",
     "minimatch": "^10.0.0"
   }

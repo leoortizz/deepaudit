@@ -1,17 +1,17 @@
 name: Release
 
-# Publishes `deepsec` to npm via OIDC Trusted Publishing — no NPM_TOKEN
+# Publishes `deepaudit` to npm via OIDC Trusted Publishing — no NPM_TOKEN
 # secret in the repo. The workflow proves its identity via a GitHub OIDC
 # token; npm verifies it against a Trusted Publisher you register on
 # npmjs.com.
 #
 # One-time setup on npmjs.com:
-#   1. Visit https://www.npmjs.com/package/deepsec/access (must be a
+#   1. Visit https://www.npmjs.com/package/deepaudit/access (must be a
 #      maintainer of the package).
 #   2. Under "Publishing access" → "Trusted Publisher", click Configure.
 #   3. Pick "GitHub Actions" and fill in:
 #        Organization or user:  vercel-labs
-#        Repository:            deepsec
+#        Repository:            deepaudit
 #        Workflow filename:     release.yml
 #        Environment name:      (leave blank)
 #   4. Save. From this point on, this workflow can publish without a token.
@@ -28,7 +28,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'packages/deepsec/package.json'
+      - 'packages/deepaudit/package.json'
       - '.github/workflows/release.yml'
 
 # Serialize releases. Two pushes landing on main back-to-back must not race
@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      # Compare the version in packages/deepsec/package.json with whatever is
+      # Compare the version in packages/deepaudit/package.json with whatever is
       # currently published on npm. Skip if equal — re-running this workflow
       # on a no-op commit must not error or republish. Uses runner-preinstalled
       # node + npm so we don't have to set up a toolchain just to skip.
@@ -58,15 +58,15 @@ jobs:
         id: ver
         run: |
           set -eo pipefail
-          LOCAL=$(node -p "require('./packages/deepsec/package.json').version")
-          PUBLISHED=$(npm view deepsec version 2>/dev/null || true)
+          LOCAL=$(node -p "require('./packages/deepaudit/package.json').version")
+          PUBLISHED=$(npm view deepaudit version 2>/dev/null || true)
           echo "local=$LOCAL" >> "$GITHUB_OUTPUT"
           if [ "$LOCAL" != "$PUBLISHED" ]; then
             echo "publish=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::Will publish deepsec@$LOCAL (currently on npm: ${PUBLISHED:-<none>})"
+            echo "::notice::Will publish deepaudit@$LOCAL (currently on npm: ${PUBLISHED:-<none>})"
           else
             echo "publish=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::deepsec@$LOCAL already on npm — skipping publish"
+            echo "::notice::deepaudit@$LOCAL already on npm — skipping publish"
           fi
 
       # Everything below only runs when there's a new version to ship. Gating
@@ -95,7 +95,7 @@ jobs:
       # `npm publish` runs the package's prepublishOnly hook (`pnpm -w validate`)
       # and then prepack (`pnpm bundle`) — full validation + fresh bundle ship
       # together. With `id-token: write` set above and a Trusted Publisher
-      # configured for `deepsec` on npmjs.com (see comment at top of file),
+      # configured for `deepaudit` on npmjs.com (see comment at top of file),
       # npm exchanges the GitHub OIDC token for a publish credential at
       # publish time. No NPM_TOKEN / NODE_AUTH_TOKEN secret is consulted.
       #
@@ -111,5 +111,5 @@ jobs:
       # laptop-side `npm publish` doesn't try to emit provenance without
       # an OIDC token.
       - if: steps.ver.outputs.publish == 'true'
-        working-directory: packages/deepsec
+        working-directory: packages/deepaudit
         run: npm publish --access public --provenance

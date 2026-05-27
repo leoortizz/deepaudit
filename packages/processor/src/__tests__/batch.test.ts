@@ -1,4 +1,4 @@
-import type { FileRecord } from "@deepsec/core";
+import type { FileRecord } from "@deepaudit/core";
 import { describe, expect, it } from "vitest";
 import { batchCandidates } from "../batch.js";
 

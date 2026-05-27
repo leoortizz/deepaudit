@@ -1,4 +1,4 @@
-# Contributing to deepsec
+# Contributing to deepaudit
 
 The most useful contributions are **new matchers** and **new plugins**.
 Both have dedicated guides:
@@ -14,7 +14,7 @@ packages/
   core/                Types, schemas, plugin contracts, config loader
   scanner/             Regex matchers + scanning engine
   processor/           AI agent integration (Claude SDK, Codex SDK), enrich, triage, revalidate
-  deepsec/              Publishable package: bundled CLI + the `deepsec/config` sub-export + the @vercel/sandbox executor
+  deepaudit/              Publishable package: bundled CLI + the `deepaudit/config` sub-export + the @vercel/sandbox executor
 e2e/                   End-to-end tests against a fixture project
 fixtures/
   vulnerable-app/      Intentionally vulnerable test data (excluded from lint/knip)
@@ -32,18 +32,18 @@ pnpm -r build           # tsc across all workspaces (typecheck)
 pnpm lint               # biome check
 pnpm lint:fix           # biome check --write
 pnpm knip               # unused code/dep detection
-pnpm deepsec --help      # the CLI (via tsx)
+pnpm deepaudit --help      # the CLI (via tsx)
 ```
 
 Bundle for distribution:
 
 ```bash
-pnpm bundle             # esbuild → packages/deepsec/dist/{cli,config}.mjs
+pnpm bundle             # esbuild → packages/deepaudit/dist/{cli,config}.mjs
 pnpm test:bundle        # bundle e2e: runs the produced binary as a subprocess
 ```
 
 All of build, test, lint, and knip must pass before a PR is mergeable.
-PRs that touch the publish surface (anything imported via `deepsec/config`)
+PRs that touch the publish surface (anything imported via `deepaudit/config`)
 must also pass `pnpm test:bundle`.
 
 ### Live-sandbox e2e (manual)
@@ -51,7 +51,7 @@ must also pass `pnpm test:bundle`.
 `e2e/pipeline-sandbox.test.ts` runs the full pipeline against a real
 Vercel Sandbox, but with a stub agent inside the sandbox — exercises
 bootstrap snapshot, worker spawn, file upload/download, and result
-merge without spending model tokens. Gated on `DEEPSEC_E2E_LIVE_SANDBOX=1`
+merge without spending model tokens. Gated on `DEEPAUDIT_E2E_LIVE_SANDBOX=1`
 + Vercel Sandbox credentials, so `pnpm test` skips it by default.
 
 - **In CI**: trigger the
@@ -60,12 +60,12 @@ merge without spending model tokens. Gated on `DEEPSEC_E2E_LIVE_SANDBOX=1`
   `VERCEL_TEAM_ID`, `VERCEL_PROJECT_ID`. (No AI key needed.)
 - **Locally**, when working on sandbox code:
   ```bash
-  VERCEL_OIDC_TOKEN=$(grep ^VERCEL_OIDC .deepsec/.env.local | cut -d= -f2) \
-  DEEPSEC_E2E_LIVE_SANDBOX=1 \
+  VERCEL_OIDC_TOKEN=$(grep ^VERCEL_OIDC .deepaudit/.env.local | cut -d= -f2) \
+  DEEPAUDIT_E2E_LIVE_SANDBOX=1 \
     pnpm exec vitest run --project e2e e2e/pipeline-sandbox.test.ts
   ```
 
-Run it before PRs that touch `packages/deepsec/src/sandbox/`. The
+Run it before PRs that touch `packages/deepaudit/src/sandbox/`. The
 stub-agent flow doesn't exercise the firewall's credential-brokering
 transform (no AI traffic flows), so PRs that touch that path
 specifically still warrant a one-off run with `--agent claude-agent-sdk`
@@ -79,7 +79,7 @@ Short version (full version in [docs/writing-matchers.md](docs/writing-matchers.
    export.
 2. Register it in `packages/scanner/src/matchers/index.ts` (import +
    `registry.register(...)`).
-3. Run `pnpm deepsec scan --project-id <id> --root <path> --matchers <slug>`
+3. Run `pnpm deepaudit scan --project-id <id> --root <path> --matchers <slug>`
    and check the candidate count is reasonable.
 4. `pnpm test` and `pnpm lint`.
 
@@ -96,10 +96,10 @@ full guide.
 The minimal shape:
 
 ```ts
-import type { DeepsecPlugin } from "deepsec/config";
+import type { DeepauditPlugin } from "deepaudit/config";
 import { myMatcher } from "./matchers/my-matcher.js";
 
-export default function myPlugin(): DeepsecPlugin {
+export default function myPlugin(): DeepauditPlugin {
   return {
     name: "@my-org/plugin-internal-services",
     matchers: [myMatcher],
@@ -128,7 +128,7 @@ The standard matcher test pattern is in
 asserts the matcher fires on a known-vulnerable input and doesn't on a
 known-safe one.
 
-## Reporting security issues in deepsec
+## Reporting security issues in deepaudit
 
 See [SECURITY.md](SECURITY.md). Don't open public issues for security
 problems in the tool itself.

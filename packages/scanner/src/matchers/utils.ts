@@ -1,4 +1,4 @@
-import type { CandidateMatch } from "@deepsec/core";
+import type { CandidateMatch } from "@deepaudit/core";
 
 /**
  * Helper to build a regex-based matcher.

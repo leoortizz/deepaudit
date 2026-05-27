@@ -18,7 +18,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # deepsec supports Node 22+ (engines.node in package.json); test on both
+    # deepaudit supports Node 22+ (engines.node in package.json); test on both
     # the floor and the current Node so a 24-only API change can't sneak in.
     strategy:
       fail-fast: false
@@ -45,7 +45,7 @@ jobs:
       - run: pnpm knip
       - run: pnpm test:unit
       - run: pnpm test:bundle
-      # Typechecks .deepsec/deepsec.config.ts against the freshly bundled
+      # Typechecks .deepaudit/deepaudit.config.ts against the freshly bundled
       # `dist/config.d.ts` — catches regressions where the published types
-      # leak references to workspace-internal `@deepsec/*` packages.
-      - run: pnpm typecheck:deepsec
+      # leak references to workspace-internal `@deepaudit/*` packages.
+      - run: pnpm typecheck:deepaudit

@@ -1,6 +1,6 @@
 /**
  * Full-pipeline e2e: init → scan → process → revalidate, all through the
- * bundled CLI, with a stub agent supplied via a plugin in deepsec.config.ts.
+ * bundled CLI, with a stub agent supplied via a plugin in deepaudit.config.ts.
  *
  * This is the gap the unit tests + the per-step bundle e2e tests left:
  * `process` and `revalidate` invoked through the published binary, with
@@ -19,7 +19,7 @@ import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const BUNDLE = path.join(ROOT, "packages/deepsec/dist/cli.mjs");
+const BUNDLE = path.join(ROOT, "packages/deepaudit/dist/cli.mjs");
 const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
 
 interface RunResult {
@@ -75,10 +75,10 @@ function readAllRecords(dir: string): Array<{
 }
 
 /**
- * Inline stub-agent plugin. The bundled CLI loads `deepsec.config.ts`
+ * Inline stub-agent plugin. The bundled CLI loads `deepaudit.config.ts`
  * via jiti, which can also load `.ts` plugin files referenced from it.
  * We use a `.mjs` here to keep things simple — the plugin only needs
- * default-export of `{ name, agents: [...] }` matching `DeepsecPlugin`.
+ * default-export of `{ name, agents: [...] }` matching `DeepauditPlugin`.
  *
  * The agent emits one HIGH finding per candidate-bearing file in
  * investigate(), and one true-positive verdict per finding in
@@ -146,7 +146,7 @@ export default { name: "stub", agents: [stub] };
 `;
 
 /**
- * Patch the scaffolded `deepsec.config.ts` so it loads the stub plugin.
+ * Patch the scaffolded `deepaudit.config.ts` so it loads the stub plugin.
  * We splice the import + a `plugins: [stubPlugin]` entry into the existing
  * `defineConfig({ … })` call without disturbing the projects-insert marker
  * (which init-project relies on for future appends).
@@ -155,8 +155,8 @@ function injectStubPlugin(configPath: string): void {
   const original = fs.readFileSync(configPath, "utf-8");
   const patched = original
     .replace(
-      'import { defineConfig } from "deepsec/config";\n',
-      'import { defineConfig } from "deepsec/config";\nimport stubPlugin from "./stub-plugin.mjs";\n',
+      'import { defineConfig } from "deepaudit/config";\n',
+      'import { defineConfig } from "deepaudit/config";\nimport stubPlugin from "./stub-plugin.mjs";\n',
     )
     .replace(
       /export default defineConfig\(\{\s*\n\s*projects:/,
@@ -176,28 +176,28 @@ describe("pipeline e2e", () => {
   });
 
   it("init → scan → process → revalidate with a stub agent plugin", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-pipeline-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-pipeline-"));
     try {
-      const workspaceDir = path.join(tmp, ".deepsec");
+      const workspaceDir = path.join(tmp, ".deepaudit");
 
       // Symlink the source repo's node_modules into both tmp/ and the
-      // workspace dir so deepsec.config.ts (which imports
-      // `deepsec/config`) and the bundled CLI's jiti loader can resolve
+      // workspace dir so deepaudit.config.ts (which imports
+      // `deepaudit/config`) and the bundled CLI's jiti loader can resolve
       // the package without a real `pnpm install` round-trip.
       fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(tmp, "node_modules"), "dir");
 
-      // 1. init — scaffolds .deepsec/ with the fixture as the first project
+      // 1. init — scaffolds .deepaudit/ with the fixture as the first project
       const init = runBundle(["init", workspaceDir, FIXTURES, "--id", "fixture"], tmp);
       expect(init.status, `init stderr: ${init.stderr}\nstdout: ${init.stdout}`).toBe(0);
-      expect(fs.existsSync(path.join(workspaceDir, "deepsec.config.ts"))).toBe(true);
+      expect(fs.existsSync(path.join(workspaceDir, "deepaudit.config.ts"))).toBe(true);
       expect(fs.existsSync(path.join(workspaceDir, "data/fixture/project.json"))).toBe(true);
 
       // 2. Drop the stub plugin + register it in the config
       fs.writeFileSync(path.join(workspaceDir, "stub-plugin.mjs"), STUB_PLUGIN_SOURCE);
-      injectStubPlugin(path.join(workspaceDir, "deepsec.config.ts"));
+      injectStubPlugin(path.join(workspaceDir, "deepaudit.config.ts"));
 
       // Make node_modules visible from the workspace (jiti resolves
-      // `deepsec/config` against the cwd's node_modules).
+      // `deepaudit/config` against the cwd's node_modules).
       fs.symlinkSync(
         path.join(tmp, "node_modules"),
         path.join(workspaceDir, "node_modules"),

@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a bug in deepsec itself (not a finding deepsec produced about another codebase)
+about: Report a bug in deepaudit itself (not a finding deepaudit produced about another codebase)
 labels: bug
 ---
 
@@ -20,7 +20,7 @@ labels: bug
 
 ## Environment
 
-- deepsec version (`pnpm deepsec --version`):
+- deepaudit version (`pnpm deepaudit --version`):
 - Node version (`node --version`):
 - OS:
 - Agent backend (`claude-agent-sdk` / `codex`):

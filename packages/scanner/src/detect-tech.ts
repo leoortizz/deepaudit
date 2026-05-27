@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { dataDir } from "@deepsec/core";
+import { dataDir } from "@deepaudit/core";
 
 /**
  * Outcome of inspecting a project root for known tech. Tags are normalized

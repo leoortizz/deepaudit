@@ -17,10 +17,10 @@
     "packages/processor": {
       "entry": ["src/__tests__/**/*.test.ts"]
     },
-    "packages/deepsec": {
+    "packages/deepaudit": {
       "entry": ["src/config.ts", "src/sandbox/request-proxy.mjs!", "src/__tests__/**/*.test.ts"]
     }
   },
-  "ignore": ["fixtures/vulnerable-app/**", "samples/**", ".deepsec/**"],
+  "ignore": ["fixtures/vulnerable-app/**", "samples/**", ".deepaudit/**"],
   "ignoreDependencies": ["@anthropic-ai/claude-agent-sdk", "@openai/codex", "@openai/codex-sdk"]
 }

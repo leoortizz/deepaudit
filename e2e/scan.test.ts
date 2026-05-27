@@ -88,14 +88,14 @@ describe("scan e2e", () => {
     expect(meta.scannerConfig.matcherSlugs).toEqual(["xss", "rce"]);
   });
 
-  it("does not scan generated deepsec data records", async () => {
-    const root = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-scan-root-"));
-    const dataRoot = path.join(root, ".deepsec", "data");
-    const projectId = "ignore-deepsec-data";
-    const oldDataRoot = process.env.DEEPSEC_DATA_ROOT;
-    process.env.DEEPSEC_DATA_ROOT = dataRoot;
+  it("does not scan generated deepaudit data records", async () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-scan-root-"));
+    const dataRoot = path.join(root, ".deepaudit", "data");
+    const projectId = "ignore-deepaudit-data";
+    const oldDataRoot = process.env.DEEPAUDIT_DATA_ROOT;
+    process.env.DEEPAUDIT_DATA_ROOT = dataRoot;
     try {
-      const generatedDir = path.join(root, ".deepsec", "data", "app", "files", "src");
+      const generatedDir = path.join(root, ".deepaudit", "data", "app", "files", "src");
       fs.mkdirSync(generatedDir, { recursive: true });
       fs.writeFileSync(
         path.join(generatedDir, "generated.json"),
@@ -155,8 +155,8 @@ describe("scan e2e", () => {
         "data/users/files/leak.ts",
       ]);
     } finally {
-      if (oldDataRoot === undefined) delete process.env.DEEPSEC_DATA_ROOT;
-      else process.env.DEEPSEC_DATA_ROOT = oldDataRoot;
+      if (oldDataRoot === undefined) delete process.env.DEEPAUDIT_DATA_ROOT;
+      else process.env.DEEPAUDIT_DATA_ROOT = oldDataRoot;
       fs.rmSync(root, { recursive: true, force: true });
     }
   });

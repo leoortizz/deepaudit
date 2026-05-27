@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { MatcherPlugin } from "@deepsec/core";
+import type { MatcherPlugin } from "@deepaudit/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock glob before importing the scanner so the driver picks up the mock.
@@ -17,9 +17,9 @@ describe("RegexScannerDriver — Windows path normalization", () => {
   let dataRoot: string;
 
   beforeEach(() => {
-    tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-scan-"));
-    dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-data-"));
-    process.env.DEEPSEC_DATA_ROOT = dataRoot;
+    tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-scan-"));
+    dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-data-"));
+    process.env.DEEPAUDIT_DATA_ROOT = dataRoot;
 
     fs.mkdirSync(path.join(tmpRoot, "src", "api"), { recursive: true });
     fs.writeFileSync(path.join(tmpRoot, "src", "api", "foo.ts"), "eval(userInput);\n");
@@ -28,7 +28,7 @@ describe("RegexScannerDriver — Windows path normalization", () => {
   afterEach(() => {
     fs.rmSync(tmpRoot, { recursive: true, force: true });
     fs.rmSync(dataRoot, { recursive: true, force: true });
-    delete process.env.DEEPSEC_DATA_ROOT;
+    delete process.env.DEEPAUDIT_DATA_ROOT;
     vi.clearAllMocks();
   });
 

@@ -1,7 +1,7 @@
 import path from "node:path";
 
 export function getDataRoot(): string {
-  return process.env.DEEPSEC_DATA_ROOT || "data";
+  return process.env.DEEPAUDIT_DATA_ROOT || "data";
 }
 
 // Reject empty, '.', '..', absolute paths, null bytes, and any path

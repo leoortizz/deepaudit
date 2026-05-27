@@ -1,6 +1,6 @@
 node_modules/
 dist/
-# Root-level only; `.deepsec/data/` is intentionally tracked.
+# Root-level only; `.deepaudit/data/` is intentionally tracked.
 /data/
 .next/
 next-env.d.ts

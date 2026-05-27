@@ -1,11 +1,11 @@
 # Configuration reference
 
-deepsec reads `deepsec.config.{ts,mjs,js,cjs}` from the current working
+deepaudit reads `deepaudit.config.{ts,mjs,js,cjs}` from the current working
 directory, walking up. The CLI inherits whatever the file declares.
 
 ```ts
-import { defineConfig } from "deepsec/config";
-import myPlugin from "@my-org/deepsec-plugin-foo";
+import { defineConfig } from "deepaudit/config";
+import myPlugin from "@my-org/deepaudit-plugin-foo";
 
 export default defineConfig({
   projects: [
@@ -18,14 +18,14 @@ export default defineConfig({
 
 For a fully-worked example exercising every common field
 (`infoMarkdown`, `promptAppend`, `priorityPaths`, an inline plugin),
-see [`samples/webapp/deepsec.config.ts`](../samples/webapp/deepsec.config.ts).
+see [`samples/webapp/deepaudit.config.ts`](../samples/webapp/deepaudit.config.ts).
 
 ## Top-level fields
 
 | Field | Type | Purpose |
 |---|---|---|
-| `projects` | `ProjectDeclaration[]` | The codebases deepsec knows about. |
-| `plugins` | `DeepsecPlugin[]` | Loaded in order; later plugins override single-slot capabilities. |
+| `projects` | `ProjectDeclaration[]` | The codebases deepaudit knows about. |
+| `plugins` | `DeepauditPlugin[]` | Loaded in order; later plugins override single-slot capabilities. |
 | `matchers` | `{ only?: string[]; exclude?: string[] }` | Filter the matcher set used by `scan`. |
 | `defaultAgent` | `string` | Default `--agent` value (`codex` or `claude`). See [models.md](models.md). |
 | `dataDir` | `string` | Override the `data/` directory. Defaults to `./data`. |
@@ -43,7 +43,7 @@ see [`samples/webapp/deepsec.config.ts`](../samples/webapp/deepsec.config.ts).
 
 ## INFO.md
 
-If `infoMarkdown` isn't set in the config, deepsec looks for
+If `infoMarkdown` isn't set in the config, deepaudit looks for
 `data/<id>/INFO.md` and injects its contents into the prompt for
 `process`, `triage`, and `revalidate`. A few hundred words of repo
 context (what the codebase does, the auth shape, the threat model,
@@ -94,7 +94,7 @@ on the project declaration if both are present.
 
 ## Environment variables
 
-deepsec reads these from `.env.local` (loaded automatically by the CLI) or
+deepaudit reads these from `.env.local` (loaded automatically by the CLI) or
 from the process environment.
 
 ### Required
@@ -114,8 +114,8 @@ backend you're using.
 |---|---|---|
 | `OPENAI_API_KEY` | `--agent codex` | Codex SDK token. Unset is fine if `AI_GATEWAY_API_KEY` is set, or if Codex routes through AI Gateway with the Anthropic token. |
 | `OPENAI_BASE_URL` | `--agent codex` | Default (when `AI_GATEWAY_API_KEY` is set): `https://ai-gateway.vercel.sh/v1`. |
-| `DEEPSEC_AGENT_DEBUG` | both backends | Set to `1` to enable verbose agent logging. |
-| `DEEPSEC_DATA_ROOT` | core | Override the data directory location. Equivalent to `dataDir` in config. |
+| `DEEPAUDIT_AGENT_DEBUG` | both backends | Set to `1` to enable verbose agent logging. |
+| `DEEPAUDIT_DATA_ROOT` | core | Override the data directory location. Equivalent to `dataDir` in config. |
 
 ### Plugin-specific
 

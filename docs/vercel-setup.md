@@ -1,11 +1,11 @@
 # Setting up AI Gateway and Vercel Sandbox
 
-deepsec uses two Vercel products. Most people only need the first.
+deepaudit uses two Vercel products. Most people only need the first.
 
 | Product | When you need it |
 |---|---|
 | **[AI Gateway](https://vercel.com/docs/ai-gateway)** | Always — for `process` and `revalidate`. One token covers both Claude and Codex; the gateway adds provider failover, observability, and zero data retention on top. |
-| **[Vercel Sandbox](https://vercel.com/docs/vercel-sandbox)** | Only for `deepsec sandbox process` (distributed scans across microVMs). Skip it if you're running locally. |
+| **[Vercel Sandbox](https://vercel.com/docs/vercel-sandbox)** | Only for `deepaudit sandbox process` (distributed scans across microVMs). Skip it if you're running locally. |
 
 Both have a free tier suitable for evaluation. Real scans on production codebases will exceed the free tier — see [Costs and credits](#costs-and-credits) below.
 
@@ -21,7 +21,7 @@ Two ways to authenticate. **If you don't know which to pick, use the API key** �
 |---|---|
 | Anywhere | API key (Option A) |
 | Local + already linked to a Vercel project (`.vercel/project.json` exists) | OIDC token (Option B) |
-| Inside `deepsec sandbox …` | OIDC token (automatic — same token authenticates both) |
+| Inside `deepaudit sandbox …` | OIDC token (automatic — same token authenticates both) |
 
 Reference: [AI Gateway authentication](https://vercel.com/docs/ai-gateway/authentication-and-byok#quick-start).
 
@@ -47,22 +47,22 @@ npx vercel link              # link this directory to a Vercel project
 npx vercel env pull          # writes VERCEL_OIDC_TOKEN to .env.local
 ```
 
-deepsec auto-refreshes the token when it's near expiry (via `@vercel/oidc`), but the underlying refresh requires `.vercel/project.json` in the workspace — re-run `vercel env pull` if refresh fails or you've moved the directory.
+deepaudit auto-refreshes the token when it's near expiry (via `@vercel/oidc`), but the underlying refresh requires `.vercel/project.json` in the workspace — re-run `vercel env pull` if refresh fails or you've moved the directory.
 
 ### Verify
 
 Run a small scan to confirm the credential works:
 
 ```bash
-pnpm deepsec scan --limit 20         # cheap, no AI calls
-pnpm deepsec process --limit 5       # exercises the gateway
+pnpm deepaudit scan --limit 20         # cheap, no AI calls
+pnpm deepaudit process --limit 5       # exercises the gateway
 ```
 
 If the second command fails with `Missing AI credentials` or a `401`, see [Troubleshooting](#troubleshooting).
 
 ### How it works
 
-deepsec expands whichever credential it finds (the API key first, the OIDC token as fallback) at startup into the four vars the agent SDKs read (`ANTHROPIC_AUTH_TOKEN`, `OPENAI_API_KEY`, `ANTHROPIC_BASE_URL`, `OPENAI_BASE_URL`), so a single credential covers both Codex (`--agent codex`, the default) and Claude (`--agent claude`).
+deepaudit expands whichever credential it finds (the API key first, the OIDC token as fallback) at startup into the four vars the agent SDKs read (`ANTHROPIC_AUTH_TOKEN`, `OPENAI_API_KEY`, `ANTHROPIC_BASE_URL`, `OPENAI_BASE_URL`), so a single credential covers both Codex (`--agent codex`, the default) and Claude (`--agent claude`).
 
 Any of those four vars you set explicitly takes precedence over the expansion — useful for mixing direct Anthropic with gateway-routed OpenAI, etc.
 
@@ -88,7 +88,7 @@ Run `--limit 50` first to calibrate before a full pass. See [getting-started.md]
 
 ### When credits run out
 
-If `process` or `revalidate` halts because the gateway balance is exhausted (or because a direct provider key ran out), deepsec stops gracefully — no further batches launch, in-flight batches are cancelled, the file lock state is preserved. The CLI prints a remediation message with the right top-up URL.
+If `process` or `revalidate` halts because the gateway balance is exhausted (or because a direct provider key ran out), deepaudit stops gracefully — no further batches launch, in-flight batches are cancelled, the file lock state is preserved. The CLI prints a remediation message with the right top-up URL.
 
 After topping up, **re-run the same command**. It picks up exactly where it stopped — files already analyzed are skipped, only the unfinished ones get re-investigated.
 
@@ -103,7 +103,7 @@ claude login    # for --agent claude
 codex login     # for --agent codex
 ```
 
-Subscriptions are useful for **evaluating** deepsec but generally do not have enough headroom for full repo scans. The Claude weekly / 5-hour and ChatGPT Plus quotas trip well before a real codebase is finished. Switch to the gateway (or a direct provider key) once you're past evaluation.
+Subscriptions are useful for **evaluating** deepaudit but generally do not have enough headroom for full repo scans. The Claude weekly / 5-hour and ChatGPT Plus quotas trip well before a real codebase is finished. Switch to the gateway (or a direct provider key) once you're past evaluation.
 
 ---
 
@@ -131,9 +131,9 @@ Mix freely — gateway for Claude, direct for OpenAI, etc. The explicit values a
 
 ## Vercel Sandbox
 
-Only needed for `deepsec sandbox process` (and `deepsec sandbox-all`). Skip this section if you're running everything locally.
+Only needed for `deepaudit sandbox process` (and `deepaudit sandbox-all`). Skip this section if you're running everything locally.
 
-deepsec supports both auth methods the Sandbox SDK accepts. Pick whichever fits your environment — no deepsec config beyond setting the right env vars in `.env.local`. Reference: [Sandbox authentication](https://vercel.com/docs/vercel-sandbox/concepts/authentication).
+deepaudit supports both auth methods the Sandbox SDK accepts. Pick whichever fits your environment — no deepaudit config beyond setting the right env vars in `.env.local`. Reference: [Sandbox authentication](https://vercel.com/docs/vercel-sandbox/concepts/authentication).
 
 | Where you're running | Use this |
 |---|---|
@@ -176,7 +176,7 @@ You can keep both sets of env vars in `.env.local`. The SDK prefers `VERCEL_OIDC
 ### Try a sandbox run
 
 ```bash
-pnpm deepsec sandbox process --project-id my-app --sandboxes 4
+pnpm deepaudit sandbox process --project-id my-app --sandboxes 4
 ```
 
 If the sandbox can't authenticate, the spawn fails with the SDK's error. Re-run `vercel env pull` (OIDC) or double-check the three access-token vars.
@@ -188,7 +188,7 @@ If the sandbox can't authenticate, the spawn fails with the SDK's error. Re-run 
 | Symptom | What it means | Fix |
 |---|---|---|
 | `Missing AI credentials for --agent claude` / `codex` | No credential present on this machine. | Set `AI_GATEWAY_API_KEY=vck_…` in `.env.local`, or run `claude login` / `codex login` to use a subscription. |
-| `401 Unauthorized` from `process` / `revalidate` | Credential present but rejected. | OIDC: re-run `vercel env pull` (token may have expired — 12 h). API key: regenerate in the dashboard. Confirm `.env.local` is in the cwd deepsec runs from. |
+| `401 Unauthorized` from `process` / `revalidate` | Credential present but rejected. | OIDC: re-run `vercel env pull` (token may have expired — 12 h). API key: regenerate in the dashboard. Confirm `.env.local` is in the cwd deepaudit runs from. |
 | `✘ Stopped: Vercel AI Gateway credits exhausted` | Gateway balance is $0. | [Top up](https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dtop-up), then re-run the same command — it resumes from where it stopped. |
 | `✘ Stopped: Anthropic API credits exhausted` | Direct Anthropic account out of credits. | Top up at [Anthropic Console](https://console.anthropic.com/), or switch to the gateway. |
 | `✘ Stopped: OpenAI API quota exhausted` | Direct OpenAI account out of quota / payment method declined. | Top up in the OpenAI dashboard, or switch to the gateway. |

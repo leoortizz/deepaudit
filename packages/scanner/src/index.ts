@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { FileRecord, MatcherGate } from "@deepsec/core";
+import type { FileRecord, MatcherGate } from "@deepaudit/core";
 import {
   completeRun,
   createRunMeta,
@@ -13,7 +13,7 @@ import {
   readFileRecord,
   writeFileRecord,
   writeRunMeta,
-} from "@deepsec/core";
+} from "@deepaudit/core";
 import { glob, globSync } from "glob";
 import { escape as escapeGlob, minimatch } from "minimatch";
 import { type DetectedTech, detectTech, readTechJson, writeTechJson } from "./detect-tech.js";
@@ -117,7 +117,7 @@ const _SCANNER_VERSION = "0.1.0";
 export const IGNORE_DIRS = [
   "**/node_modules/**",
   "**/.git/**",
-  "**/.deepsec/data/**",
+  "**/.deepaudit/data/**",
   "**/dist/**",
   "**/build/**",
   "**/.next/**",
@@ -144,7 +144,7 @@ function relativeInsideRoot(root: string, target: string): string | null {
   return rel;
 }
 
-function appendDeepsecDataIgnoreGlobs(
+function appendDeepauditDataIgnoreGlobs(
   absRoot: string,
   dataRoot: string,
   seenDataRoots: Set<string>,
@@ -167,7 +167,7 @@ function appendDeepsecDataIgnoreGlobs(
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const projectDir = path.join(absDataRoot, entry.name);
-    if (!isDeepsecProjectDir(projectDir, entry.name)) continue;
+    if (!isDeepauditProjectDir(projectDir, entry.name)) continue;
     const relProject = escapeGlob(`${relDataRoot}/${entry.name}`, { magicalBraces: true });
     globs.push(
       `${relProject}/files/**`,
@@ -179,7 +179,7 @@ function appendDeepsecDataIgnoreGlobs(
   }
 }
 
-function isDeepsecProjectDir(projectDir: string, projectId: string): boolean {
+function isDeepauditProjectDir(projectDir: string, projectId: string): boolean {
   try {
     const raw = JSON.parse(fs.readFileSync(path.join(projectDir, "project.json"), "utf-8"));
     const parsed = projectConfigSchema.safeParse(raw);
@@ -189,15 +189,15 @@ function isDeepsecProjectDir(projectDir: string, projectId: string): boolean {
   }
 }
 
-export function deepsecDataIgnoreGlobs(root: string): string[] {
+export function deepauditDataIgnoreGlobs(root: string): string[] {
   const absRoot = path.resolve(root);
   const globs: string[] = [];
   const seenDataRoots = new Set<string>();
 
-  // Repos can contain both the active data root and root-level DeepSec mirrors.
-  // Only ignore subtrees that prove they are DeepSec projects via project.json.
-  appendDeepsecDataIgnoreGlobs(absRoot, path.resolve(getDataRoot()), seenDataRoots, globs);
-  appendDeepsecDataIgnoreGlobs(absRoot, path.join(absRoot, "data"), seenDataRoots, globs);
+  // Repos can contain both the active data root and root-level DeepAudit mirrors.
+  // Only ignore subtrees that prove they are DeepAudit projects via project.json.
+  appendDeepauditDataIgnoreGlobs(absRoot, path.resolve(getDataRoot()), seenDataRoots, globs);
+  appendDeepauditDataIgnoreGlobs(absRoot, path.join(absRoot, "data"), seenDataRoots, globs);
 
   return globs;
 }
@@ -212,7 +212,11 @@ export class RegexScannerDriver implements ScannerDriver {
     ignorePaths?: string[];
   }): AsyncGenerator<ScanProgress, FileRecord[]> {
     const { root, matchers, projectId, runId } = params;
-    const ignore = [...IGNORE_DIRS, ...deepsecDataIgnoreGlobs(root), ...(params.ignorePaths ?? [])];
+    const ignore = [
+      ...IGNORE_DIRS,
+      ...deepauditDataIgnoreGlobs(root),
+      ...(params.ignorePaths ?? []),
+    ];
     const upserted = new Map<string, FileRecord>();
 
     // Pre-glob: deduplicate file patterns across matchers
@@ -370,7 +374,7 @@ export class RegexScannerDriver implements ScannerDriver {
 
 /**
  * Per-language scan stats. Emitted on the scan result so downstream tools
- * (CLI warning, analytics) can spot ecosystems where deepsec has weak
+ * (CLI warning, analytics) can spot ecosystems where deepaudit has weak
  * coverage. `matchRate` is `candidates / scannedFiles` for that language;
  * very low rates on a language with significant file count signal we
  * should ship more matchers (or the user should write a custom plugin).
@@ -525,8 +529,8 @@ export async function scan(params: {
   const ignore = [
     "**/node_modules/**",
     "**/.git/**",
-    "**/.deepsec/data/**",
-    ...deepsecDataIgnoreGlobs(params.root),
+    "**/.deepaudit/data/**",
+    ...deepauditDataIgnoreGlobs(params.root),
     "**/dist/**",
     "**/build/**",
     "**/.next/**",

@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { dataDir, type FileRecord, type Finding, type RefusalReport } from "@deepsec/core";
+import { dataDir, type FileRecord, type Finding, type RefusalReport } from "@deepaudit/core";
 import type { InvestigateResult, RevalidateVerdict } from "./types.js";
 
 // --- Retry / backoff -------------------------------------------------------
@@ -201,8 +201,8 @@ export class QuotaExhaustedError extends Error {
 
 /**
  * Vercel AI Gateway endpoints — duplicated from preflight.ts on purpose:
- * processor doesn't depend on the deepsec CLI package. Keep these in sync
- * with the constants in `packages/deepsec/src/preflight.ts`.
+ * processor doesn't depend on the deepaudit CLI package. Keep these in sync
+ * with the constants in `packages/deepaudit/src/preflight.ts`.
  */
 const GATEWAY_ANTHROPIC_BASE_URL = "https://ai-gateway.vercel.sh";
 const GATEWAY_OPENAI_BASE_URL = "https://ai-gateway.vercel.sh/v1";
@@ -419,7 +419,7 @@ export function writeParseFailureDebug(params: {
     const errMsg = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
     const filesList = batch?.map((b) => `  - ${b.filePath}`).join("\n") ?? "  (none)";
     const header =
-      `# deepsec parse-failure debug dump\n` +
+      `# deepaudit parse-failure debug dump\n` +
       `# phase: ${phase}\n` +
       `# agentType: ${agentType}\n` +
       `# timestamp: ${new Date().toISOString()}\n` +

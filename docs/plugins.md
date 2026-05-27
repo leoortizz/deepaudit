@@ -1,6 +1,6 @@
 # Plugins
 
-A deepsec plugin can fill any of five slots:
+A deepaudit plugin can fill any of five slots:
 
 | Slot | Purpose |
 |---|---|
@@ -8,7 +8,7 @@ A deepsec plugin can fill any of five slots:
 | `notifiers` | Where findings get reported (Slack, GitHub Issues, webhooks…) |
 | `ownership` | Map files to owning teams/people (e.g. an internal directory) |
 | `people` | Look up a person by email/name (managers, on-call, contact info) |
-| `executor` | Run a deepsec command on remote infrastructure |
+| `executor` | Run a deepaudit command on remote infrastructure |
 
 A single plugin can fill any subset.
 
@@ -16,7 +16,7 @@ The plugin contract lives in
 [`packages/core/src/plugin.ts`](../packages/core/src/plugin.ts):
 
 ```ts
-export interface DeepsecPlugin {
+export interface DeepauditPlugin {
   name: string;
   matchers?: MatcherPlugin[];
   notifiers?: NotifierPlugin[];
@@ -28,11 +28,11 @@ export interface DeepsecPlugin {
 }
 ```
 
-Plugins are loaded from `deepsec.config.ts`:
+Plugins are loaded from `deepaudit.config.ts`:
 
 ```ts
-import { defineConfig } from "deepsec/config";
-import myPlugin from "@my-org/deepsec-plugin";
+import { defineConfig } from "deepaudit/config";
+import myPlugin from "@my-org/deepaudit-plugin";
 
 export default defineConfig({
   projects: [{ id: "my-app", root: "../my-app" }],
@@ -56,8 +56,8 @@ Most common. Same shape as a built-in matcher; see
 
 ```ts
 // my-plugin/src/matchers/internal-rpc.ts
-import type { MatcherPlugin, CandidateMatch } from "deepsec/config";
-import { regexMatcher } from "deepsec/config";
+import type { MatcherPlugin, CandidateMatch } from "deepaudit/config";
+import { regexMatcher } from "deepaudit/config";
 
 export const internalRpcMatcher: MatcherPlugin = {
   slug: "internal-rpc-no-auth",
@@ -74,10 +74,10 @@ export const internalRpcMatcher: MatcherPlugin = {
 
 ```ts
 // my-plugin/src/index.ts
-import type { DeepsecPlugin } from "deepsec/config";
+import type { DeepauditPlugin } from "deepaudit/config";
 import { internalRpcMatcher } from "./matchers/internal-rpc.js";
 
-export default function myPlugin(): DeepsecPlugin {
+export default function myPlugin(): DeepauditPlugin {
   return {
     name: "@my-org/plugin-internal-services",
     matchers: [internalRpcMatcher],
@@ -88,7 +88,7 @@ export default function myPlugin(): DeepsecPlugin {
 Activate it:
 
 ```ts
-// deepsec.config.ts
+// deepaudit.config.ts
 import myPlugin from "@my-org/plugin-internal-services";
 export default defineConfig({
   projects: [/* … */],
@@ -96,19 +96,19 @@ export default defineConfig({
 });
 ```
 
-The plugin's matchers are registered alongside deepsec's built-ins. Slugs
+The plugin's matchers are registered alongside deepaudit's built-ins. Slugs
 are unique. If your slug collides with a built-in, **the plugin wins**
 (last-registered overrides). Useful for swapping a built-in matcher for
 a tighter org-specific version.
 
 A complete inline-plugin example with two real matchers lives at
-[`samples/webapp/deepsec.config.ts`](../samples/webapp/deepsec.config.ts) and
+[`samples/webapp/deepaudit.config.ts`](../samples/webapp/deepaudit.config.ts) and
 [`samples/webapp/matchers/`](../samples/webapp/matchers/) — the same
 shape as a published plugin, just defined in the user's config file.
 
 ## Slot 2: ownership
 
-`ownership` maps a file to the team or person that owns it. `deepsec
+`ownership` maps a file to the team or person that owns it. `deepaudit
 enrich` attaches this data to findings. Useful for routing notifications
 and prioritizing review.
 
@@ -130,7 +130,7 @@ a soft-fail.
 A minimal ownership provider that reads from a CODEOWNERS file:
 
 ```ts
-import type { OwnershipProvider } from "deepsec/config";
+import type { OwnershipProvider } from "deepaudit/config";
 import fs from "node:fs";
 
 export function codeownersProvider(rootPath: string): OwnershipProvider {
@@ -185,13 +185,13 @@ interface NotifierPlugin {
 `FindingNotification` carries an `externalId` and `externalUrl` for
 correlation back to the source.
 
-deepsec doesn't ship a notifier in core. The original Slack notifier was
+deepaudit doesn't ship a notifier in core. The original Slack notifier was
 removed during open-sourcing because Slack belongs in a plugin. A
 GitHub Issues notifier would be a good first plugin to write.
 
 ## Slot 5: executor
 
-`executor` runs deepsec commands on remote infrastructure. The in-tree
+`executor` runs deepaudit commands on remote infrastructure. The in-tree
 `@vercel/sandbox` executor is the canonical example. Docker, Kubernetes,
 and AWS-Batch executors all fit here.
 
@@ -205,7 +205,7 @@ interface ExecutorProvider {
 ```
 
 The Vercel-Sandbox path lives in
-[`packages/deepsec/src/sandbox/`](../packages/deepsec/src/sandbox); it's
+[`packages/deepaudit/src/sandbox/`](../packages/deepaudit/src/sandbox); it's
 not yet routed through `ExecutorProvider`. That refactor is on the
 roadmap. For now, this is the most experimental slot of the five.
 
@@ -216,7 +216,7 @@ Drop-in pattern:
 ```ts
 // my-plugin/src/__tests__/plugin.test.ts
 import { describe, expect, it } from "vitest";
-import { createDefaultRegistry } from "deepsec/config";
+import { createDefaultRegistry } from "deepaudit/config";
 import myPlugin from "../index.js";
 
 describe("@my-org/plugin-internal-services", () => {

@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a new capability for deepsec
+about: Suggest a new capability for deepaudit
 labels: enhancement
 ---
 
@@ -8,7 +8,7 @@ labels: enhancement
 
 <!-- The user-facing problem, not the proposed solution. -->
 
-## What would you want deepsec to do
+## What would you want deepaudit to do
 
 <!-- The shape of the feature. CLI flag? New command? New plugin slot?
 Be concrete. -->

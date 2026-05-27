@@ -1,35 +1,35 @@
 # FAQ
 
-## How should I install deepsec?
+## How should I install deepaudit?
 
-deepsec lives in a `.deepsec/` directory at the root of the repo you
+deepaudit lives in a `.deepaudit/` directory at the root of the repo you
 want to scan, checked into git so teammates inherit project context.
 From the codebase's repo root:
 
 ```bash
-npx deepsec init       # creates .deepsec/ + registers this repo
-cd .deepsec
+npx deepaudit init       # creates .deepaudit/ + registers this repo
+cd .deepaudit
 pnpm install
 ```
 
-`.deepsec/` has its own `package.json` and `node_modules/` — separate
+`.deepaudit/` has its own `package.json` and `node_modules/` — separate
 from the parent repo's lockfile and tooling. The parent repo only
-needs to know `.deepsec/` exists.
+needs to know `.deepaudit/` exists.
 
-To scan another codebase from the same `.deepsec/`, run
-`pnpm deepsec init-project <path>`. Each project gets its own
+To scan another codebase from the same `.deepaudit/`, run
+`pnpm deepaudit init-project <path>`. Each project gets its own
 `data/<id>/` subdirectory.
 
 ### What about non-JS codebases?
 
-deepsec is polyglot (TS, Go, Python, Lua, Terraform, …). The parent
-repo doesn't need to be a Node project — `.deepsec/` is self-contained
+deepaudit is polyglot (TS, Go, Python, Lua, Terraform, …). The parent
+repo doesn't need to be a Node project — `.deepaudit/` is self-contained
 and only needs `pnpm` (or `npm` / `yarn`) inside that one directory.
 
 ### `.gitignore` policy
 
-The scaffold's `.deepsec/.gitignore` keeps `INFO.md`, `SETUP.md`, and
-`deepsec.config.ts` tracked so teammates inherit project context, but
+The scaffold's `.deepaudit/.gitignore` keeps `INFO.md`, `SETUP.md`, and
+`deepaudit.config.ts` tracked so teammates inherit project context, but
 ignores generated state (`data/*/files/`, `data/*/runs/`, etc.).
 
 ## How much does it cost?
@@ -97,7 +97,7 @@ Two things help most:
 
 ## When should I use sandbox mode?
 
-`deepsec sandbox process` fans work across [Vercel Sandbox][sb] microVMs
+`deepaudit sandbox process` fans work across [Vercel Sandbox][sb] microVMs
 in parallel. Worth it when:
 
 - The repo is large enough that local concurrency saturates your laptop.
@@ -117,7 +117,7 @@ prompts. With Vercel AI Gateway, the gateway has zero data retention;
 prompts aren't stored. With direct Anthropic, see Anthropic's data
 retention policy.
 
-deepsec itself doesn't phone home or report telemetry. The `data/<id>/`
+deepaudit itself doesn't phone home or report telemetry. The `data/<id>/`
 directory stays on your machine unless you explicitly export it.
 
 ## Can I run this in CI?
@@ -126,14 +126,14 @@ Yes. The natural shape:
 
 ```bash
 # Cron — full scan every Sunday
-pnpm deepsec scan --project-id main --root .
-pnpm deepsec process --project-id main --concurrency 5
-pnpm deepsec revalidate --project-id main --min-severity HIGH
-pnpm deepsec export --project-id main --format json --out findings.json
+pnpm deepaudit scan --project-id main --root .
+pnpm deepaudit process --project-id main --concurrency 5
+pnpm deepaudit revalidate --project-id main --min-severity HIGH
+pnpm deepaudit export --project-id main --format json --out findings.json
 
 # Per-PR — incremental scan on changed files only
-pnpm deepsec scan --project-id main --root .
-pnpm deepsec process --project-id main --filter $CHANGED_PATH_PREFIX
+pnpm deepaudit scan --project-id main --root .
+pnpm deepaudit process --project-id main --filter $CHANGED_PATH_PREFIX
 ```
 
 The `data/` directory is your state — persist it between CI runs (cache
@@ -166,11 +166,11 @@ what `--reinvestigate` (process) and `--force` (revalidate) are for.
 ## How do I add a matcher for my codebase?
 
 See [docs/writing-matchers.md](writing-matchers.md). Short version: hand
-your `.deepsec/data/` and the target repo to your coding agent with the
+your `.deepaudit/data/` and the target repo to your coding agent with the
 prompt in that doc — it'll spot entry-point coverage gaps the default
 matchers miss and write matchers tailored to your codebase.
 
-## What if my codebase is in a language deepsec doesn't have matchers for?
+## What if my codebase is in a language deepaudit doesn't have matchers for?
 
 The AI processor is language-agnostic and will investigate any
 text-readable source file. The thinner the regex layer, the more the
@@ -178,7 +178,7 @@ process stage carries. A few starter matchers for the new language are
 worth writing; they front-load file selection so the AI gets the most
 promising sites first.
 
-## What if I find a vulnerability in deepsec itself?
+## What if I find a vulnerability in deepaudit itself?
 
 See [SECURITY.md](../SECURITY.md). Don't open a public issue — use
 GitHub Security Advisories instead.

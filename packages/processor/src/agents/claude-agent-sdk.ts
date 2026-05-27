@@ -1,5 +1,5 @@
 import { query, type SandboxSettings } from "@anthropic-ai/claude-agent-sdk";
-import type { RefusalReport } from "@deepsec/core";
+import type { RefusalReport } from "@deepaudit/core";
 import {
   backoff,
   buildInvestigatePrompt,
@@ -83,7 +83,7 @@ const CLAUDE_ENV_ALLOWLIST = new Set<string>([
  * the host process — defense in depth on top of `permissionMode:
  * "dontAsk"` and the `allowedTools` allowlist.
  *
- * - In-VM (DEEPSEC_INSIDE_SANDBOX=1): no nested sandbox. The Vercel
+ * - In-VM (DEEPAUDIT_INSIDE_SANDBOX=1): no nested sandbox. The Vercel
  *   Sandbox microVM is the real boundary, and a nested OS sandbox just
  *   adds failure modes.
  * - Local: enable, auto-allow Bash without prompting, and degrade
@@ -94,7 +94,7 @@ const CLAUDE_ENV_ALLOWLIST = new Set<string>([
  *   everything quiet.
  */
 function buildSandbox(): SandboxSettings | undefined {
-  if (process.env.DEEPSEC_INSIDE_SANDBOX === "1") return undefined;
+  if (process.env.DEEPAUDIT_INSIDE_SANDBOX === "1") return undefined;
   return {
     enabled: true,
     autoAllowBashIfSandboxed: true,

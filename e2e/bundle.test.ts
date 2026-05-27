@@ -5,7 +5,7 @@ import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const BUNDLE = path.join(ROOT, "packages/deepsec/dist/cli.mjs");
+const BUNDLE = path.join(ROOT, "packages/deepaudit/dist/cli.mjs");
 const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
 
 function runBundle(
@@ -26,9 +26,9 @@ function runBundle(
 }
 
 function makeWorkspace(): string {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-bundle-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-bundle-"));
   // Symlink the repo's node_modules so the temp workspace can resolve
-  // `deepsec/config` (workspace symlink) and the externalized native deps.
+  // `deepaudit/config` (workspace symlink) and the externalized native deps.
   fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(dir, "node_modules"), "dir");
   return dir;
 }
@@ -43,33 +43,33 @@ describe("bundle e2e", () => {
   it("--help exits 0 and prints the help banner", () => {
     const { stdout, status } = runBundle(["--help"]);
     expect(status).toBe(0);
-    expect(stdout).toContain("deepsec");
+    expect(stdout).toContain("deepaudit");
     expect(stdout).toContain("scan");
     expect(stdout).toContain("process");
   });
 
-  it("config.d.ts is self-contained (no internal @deepsec/* re-exports)", () => {
-    const dts = fs.readFileSync(path.join(ROOT, "packages/deepsec/dist/config.d.ts"), "utf-8");
-    // Consumers install only `deepsec` from npm — `@deepsec/core` and
-    // `@deepsec/scanner` are workspace-internal. Any leaked re-export
-    // here breaks typing for `import { defineConfig } from "deepsec/config"`.
-    expect(dts).not.toMatch(/from\s+["']@deepsec\//);
+  it("config.d.ts is self-contained (no internal @deepaudit/* re-exports)", () => {
+    const dts = fs.readFileSync(path.join(ROOT, "packages/deepaudit/dist/config.d.ts"), "utf-8");
+    // Consumers install only `deepaudit` from npm — `@deepaudit/core` and
+    // `@deepaudit/scanner` are workspace-internal. Any leaked re-export
+    // here breaks typing for `import { defineConfig } from "deepaudit/config"`.
+    expect(dts).not.toMatch(/from\s+["']@deepaudit\//);
   });
 
   it("--version reports the current package version", () => {
     const { stdout, status } = runBundle(["--version"]);
     expect(status).toBe(0);
-    const deepsecPkg = JSON.parse(
-      fs.readFileSync(path.join(ROOT, "packages/deepsec/package.json"), "utf-8"),
+    const deepauditPkg = JSON.parse(
+      fs.readFileSync(path.join(ROOT, "packages/deepaudit/package.json"), "utf-8"),
     );
-    expect(stdout.trim()).toBe(deepsecPkg.version);
+    expect(stdout.trim()).toBe(deepauditPkg.version);
   });
 
   it("scan against the fixture produces FileRecords", () => {
     const cwd = makeWorkspace();
     fs.writeFileSync(
-      path.join(cwd, "deepsec.config.ts"),
-      `import { defineConfig } from "deepsec/config";
+      path.join(cwd, "deepaudit.config.ts"),
+      `import { defineConfig } from "deepaudit/config";
 export default defineConfig({
   projects: [{ id: "fixture", root: ${JSON.stringify(FIXTURES)} }],
 });`,
@@ -88,11 +88,11 @@ export default defineConfig({
     expect(filesCount).toBeGreaterThan(0);
   });
 
-  it("loads deepsec.config.ts from cwd via the bundle", () => {
+  it("loads deepaudit.config.ts from cwd via the bundle", () => {
     const cwd = makeWorkspace();
     fs.writeFileSync(
-      path.join(cwd, "deepsec.config.ts"),
-      `import { defineConfig } from "deepsec/config";
+      path.join(cwd, "deepaudit.config.ts"),
+      `import { defineConfig } from "deepaudit/config";
 console.error("[config-loaded-marker]");
 export default defineConfig({
   projects: [{ id: "fixture", root: ${JSON.stringify(FIXTURES)} }],
@@ -103,14 +103,14 @@ export default defineConfig({
     expect(stderr).toContain("[config-loaded-marker]");
   });
 
-  it("activates an inline plugin declared in deepsec.config.ts", () => {
+  it("activates an inline plugin declared in deepaudit.config.ts", () => {
     const cwd = makeWorkspace();
     // A throwaway plugin contributing one matcher. If the bundle's plugin
     // loader works, the matcher's slug should be selectable via --matchers
     // and visible in the scan log.
     fs.writeFileSync(
-      path.join(cwd, "deepsec.config.ts"),
-      `import { defineConfig } from "deepsec/config";
+      path.join(cwd, "deepaudit.config.ts"),
+      `import { defineConfig } from "deepaudit/config";
 const plugin = {
   name: "inline-test-plugin",
   matchers: [{
@@ -137,7 +137,7 @@ export default defineConfig({
 
   it("samples/webapp/ — config loads and custom matchers register", () => {
     const sampleDir = path.join(ROOT, "samples/webapp");
-    // Symlink node_modules so the sample's `deepsec/config` import resolves.
+    // Symlink node_modules so the sample's `deepaudit/config` import resolves.
     const link = path.join(sampleDir, "node_modules");
     if (!fs.existsSync(link)) {
       fs.symlinkSync(path.join(ROOT, "node_modules"), link, "dir");
@@ -166,7 +166,7 @@ export default defineConfig({
   });
 
   it("init scaffolds a minimal workspace seeded with the first project", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const targetRoot = path.join(tmp, "my-app");
     fs.mkdirSync(targetRoot);
@@ -181,7 +181,7 @@ export default defineConfig({
 
       for (const f of [
         "package.json",
-        "deepsec.config.ts",
+        "deepaudit.config.ts",
         "README.md",
         "AGENTS.md",
         ".gitignore",
@@ -199,37 +199,37 @@ export default defineConfig({
       expect(fs.existsSync(path.join(workspace, "matchers"))).toBe(false);
       expect(fs.existsSync(path.join(workspace, "config.json"))).toBe(false);
 
-      // package.json: workspace dir name + deepsec dep pinned to the
+      // package.json: workspace dir name + deepaudit dep pinned to the
       // current package version (NOT a hardcoded literal — that would
       // silently rot every time we publish, leaving fresh installs to
       // resolve a stale or non-existent npm version).
       const pkg = JSON.parse(fs.readFileSync(path.join(workspace, "package.json"), "utf-8"));
       expect(pkg.name).toBe("audits");
-      const deepsecPkg = JSON.parse(
-        fs.readFileSync(path.join(ROOT, "packages/deepsec/package.json"), "utf-8"),
+      const deepauditPkg = JSON.parse(
+        fs.readFileSync(path.join(ROOT, "packages/deepaudit/package.json"), "utf-8"),
       );
-      expect(pkg.dependencies.deepsec).toBe(`^${deepsecPkg.version}`);
+      expect(pkg.dependencies.deepaudit).toBe(`^${deepauditPkg.version}`);
       // packageManager: pinned to pnpm so a parent repo's `packageManager`
-      // (e.g. yarn) doesn't make pnpm refuse to install in `.deepsec/`.
+      // (e.g. yarn) doesn't make pnpm refuse to install in `.deepaudit/`.
       expect(pkg.packageManager).toMatch(/^pnpm@\d+\.\d+\.\d+$/);
 
       // config.ts: minimal — id + root only, plus the insert marker.
-      const configSrc = fs.readFileSync(path.join(workspace, "deepsec.config.ts"), "utf-8");
+      const configSrc = fs.readFileSync(path.join(workspace, "deepaudit.config.ts"), "utf-8");
       expect(configSrc).toContain('id: "my-app"');
       expect(configSrc).toContain('root: "../my-app"');
-      expect(configSrc).toContain("// <deepsec:projects-insert-above>");
+      expect(configSrc).toContain("// <deepaudit:projects-insert-above>");
       expect(configSrc).not.toContain("infoMarkdown");
       expect(configSrc).not.toContain('from "node:fs"');
 
       // README.md: usage instructions for humans.
       const readmeMd = fs.readFileSync(path.join(workspace, "README.md"), "utf-8");
-      expect(readmeMd).toContain("# deepsec");
-      expect(readmeMd).toContain("pnpm deepsec scan");
+      expect(readmeMd).toContain("# deepaudit");
+      expect(readmeMd).toContain("pnpm deepaudit scan");
       expect(readmeMd).toContain("init-project");
 
       // AGENTS.md: workspace-level pointer (no per-project content).
       const agentsMd = fs.readFileSync(path.join(workspace, "AGENTS.md"), "utf-8");
-      expect(agentsMd).toContain("node_modules/deepsec/SKILL.md");
+      expect(agentsMd).toContain("node_modules/deepaudit/SKILL.md");
       expect(agentsMd).toContain("data/<id>/SETUP.md");
       expect(agentsMd).toContain("init-project");
       // AGENTS.md itself doesn't mention any specific project.
@@ -239,7 +239,7 @@ export default defineConfig({
       const setupMd = fs.readFileSync(path.join(workspace, "data/my-app/SETUP.md"), "utf-8");
       expect(setupMd).toContain("`my-app`");
       expect(setupMd).toContain("../my-app");
-      expect(setupMd).toContain("node_modules/deepsec/SKILL.md");
+      expect(setupMd).toContain("node_modules/deepaudit/SKILL.md");
       expect(setupMd).toContain("data/my-app/INFO.md");
 
       // project.json populated with rootPath.
@@ -261,21 +261,21 @@ export default defineConfig({
     }
   });
 
-  it("init with no args defaults to .deepsec/ inside cwd, target = .", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+  it("init with no args defaults to .deepaudit/ inside cwd, target = .", () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const repo = path.join(tmp, "my-repo");
     fs.mkdirSync(repo);
     fs.writeFileSync(path.join(repo, "package.json"), "{}\n");
     try {
       const { status, stdout, stderr } = runBundle(["init"], { cwd: repo });
       expect(status, `stdout: ${stdout}\nstderr: ${stderr}`).toBe(0);
-      // Workspace lands at .deepsec/ inside the repo.
-      const workspace = path.join(repo, ".deepsec");
-      expect(fs.existsSync(path.join(workspace, "deepsec.config.ts"))).toBe(true);
+      // Workspace lands at .deepaudit/ inside the repo.
+      const workspace = path.join(repo, ".deepaudit");
+      expect(fs.existsSync(path.join(workspace, "deepaudit.config.ts"))).toBe(true);
       // Project id is derived from cwd basename.
       expect(fs.existsSync(path.join(workspace, "data/my-repo/INFO.md"))).toBe(true);
       // Config's `root` is the parent (target = .).
-      const configSrc = fs.readFileSync(path.join(workspace, "deepsec.config.ts"), "utf-8");
+      const configSrc = fs.readFileSync(path.join(workspace, "deepaudit.config.ts"), "utf-8");
       expect(configSrc).toContain('id: "my-repo"');
       expect(configSrc).toContain('root: ".."');
     } finally {
@@ -284,7 +284,7 @@ export default defineConfig({
   });
 
   it("init --id overrides the auto-derived project id", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const targetRoot = path.join(tmp, "boring-name");
     fs.mkdirSync(targetRoot);
@@ -297,7 +297,7 @@ export default defineConfig({
         "internal-api",
       ]);
       expect(status, `stdout: ${stdout}\nstderr: ${stderr}`).toBe(0);
-      const configSrc = fs.readFileSync(path.join(workspace, "deepsec.config.ts"), "utf-8");
+      const configSrc = fs.readFileSync(path.join(workspace, "deepaudit.config.ts"), "utf-8");
       expect(configSrc).toContain('id: "internal-api"');
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
@@ -305,7 +305,7 @@ export default defineConfig({
   });
 
   it("init refuses a non-existent target codebase", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     try {
       const { status, stderr } = runBundle([
         "init",
@@ -320,7 +320,7 @@ export default defineConfig({
   });
 
   it("init refuses a non-empty workspace without --force", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const targetRoot = path.join(tmp, "my-app");
     fs.mkdirSync(workspace);
@@ -336,7 +336,7 @@ export default defineConfig({
   });
 
   it("init-project adds a second project to an existing workspace", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const firstTarget = path.join(tmp, "first-app");
     const secondTarget = path.join(tmp, "second-app");
@@ -353,12 +353,12 @@ export default defineConfig({
       expect(ip.stdout).toContain("second-app");
 
       // Both entries above the marker.
-      const configSrc = fs.readFileSync(path.join(workspace, "deepsec.config.ts"), "utf-8");
+      const configSrc = fs.readFileSync(path.join(workspace, "deepaudit.config.ts"), "utf-8");
       expect(configSrc).toContain('id: "first-app"');
       expect(configSrc).toContain('id: "second-app"');
       const firstIdx = configSrc.indexOf('id: "first-app"');
       const secondIdx = configSrc.indexOf('id: "second-app"');
-      const markerIdx = configSrc.indexOf("// <deepsec:projects-insert-above>");
+      const markerIdx = configSrc.indexOf("// <deepaudit:projects-insert-above>");
       expect(firstIdx).toBeGreaterThan(0);
       expect(secondIdx).toBeGreaterThan(firstIdx);
       expect(markerIdx).toBeGreaterThan(secondIdx);
@@ -380,7 +380,7 @@ export default defineConfig({
   });
 
   it("init-project errors on missing target codebase", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const target = path.join(tmp, "first");
     fs.mkdirSync(target);
@@ -397,7 +397,7 @@ export default defineConfig({
   });
 
   it("init-project errors on duplicate project id without --force", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const target = path.join(tmp, "my-app");
     fs.mkdirSync(target);
@@ -412,21 +412,21 @@ export default defineConfig({
     }
   });
 
-  it("init-project errors when run outside a deepsec workspace", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+  it("init-project errors when run outside a deepaudit workspace", () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const target = path.join(tmp, "my-app");
     fs.mkdirSync(target);
     try {
       const { status, stderr } = runBundle(["init-project", target], { cwd: tmp });
       expect(status).not.toBe(0);
-      expect(stderr).toContain("No .deepsec/ workspace");
+      expect(stderr).toContain("No .deepaudit/ workspace");
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
     }
   });
 
-  it("init-project errors when the marker is missing from deepsec.config.ts", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+  it("init-project errors when the marker is missing from deepaudit.config.ts", () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const firstTarget = path.join(tmp, "first");
     const secondTarget = path.join(tmp, "second");
@@ -435,10 +435,10 @@ export default defineConfig({
     try {
       runBundle(["init", workspace, firstTarget]);
       // Strip the marker out of the config.
-      const cfgPath = path.join(workspace, "deepsec.config.ts");
+      const cfgPath = path.join(workspace, "deepaudit.config.ts");
       const stripped = fs
         .readFileSync(cfgPath, "utf-8")
-        .replace(/\s*\/\/ <deepsec:projects-insert-above>/g, "");
+        .replace(/\s*\/\/ <deepaudit:projects-insert-above>/g, "");
       fs.writeFileSync(cfgPath, stripped);
 
       const { status, stderr } = runBundle(["init-project", secondTarget], { cwd: workspace });
@@ -450,7 +450,7 @@ export default defineConfig({
   });
 
   it("scan resolves --root from the config when omitted (sibling layout)", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const targetRoot = path.join(tmp, "my-app");
     fs.mkdirSync(targetRoot);
@@ -460,7 +460,7 @@ export default defineConfig({
       expect(init.status, `init: ${init.stdout}\n${init.stderr}`).toBe(0);
 
       // Symlink node_modules so the freshly-init'd workspace can resolve
-      // `deepsec/config` during config evaluation by jiti.
+      // `deepaudit/config` during config evaluation by jiti.
       fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(workspace, "node_modules"), "dir");
 
       const scan = runBundle(["scan", "--project-id", "my-app"], { cwd: workspace });
@@ -475,11 +475,11 @@ export default defineConfig({
     }
   });
 
-  it("scan resolves --root from the config (nested .deepsec/ layout)", () => {
-    // Default `init` flow: workspace lands at .deepsec/ inside the codebase,
-    // project root is ".." (the parent repo). Scan from inside .deepsec/
+  it("scan resolves --root from the config (nested .deepaudit/ layout)", () => {
+    // Default `init` flow: workspace lands at .deepaudit/ inside the codebase,
+    // project root is ".." (the parent repo). Scan from inside .deepaudit/
     // should resolve `..` against the workspace dir → the codebase itself.
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const repo = path.join(tmp, "my-repo");
     fs.mkdirSync(repo);
     fs.writeFileSync(path.join(repo, "package.json"), "{}\n");
@@ -488,9 +488,9 @@ export default defineConfig({
       const init = runBundle(["init"], { cwd: repo });
       expect(init.status, `init: ${init.stdout}\n${init.stderr}`).toBe(0);
 
-      const workspace = path.join(repo, ".deepsec");
+      const workspace = path.join(repo, ".deepaudit");
       // Sanity: config.ts points at the parent repo via `..`.
-      const configSrc = fs.readFileSync(path.join(workspace, "deepsec.config.ts"), "utf-8");
+      const configSrc = fs.readFileSync(path.join(workspace, "deepaudit.config.ts"), "utf-8");
       expect(configSrc).toContain('root: ".."');
 
       fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(workspace, "node_modules"), "dir");
@@ -513,7 +513,7 @@ export default defineConfig({
   });
 
   it("scan errors clearly when --root is missing and no config / project.json", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     try {
       const { status, stderr } = runBundle(["scan", "--project-id", "ghost"], { cwd: tmp });
       expect(status).not.toBe(0);
@@ -524,7 +524,7 @@ export default defineConfig({
   });
 
   it("scan auto-resolves --project-id when config has one project", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const targetRoot = path.join(tmp, "solo");
     fs.mkdirSync(targetRoot);
@@ -543,7 +543,7 @@ export default defineConfig({
   });
 
   it("scan errors clearly when config has multiple projects and no --project-id", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     const workspace = path.join(tmp, "audits");
     const a = path.join(tmp, "a");
     const b = path.join(tmp, "b");
@@ -553,10 +553,10 @@ export default defineConfig({
       runBundle(["init", workspace, a]);
       fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(workspace, "node_modules"), "dir");
       // Append a second project entry above the marker.
-      const cfgPath = path.join(workspace, "deepsec.config.ts");
+      const cfgPath = path.join(workspace, "deepaudit.config.ts");
       const orig = fs.readFileSync(cfgPath, "utf-8");
       const updated = orig.replace(
-        /(\s*\/\/ <deepsec:projects-insert-above>)/,
+        /(\s*\/\/ <deepaudit:projects-insert-above>)/,
         `\n    { id: "second", root: "../b" },$1`,
       );
       fs.writeFileSync(cfgPath, updated);
@@ -571,7 +571,7 @@ export default defineConfig({
   });
 
   it("scan errors clearly when --root points at a nonexistent path", () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-init-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-init-"));
     try {
       const { status, stderr } = runBundle([
         "scan",

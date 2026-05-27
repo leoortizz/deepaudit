@@ -14,7 +14,7 @@ function write(rel: string, content: string) {
 }
 
 beforeEach(() => {
-  tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-detect-tech-"));
+  tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-detect-tech-"));
 });
 
 afterEach(() => {

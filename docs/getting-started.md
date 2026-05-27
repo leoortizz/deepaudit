@@ -5,7 +5,7 @@
 Requires **Node.js 22+**. The recipe below uses pnpm; npm and yarn
 work the same way.
 
-deepsec lives in a `.deepsec/` directory at the root of your codebase
+deepaudit lives in a `.deepaudit/` directory at the root of your codebase
 — checked into the same git repo, so config, project context, and
 custom matchers travel with the code. Generated scan output (findings,
 runs, reports) stays gitignored.
@@ -13,13 +13,13 @@ runs, reports) stays gitignored.
 From the root of the codebase you want to scan:
 
 ```bash
-npx deepsec init                                   # creates .deepsec/ + registers this repo
-cd .deepsec
-pnpm install                                       # installs deepsec
+npx deepaudit init                                   # creates .deepaudit/ + registers this repo
+cd .deepaudit
+pnpm install                                       # installs deepaudit
 ```
 
-`init` lays down a minimal scaffold inside `.deepsec/`: `package.json`,
-`deepsec.config.ts` (one `projects[]` entry pointing at `..`, id
+`init` lays down a minimal scaffold inside `.deepaudit/`: `package.json`,
+`deepaudit.config.ts` (one `projects[]` entry pointing at `..`, id
 derived from your repo dir's basename), `data/<id>/INFO.md` (template
 with section placeholders), `data/<id>/SETUP.md` (per-project agent
 prompt), workspace-level `AGENTS.md`, `.env.local`, `.gitignore`. No
@@ -33,7 +33,7 @@ Open `.env.local` and pick one of:
   covers both Claude and Codex.
 - **Vercel OIDC token** — run `npx vercel link && npx vercel env pull`
   in this workspace. That writes `VERCEL_OIDC_TOKEN` to `.env.local`,
-  which deepsec uses as the gateway credential automatically. The token
+  which deepaudit uses as the gateway credential automatically. The token
   expires after 12 hours; re-pull when you hit auth errors. Convenient
   if you're already using Vercel Sandbox (same token unlocks both).
 
@@ -43,25 +43,25 @@ Prefer Anthropic directly? Set `ANTHROPIC_AUTH_TOKEN=sk-ant-…` and
 (`process` / `revalidate` / `triage`) skip the token and reuse the
 subscription. See [vercel-setup.md](vercel-setup.md).
 
-To scan a *different* codebase from the same `.deepsec/`, run
-`pnpm deepsec init-project <path>` — relative paths resolve against
-`.deepsec/`'s parent.
+To scan a *different* codebase from the same `.deepaudit/`, run
+`pnpm deepaudit init-project <path>` — relative paths resolve against
+`.deepaudit/`'s parent.
 
 ## Fill in INFO.md
 
-`INFO.md` is what makes deepsec project-aware. It's injected into the
+`INFO.md` is what makes deepaudit project-aware. It's injected into the
 AI prompt for every batch — vague content here means vague findings.
 
 ### Option A: let your coding agent do it (recommended)
 
-Open the *parent repo* (the codebase you scanned, not `.deepsec/`) in
+Open the *parent repo* (the codebase you scanned, not `.deepaudit/`) in
 your coding agent (Claude Code, Codex, Cursor, …) and paste the prompt
-that `deepsec init` printed. It walks the agent through:
+that `deepaudit init` printed. It walks the agent through:
 
-1. Read `.deepsec/node_modules/deepsec/SKILL.md` to understand the tool.
-2. Open `.deepsec/data/<id>/SETUP.md` for project-specific instructions.
+1. Read `.deepaudit/node_modules/deepaudit/SKILL.md` to understand the tool.
+2. Open `.deepaudit/data/<id>/SETUP.md` for project-specific instructions.
 3. Skim the codebase, then replace each section of
-   `.deepsec/data/<id>/INFO.md`.
+   `.deepaudit/data/<id>/INFO.md`.
 
 The same prompt is shown in the project root README and is what `init`
 prints to stdout after scaffold.
@@ -70,19 +70,19 @@ prints to stdout after scaffold.
 
 The processor auto-loads `data/<id>/INFO.md` from the workspace's data
 dir. Edit it directly — no extra wiring needed in
-`deepsec.config.ts`. INFO.md is optional but worth keeping; even a
+`deepaudit.config.ts`. INFO.md is optional but worth keeping; even a
 paragraph noticeably improves the AI's output.
 
 ## Run a scan
 
-Before the first command: deepsec writes per-project state to
+Before the first command: deepaudit writes per-project state to
 `./data/<project-id>/` next to your config — `files/` (one JSON per
 scanned source file), `runs/`, plus `project.json` and the optional
 `INFO.md` / `config.json`. The directory is gitignored by default; see
 [data-layout.md](data-layout.md) for the full schema.
 
 ```bash
-pnpm deepsec scan
+pnpm deepaudit scan
 ```
 
 `--project-id` is auto-resolved when the config has a single project
@@ -96,7 +96,7 @@ On a 2,000-file project it takes ~15s. Output goes to
 `FileRecord`).
 
 ```bash
-pnpm deepsec status
+pnpm deepaudit status
 ```
 
 shows the current state: how many files were scanned, how many are
@@ -105,7 +105,7 @@ pending AI investigation, etc.
 ## Run the AI investigation
 
 ```bash
-pnpm deepsec process --concurrency 5
+pnpm deepaudit process --concurrency 5
 ```
 
 Defaults: Claude Opus, 5 files per batch,
@@ -127,14 +127,14 @@ calibrate before committing to the full pass.
 
 `process` is safe to re-run. If a batch fails (network blip, transient
 model error, quota exhausted, you hit Ctrl-C), just run the same command
-again — deepsec resumes, skipping files that already finished and
+again — deepaudit resumes, skipping files that already finished and
 re-investigating only the ones that didn't. Nothing to clean up. Same
 applies to `revalidate`.
 
 For a cheaper backend:
 
 ```bash
-pnpm deepsec process --agent codex --model gpt-5.5
+pnpm deepaudit process --agent codex --model gpt-5.5
 ```
 
 Codex is the OpenAI-flavored backend. Same prompt, same JSON output,
@@ -146,8 +146,8 @@ models.
 ## Triage and revalidate
 
 ```bash
-pnpm deepsec triage --severity HIGH
-pnpm deepsec revalidate --min-severity HIGH
+pnpm deepaudit triage --severity HIGH
+pnpm deepaudit revalidate --min-severity HIGH
 ```
 
 - **triage**: classifies findings P0/P1/P2 without re-reading the code.
@@ -161,8 +161,8 @@ Both optional, but worth running on the HIGH/CRITICAL set.
 ## Get the findings out
 
 ```bash
-pnpm deepsec export --format md-dir --out ./findings
-pnpm deepsec export --format json   --out findings.json
+pnpm deepaudit export --format md-dir --out ./findings
+pnpm deepaudit export --format json   --out findings.json
 ```
 
 `md-dir` writes one markdown file per finding under
@@ -172,7 +172,7 @@ suitable for piping to a downstream issue tracker.
 For a quick aggregate look:
 
 ```bash
-pnpm deepsec metrics
+pnpm deepaudit metrics
 ```
 
 (Each of these commands accepts `--project-id <id>` if your config has
@@ -185,7 +185,7 @@ exactly one.)
   agent to compare `data/` matches against the target repo and write
   matchers that close the entry-point coverage gaps.
 - [docs/configuration.md](configuration.md) — every field on
-  `deepsec.config.ts` and `data/<id>/config.json`.
+  `deepaudit.config.ts` and `data/<id>/config.json`.
 - [docs/models.md](models.md) — defaults, `--agent` / `--model`,
   refusal handling, future models.
 - [docs/plugins.md](plugins.md) — for org-specific patterns that don't

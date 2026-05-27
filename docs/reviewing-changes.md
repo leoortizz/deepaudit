@@ -1,12 +1,12 @@
 # Reviewing changes (PR mode)
 
-`deepsec process` has a direct-invocation mode for reviewing a specific
+`deepaudit process` has a direct-invocation mode for reviewing a specific
 set of files — typically the files changed in a pull request. This is
 the right tool when you want a fast, scoped read of changed code in CI,
 rather than a whole-repo audit.
 
 ```bash
-deepsec process --diff origin/main
+deepaudit process --diff origin/main
 ```
 
 ## How it differs from a full scan
@@ -50,7 +50,7 @@ Other knobs:
 --no-ignore            Bypass the default ignore filter (test files, dist/, node_modules/, …)
 --comment-out <path>   Write a PR-comment-shaped markdown summary to <path> (only when findings exist)
 --project-id <id>      Override the project id (auto-derived from rootPath basename otherwise)
---root <path>          Override the project root (defaults to cwd or deepsec.config.ts)
+--root <path>          Override the project root (defaults to cwd or deepaudit.config.ts)
 ```
 
 The usual `--agent`, `--model`, `--concurrency`, `--batch-size`,
@@ -58,17 +58,17 @@ The usual `--agent`, `--model`, `--concurrency`, `--batch-size`,
 
 ## Auto-created projects
 
-You don't need to run `deepsec init` first. When invoked with one of the
+You don't need to run `deepaudit init` first. When invoked with one of the
 direct-mode flags, `process` will:
 
 1. Use `--project-id` if you pass one. If it's already declared in
-   `deepsec.config.ts`, the declared root is used; otherwise `--root`
+   `deepaudit.config.ts`, the declared root is used; otherwise `--root`
    (or the current working directory) is used.
 2. Otherwise, derive the id from the basename of the resolved root.
 3. Write `data/<id>/project.json` if it doesn't already exist.
 
 Auto-creation is one-line and non-destructive — it never modifies your
-`deepsec.config.ts`. It just ensures `data/<id>/` exists so file
+`deepaudit.config.ts`. It just ensures `data/<id>/` exists so file
 records, run metadata, and the optional PR-comment markdown have
 somewhere to land.
 
@@ -103,7 +103,7 @@ nothing on disk and your "post comment" step can short-circuit on
 This is the workflow we use to review our own PRs — copy it as-is:
 
 ```yaml
-name: deepsec
+name: deepaudit
 
 on: pull_request
 
@@ -127,19 +127,19 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: npm install -g @anthropic-ai/claude-code
 
-      - id: deepsec
+      - id: deepaudit
         env:
           AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
           CLAUDE_CODE_EXECUTABLE: claude
         run: |
-          pnpm deepsec process \
+          pnpm deepaudit process \
             --diff origin/${{ github.event.pull_request.base.ref }} \
             --comment-out comment.md
 
       - if: always() && hashFiles('comment.md') != ''
         uses: actions/upload-artifact@v4
         with:
-          name: deepsec-comment
+          name: deepaudit-comment
           path: comment.md
           retention-days: 1
 
@@ -156,7 +156,7 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
-          name: deepsec-comment
+          name: deepaudit-comment
 
       - if: steps.dl.outcome == 'success'
         uses: actions/github-script@v7
@@ -182,7 +182,7 @@ jobs:
   repository" in a single privileged step.
 - **Same-repo-only gate.** `if: github.event.pull_request.head.repo.full_name == github.repository`
   skips fork PRs entirely. Forks already don't receive repo secrets
-  under `pull_request`, so the deepsec step would just fail on
+  under `pull_request`, so the deepaudit step would just fail on
   missing credentials anyway — this gate is purely a UX cleanup
   (fork PRs show "skipped" instead of red ❌ from a doomed run).
 - **`fetch-depth: 0`** — needed so `git diff origin/<base>` can
@@ -192,8 +192,8 @@ jobs:
   is what the SDK actually drives. Installing it globally + setting
   `CLAUDE_CODE_EXECUTABLE: claude` skips the SDK's bundled-binary
   resolution, which can fail on Linux under some package managers.
-- **`pnpm deepsec`** — swap for `npx -y deepsec`, `npm exec deepsec`,
-  or `yarn deepsec` to match your package manager.
+- **`pnpm deepaudit`** — swap for `npx -y deepaudit`, `npm exec deepaudit`,
+  or `yarn deepaudit` to match your package manager.
 - **`comment.md` is uploaded only when findings exist** —
   `--comment-out` writes nothing on a green run, so the upload step's
   `hashFiles` check skips and the `comment` job downloads no
@@ -231,7 +231,7 @@ drop it via a custom `--files-from` script:
 ```bash
 git diff --name-only origin/main \
   | grep -v '^generated/' \
-  | deepsec process --files-from -
+  | deepaudit process --files-from -
 ```
 
 ## When NOT to use direct mode

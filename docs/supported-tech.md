@@ -1,9 +1,9 @@
 # Supported tech
 
-Canonical list of frameworks and ecosystems deepsec recognizes out of the box.
+Canonical list of frameworks and ecosystems deepaudit recognizes out of the box.
 Each entry tells you three things:
 
-1. **How deepsec detects it** — which sentinel files / lockfile shapes
+1. **How deepaudit detects it** — which sentinel files / lockfile shapes
    trigger the tech tag. See `packages/scanner/src/detect-tech.ts`.
 2. **What it scans for** — the matcher slugs that activate when the tech
    is detected. Matchers without a tech gate run on every repo.

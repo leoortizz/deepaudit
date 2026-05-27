@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import * as os from "node:os";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { RefusalReport } from "@deepsec/core";
+import type { RefusalReport } from "@deepaudit/core";
 import {
   Codex,
   type CodexOptions,
@@ -44,7 +44,7 @@ const DEFAULT_EFFORT: ModelReasoningEffort = "xhigh";
 /**
  * Pick a Codex sandbox mode based on whether the orchestrator is already
  * running inside a Vercel Sandbox microVM (signalled by
- * DEEPSEC_INSIDE_SANDBOX, set in setup.ts's `buildSandboxEnv`).
+ * DEEPAUDIT_INSIDE_SANDBOX, set in setup.ts's `buildSandboxEnv`).
  *
  * - In-VM: `danger-full-access` — the VM is the boundary, and Codex's
  *   nested read-only sandbox was rejecting ~7% of cat/sed/rg calls under
@@ -57,7 +57,7 @@ const DEFAULT_EFFORT: ModelReasoningEffort = "xhigh";
  *   running directly on the user's laptop.
  */
 function pickSandboxMode(): "danger-full-access" | "workspace-write" {
-  return process.env.DEEPSEC_INSIDE_SANDBOX === "1" ? "danger-full-access" : "workspace-write";
+  return process.env.DEEPAUDIT_INSIDE_SANDBOX === "1" ? "danger-full-access" : "workspace-write";
 }
 
 /**
@@ -407,7 +407,7 @@ function shortPath(p: string): string {
  * for items we don't surface (turn-internal noise).
  */
 /**
- * When `DEEPSEC_AGENT_DEBUG=1` is set, surface a lot more raw signal:
+ * When `DEEPAUDIT_AGENT_DEBUG=1` is set, surface a lot more raw signal:
  *   - command_execution: include exit code + a tail of aggregated_output
  *   - agent_message: emit the full text (so we can see what's being captured
  *     as resultText vs lost as narration)
@@ -416,7 +416,7 @@ function shortPath(p: string): string {
  *   - parse step: report whether the captured text contains a JSON block,
  *     length, and which filePaths the parser matched vs missed
  */
-const DEBUG = process.env.DEEPSEC_AGENT_DEBUG === "1";
+const DEBUG = process.env.DEEPAUDIT_AGENT_DEBUG === "1";
 
 const REASONING_LEN = DEBUG ? 1200 : 200;
 const COMMAND_LEN = DEBUG ? 400 : 120;

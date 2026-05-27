@@ -1,6 +1,6 @@
 # Models
 
-deepsec talks to LLMs through two interchangeable backends:
+deepaudit talks to LLMs through two interchangeable backends:
 
 | Backend                     | Default model         | Used by                      |
 |-----------------------------|-----------------------|------------------------------|
@@ -17,24 +17,24 @@ Anthropic or OpenAI directly, point `ANTHROPIC_BASE_URL` /
 
 ```bash
 # Codex (default backend), default model:
-pnpm deepsec process --project-id my-app
+pnpm deepaudit process --project-id my-app
 
 # Claude with a specific model:
-pnpm deepsec process --project-id my-app --agent claude --model claude-sonnet-4-6
+pnpm deepaudit process --project-id my-app --agent claude --model claude-sonnet-4-6
 
 # Codex backend, default model:
-pnpm deepsec process --project-id my-app --agent codex
+pnpm deepaudit process --project-id my-app --agent codex
 
 # Codex backend, specific model:
-pnpm deepsec process --project-id my-app --agent codex --model gpt-5.4
+pnpm deepaudit process --project-id my-app --agent codex --model gpt-5.4
 
 # Triage uses Claude; pass a cheaper model if you want:
-pnpm deepsec triage --project-id my-app --model claude-haiku-4-5
+pnpm deepaudit triage --project-id my-app --model claude-haiku-4-5
 ```
 
 `--agent` and `--model` are also accepted on `revalidate`. Set the
 default backend project-wide via `defaultAgent` in
-[`deepsec.config.ts`](configuration.md).
+[`deepaudit.config.ts`](configuration.md).
 
 ## Why these defaults
 
@@ -68,7 +68,7 @@ overkill. Sonnet keeps `triage` at ~1¢/finding.
 
 Models occasionally refuse to investigate a candidate — usually when the
 source contains an exploit pattern they read as harmful, or when a path
-trips a content filter. After every batch, deepsec issues a follow-up
+trips a content filter. After every batch, deepaudit issues a follow-up
 turn asking the agent whether it skipped or declined anything:
 
 > Looking back at the investigation: was there anything you declined
@@ -98,17 +98,17 @@ it.
 The model is a flag, not a baked-in choice. When a stronger reasoning
 model lands — Anthropic's Mythos, a next-tier OpenAI release, an
 open-weight contender — point `--model` at the new identifier and the
-rest of deepsec stays unchanged:
+rest of deepaudit stays unchanged:
 
 ```bash
-pnpm deepsec process --project-id my-app --model anthropic-mythos-1
-pnpm deepsec process --project-id my-app --agent codex --model gpt-6
+pnpm deepaudit process --project-id my-app --model anthropic-mythos-1
+pnpm deepaudit process --project-id my-app --agent codex --model gpt-6
 ```
 
 Two small integration points:
 
 1. **The model identifier** — whatever string the provider's SDK
-   accepts. deepsec passes it through unchanged. No code change needed
+   accepts. deepaudit passes it through unchanged. No code change needed
    to *use* a new model on either backend.
 2. **Pricing for the cost-per-batch readout.** The Claude Agent SDK
    reports cost natively, so new Claude-family models drop in with
@@ -119,9 +119,9 @@ Two small integration points:
    readout is simply omitted.
 
 When a new model becomes the right default, change the relevant entry
-in `packages/deepsec/src/agent-defaults.ts` (one string per backend) and
+in `packages/deepaudit/src/agent-defaults.ts` (one string per backend) and
 the `DEFAULT_MODEL` constant in the corresponding agent file. Existing
-data and findings are unaffected — deepsec records which agent + model
+data and findings are unaffected — deepaudit records which agent + model
 produced each finding, so a model change shows up cleanly in the
 `analysisHistory` of any re-investigated file.
 

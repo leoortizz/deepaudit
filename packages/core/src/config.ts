@@ -1,6 +1,6 @@
 import type {
   AgentPluginRef,
-  DeepsecPlugin,
+  DeepauditPlugin,
   ExecutorProvider,
   MatcherPlugin,
   NotifierPlugin,
@@ -23,9 +23,9 @@ export interface ProjectDeclaration {
   priorityPaths?: string[];
 }
 
-export interface DeepsecConfig {
+export interface DeepauditConfig {
   projects: ProjectDeclaration[];
-  plugins?: DeepsecPlugin[];
+  plugins?: DeepauditPlugin[];
   /** Filter the matcher set used by `scan`. */
   matchers?: { only?: string[]; exclude?: string[] };
   defaultAgent?: string;
@@ -34,7 +34,7 @@ export interface DeepsecConfig {
 }
 
 /** Identity helper that gives users autocomplete on the config object. */
-export function defineConfig(config: DeepsecConfig): DeepsecConfig {
+export function defineConfig(config: DeepauditConfig): DeepauditConfig {
   return config;
 }
 
@@ -55,7 +55,7 @@ export class PluginRegistry {
   executor?: ExecutorProvider;
   commands: Array<(program: unknown) => void> = [];
 
-  add(plugin: DeepsecPlugin): void {
+  add(plugin: DeepauditPlugin): void {
     if (plugin.matchers) this.matchers.push(...plugin.matchers);
     if (plugin.agents) this.agents.push(...plugin.agents);
     if (plugin.notifiers) this.notifiers.push(...plugin.notifiers);
@@ -69,14 +69,14 @@ export class PluginRegistry {
 // --- Singleton accessor used by commands at runtime ---
 
 let _registry: PluginRegistry = new PluginRegistry();
-let _config: DeepsecConfig | undefined;
+let _config: DeepauditConfig | undefined;
 let _configPath: string | undefined;
 
 export function getRegistry(): PluginRegistry {
   return _registry;
 }
 
-export function getConfig(): DeepsecConfig | undefined {
+export function getConfig(): DeepauditConfig | undefined {
   return _config;
 }
 
@@ -86,7 +86,7 @@ export function getConfigPath(): string | undefined {
 }
 
 /** Wired up by the CLI bootstrap after a config file has been loaded. */
-export function setLoadedConfig(config: DeepsecConfig, configPath?: string): void {
+export function setLoadedConfig(config: DeepauditConfig, configPath?: string): void {
   _config = config;
   _configPath = configPath;
   _registry = new PluginRegistry();

@@ -213,7 +213,7 @@ function installShutdownHandlers(): void {
     // default termination, so we have to provide an exit path
     // ourselves or the process hangs after Ctrl+C. When another
     // listener is also registered (e.g. the sandbox shutdown handler
-    // in `deepsec/sandbox/shutdown.ts`), defer to it — that handler
+    // in `deepaudit/sandbox/shutdown.ts`), defer to it — that handler
     // needs async cleanup time and calls process.exit() itself once
     // its sandboxes have stopped (or its 10s timeout fires).
     //
@@ -369,7 +369,7 @@ export async function acquireProcessLock(
       if (Date.now() >= deadline) {
         throw new Error(
           `Timed out after ${timeoutMs}ms waiting for the process lock on project ${JSON.stringify(projectId)}. ` +
-            `Another \`deepsec process\` is mid-claim. If no run is active, remove ${lockDir} manually.`,
+            `Another \`deepaudit process\` is mid-claim. If no run is active, remove ${lockDir} manually.`,
         );
       }
       await new Promise((r) => setTimeout(r, 200));

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { loadAllFileRecords, readFileRecord, readRunMeta } from "@deepsec/core";
+import { loadAllFileRecords, readFileRecord, readRunMeta } from "@deepaudit/core";
 import { afterEach, describe, expect, it } from "vitest";
 import { scanFiles } from "../index.js";
 
@@ -13,21 +13,21 @@ afterEach(() => {
 });
 
 function makeProject(files: Record<string, string>): { root: string; projectId: string } {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-scanfiles-"));
-  const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-data-"));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-scanfiles-"));
+  const dataRoot = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-data-"));
   for (const [rel, content] of Object.entries(files)) {
     const abs = path.join(root, rel);
     fs.mkdirSync(path.dirname(abs), { recursive: true });
     fs.writeFileSync(abs, content);
   }
-  process.env.DEEPSEC_DATA_ROOT = dataRoot;
+  process.env.DEEPAUDIT_DATA_ROOT = dataRoot;
   // Generate a unique project id per test so concurrent vitest workers
   // don't trip over each other's data dirs.
   const projectId = `t-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   cleanups.push(() => {
     fs.rmSync(root, { recursive: true, force: true });
     fs.rmSync(dataRoot, { recursive: true, force: true });
-    delete process.env.DEEPSEC_DATA_ROOT;
+    delete process.env.DEEPAUDIT_DATA_ROOT;
   });
   return { root, projectId };
 }

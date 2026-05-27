@@ -1,13 +1,13 @@
 ---
 name: Matcher suggestion
-about: Suggest a new built-in matcher (a pattern deepsec should catch out of the box)
+about: Suggest a new built-in matcher (a pattern deepaudit should catch out of the box)
 labels: matcher
 ---
 
 ## The pattern
 
 <!-- What's the vulnerable shape? Be specific — paste a real (anonymized)
-example of code you'd want deepsec to flag. -->
+example of code you'd want deepaudit to flag. -->
 
 ## CWE / category
 

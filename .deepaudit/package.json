@@ -1,0 +1,13 @@
+{
+  "name": "deepaudit-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "deepaudit scanning workspace",
+  "type": "module",
+  "scripts": {
+    "deepaudit": "pnpm -s -C ../packages/deepaudit bundle && pnpm exec deepaudit"
+  },
+  "dependencies": {
+    "deepaudit": "link:../packages/deepaudit"
+  }
+}

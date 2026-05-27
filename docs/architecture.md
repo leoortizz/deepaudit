@@ -29,7 +29,7 @@ data/<projectId>/
 ```
 
 `data/` is gitignored by default. Each `FileRecord` is the source of truth
-for everything deepsec knows about a single source file: candidate
+for everything deepaudit knows about a single source file: candidate
 matches, AI findings, analysis history, git committer info, ownership.
 Full schemas for every file under `data/` are documented in
 [data-layout.md](data-layout.md).
@@ -124,7 +124,7 @@ Five extension points, all defined in
 - `people` — single-slot
 - `executor` — single-slot
 
-A plugin registers via `deepsec.config.ts`:
+A plugin registers via `deepaudit.config.ts`:
 
 ```ts
 export default defineConfig({

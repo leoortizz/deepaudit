@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { FileRecord } from "@deepsec/core";
+import type { FileRecord } from "@deepaudit/core";
 
 const DEFAULT_BATCH_SIZE = 5;
 

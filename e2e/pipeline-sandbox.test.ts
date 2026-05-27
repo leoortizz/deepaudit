@@ -16,13 +16,13 @@
  *    `VERCEL_PROJECT_ID`. (No AI key — the test uses a stub agent.)
  *
  * 2. Local — when iterating on sandbox code:
- *      VERCEL_OIDC_TOKEN=$(grep ^VERCEL_OIDC .deepsec/.env.local | cut -d= -f2) \
- *      DEEPSEC_E2E_LIVE_SANDBOX=1 \
+ *      VERCEL_OIDC_TOKEN=$(grep ^VERCEL_OIDC .deepaudit/.env.local | cut -d= -f2) \
+ *      DEEPAUDIT_E2E_LIVE_SANDBOX=1 \
  *        pnpm exec vitest run --project e2e e2e/pipeline-sandbox.test.ts
  *    (locally OIDC works; CI uses access tokens because OIDC is scoped
  *    to a Vercel deployment.)
  *
- * The test is `describe.skipIf` — without DEEPSEC_E2E_LIVE_SANDBOX=1
+ * The test is `describe.skipIf` — without DEEPAUDIT_E2E_LIVE_SANDBOX=1
  * the entire file is silently skipped, so it stays out of the default
  * `pnpm test` run.
  *
@@ -44,19 +44,19 @@ import { beforeAll, describe, expect, it } from "vitest";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
 
-// We invoke the bundle through `tmp/node_modules/deepsec/dist/cli.mjs`
+// We invoke the bundle through `tmp/node_modules/deepaudit/dist/cli.mjs`
 // (a symlink chain back to the source package) WITH
 // `--preserve-symlinks-main`. That keeps `import.meta.url` at the
-// node_modules path, so `resolveDeepsecAppContext` picks
+// node_modules path, so `resolveDeepauditAppContext` picks
 // mode="installed" — same as production. In dev mode the appRoot
 // would be the source repo (a git checkout), and `makeTarball`'s git
 // branch would tarball ROOT itself, which is not what real users do
 // AND tickles a tar arg-order interaction in CI's GNU tar.
-const BUNDLE_REL = "node_modules/deepsec/dist/cli.mjs";
+const BUNDLE_REL = "node_modules/deepaudit/dist/cli.mjs";
 
 // Opt-in flag plus a sandbox-credential check so a typo doesn't burn
 // 30s spinning up a sandbox that can't authenticate.
-const LIVE = process.env.DEEPSEC_E2E_LIVE_SANDBOX === "1";
+const LIVE = process.env.DEEPAUDIT_E2E_LIVE_SANDBOX === "1";
 const HAS_SANDBOX_KEY =
   Boolean(process.env.VERCEL_OIDC_TOKEN) ||
   (Boolean(process.env.VERCEL_TOKEN) &&
@@ -133,8 +133,8 @@ function injectStubPlugin(configPath: string): void {
   const original = fs.readFileSync(configPath, "utf-8");
   const patched = original
     .replace(
-      'import { defineConfig } from "deepsec/config";\n',
-      'import { defineConfig } from "deepsec/config";\nimport stubPlugin from "./stub-plugin.mjs";\n',
+      'import { defineConfig } from "deepaudit/config";\n',
+      'import { defineConfig } from "deepaudit/config";\nimport stubPlugin from "./stub-plugin.mjs";\n',
     )
     .replace(
       /export default defineConfig\(\{\s*\n\s*projects:/,
@@ -193,7 +193,7 @@ function fingerprint(value: string | undefined): string {
 }
 
 /**
- * List `deepsec-tar-*` temp files currently in `os.tmpdir()`. Used as a
+ * List `deepaudit-tar-*` temp files currently in `os.tmpdir()`. Used as a
  * before/after snapshot around sandbox invocations: makeTarball writes
  * each upload bundle to a path under os.tmpdir(), and either the
  * uploader or the orchestrator's finally block is supposed to unlink
@@ -204,23 +204,23 @@ function fingerprint(value: string | undefined): string {
  * We diff before/after rather than asserting an empty set so concurrent
  * CI jobs on the same runner don't cause false positives.
  */
-function listDeepsecTarballs(): string[] {
+function listDeepauditTarballs(): string[] {
   return fs
     .readdirSync(os.tmpdir())
-    .filter((n) => n.startsWith("deepsec-tar-") && n.endsWith(".tar.gz"));
+    .filter((n) => n.startsWith("deepaudit-tar-") && n.endsWith(".tar.gz"));
 }
 
 /**
- * Pack the local `packages/deepsec` into a `.tgz` tarball — same format
+ * Pack the local `packages/deepaudit` into a `.tgz` tarball — same format
  * `npm publish` would ship. Returns the absolute path to the produced
  * file. Used by the live-sandbox test to substitute the local source
- * for the npm-published `deepsec` dep, so a version bump in HEAD
+ * for the npm-published `deepaudit` dep, so a version bump in HEAD
  * doesn't break the test waiting for npm to catch up.
  */
-function packLocalDeepsec(destDir: string): string {
+function packLocalDeepaudit(destDir: string): string {
   fs.mkdirSync(destDir, { recursive: true });
   const result = spawnSync("npm", ["pack", "--silent", "--pack-destination", destDir], {
-    cwd: path.join(ROOT, "packages/deepsec"),
+    cwd: path.join(ROOT, "packages/deepaudit"),
     encoding: "utf-8",
     timeout: 60_000,
   });
@@ -229,7 +229,7 @@ function packLocalDeepsec(destDir: string): string {
       `npm pack failed (exit ${result.status}):\nstdout: ${result.stdout}\nstderr: ${result.stderr}`,
     );
   }
-  // npm pack --silent prints just the filename to stdout, e.g. `deepsec-1.1.7.tgz\n`.
+  // npm pack --silent prints just the filename to stdout, e.g. `deepaudit-1.1.7.tgz\n`.
   const filename = result.stdout.trim().split("\n").pop() ?? "";
   if (!filename?.endsWith(".tgz")) {
     throw new Error(`npm pack did not produce a .tgz (stdout: ${JSON.stringify(result.stdout)})`);
@@ -239,12 +239,12 @@ function packLocalDeepsec(destDir: string): string {
 
 describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
   beforeAll(() => {
-    const realBundle = path.join(ROOT, "packages/deepsec/dist/cli.mjs");
+    const realBundle = path.join(ROOT, "packages/deepaudit/dist/cli.mjs");
     if (!fs.existsSync(realBundle)) {
       throw new Error(`Bundle not found at ${realBundle}. Run \`pnpm bundle\` first.`);
     }
     if (LIVE && !HAS_SANDBOX_KEY) {
-      console.warn("DEEPSEC_E2E_LIVE_SANDBOX=1 but no Vercel Sandbox key — skipping.");
+      console.warn("DEEPAUDIT_E2E_LIVE_SANDBOX=1 but no Vercel Sandbox key — skipping.");
     }
     // Fingerprint the Vercel creds so CI logs confirm we got the
     // right secrets without exposing them. First 4 chars only.
@@ -259,9 +259,9 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
   it(
     "init → scan → sandbox process → sandbox revalidate",
     () => {
-      const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-live-"));
+      const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-live-"));
       try {
-        const workspaceDir = path.join(tmp, ".deepsec");
+        const workspaceDir = path.join(tmp, ".deepaudit");
         fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(tmp, "node_modules"), "dir");
 
         // 1. init
@@ -273,26 +273,26 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
         );
         expect(init.status).toBe(0);
 
-        // 2. Substitute the scaffolded `"deepsec": "^x.y.z"` (which
+        // 2. Substitute the scaffolded `"deepaudit": "^x.y.z"` (which
         // points at npm) with a `file:` reference to a tarball of the
         // local source. Otherwise: every version bump in HEAD breaks
         // this test until npm catches up — `pnpm install` inside the
         // sandbox can't resolve a version that hasn't been published
-        // yet. With `file:./deepsec-x.y.z.tgz`, the sandbox uses
+        // yet. With `file:./deepaudit-x.y.z.tgz`, the sandbox uses
         // exactly the code in this branch, every run.
-        const tarballPath = packLocalDeepsec(workspaceDir);
+        const tarballPath = packLocalDeepaudit(workspaceDir);
         const tarballName = path.basename(tarballPath);
         const pkgPath = path.join(workspaceDir, "package.json");
         const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-        pkg.dependencies.deepsec = `file:./${tarballName}`;
+        pkg.dependencies.deepaudit = `file:./${tarballName}`;
         fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
 
         // 3. Drop the stub plugin + register it. Same shape as
         // pipeline.test.ts — the plugin file ships into the sandbox
-        // via the `.deepsec/` tarball, so the worker imports it
-        // alongside `deepsec.config.ts`.
+        // via the `.deepaudit/` tarball, so the worker imports it
+        // alongside `deepaudit.config.ts`.
         fs.writeFileSync(path.join(workspaceDir, "stub-plugin.mjs"), STUB_PLUGIN_SOURCE);
-        injectStubPlugin(path.join(workspaceDir, "deepsec.config.ts"));
+        injectStubPlugin(path.join(workspaceDir, "deepaudit.config.ts"));
 
         fs.symlinkSync(
           path.join(tmp, "node_modules"),
@@ -316,7 +316,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
         // uploader does it on success, the orchestrator's finally
         // block sweeps any survivors). A regression that holds onto
         // those files would slowly fill /tmp on long-running invokers.
-        const tarsBeforeProc = listDeepsecTarballs();
+        const tarsBeforeProc = listDeepauditTarballs();
         const proc = runBundle(
           [
             "sandbox",
@@ -337,7 +337,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
           tmp,
         );
         expect(proc.status).toBe(0);
-        const tarsAfterProc = listDeepsecTarballs();
+        const tarsAfterProc = listDeepauditTarballs();
         const leakedProc = tarsAfterProc.filter((n) => !tarsBeforeProc.includes(n));
         expect(
           leakedProc,
@@ -355,7 +355,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
         expect(withFindings[0].analysisHistory.some((h) => h.agentType === "stub")).toBe(true);
 
         // 5. sandbox revalidate over the same findings.
-        const tarsBeforeReval = listDeepsecTarballs();
+        const tarsBeforeReval = listDeepauditTarballs();
         const reval = runBundle(
           [
             "sandbox",
@@ -376,7 +376,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
           tmp,
         );
         expect(reval.status).toBe(0);
-        const tarsAfterReval = listDeepsecTarballs();
+        const tarsAfterReval = listDeepauditTarballs();
         const leakedReval = tarsAfterReval.filter((n) => !tarsBeforeReval.includes(n));
         expect(
           leakedReval,

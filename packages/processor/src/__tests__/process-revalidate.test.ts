@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { defineConfig, type FileRecord, setLoadedConfig } from "@deepsec/core";
+import { defineConfig, type FileRecord, setLoadedConfig } from "@deepaudit/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { QuotaExhaustedError } from "../agents/shared.js";
 import { process as processProject, revalidate } from "../index.js";
@@ -19,7 +19,7 @@ interface Fixture {
 
 function setupProject(opts: { projectId?: string; files?: string[] } = {}): Fixture {
   const projectId = opts.projectId ?? "test-proj";
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-proc-"));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-proc-"));
   const targetRoot = path.join(tmp, "target");
   const dataRoot = path.join(tmp, "data");
   fs.mkdirSync(targetRoot, { recursive: true });
@@ -40,7 +40,7 @@ function setupProject(opts: { projectId?: string; files?: string[] } = {}): Fixt
     }),
   );
 
-  process.env.DEEPSEC_DATA_ROOT = dataRoot;
+  process.env.DEEPAUDIT_DATA_ROOT = dataRoot;
 
   const recordPath = (relPath: string) =>
     path.join(dataRoot, projectId, "files", `${relPath}.json`);
@@ -80,12 +80,12 @@ describe("processor with stub agent", () => {
   let prevDataRoot: string | undefined;
 
   beforeEach(() => {
-    prevDataRoot = process.env.DEEPSEC_DATA_ROOT;
+    prevDataRoot = process.env.DEEPAUDIT_DATA_ROOT;
   });
 
   afterEach(() => {
-    if (prevDataRoot === undefined) delete process.env.DEEPSEC_DATA_ROOT;
-    else process.env.DEEPSEC_DATA_ROOT = prevDataRoot;
+    if (prevDataRoot === undefined) delete process.env.DEEPAUDIT_DATA_ROOT;
+    else process.env.DEEPAUDIT_DATA_ROOT = prevDataRoot;
     setLoadedConfig(defineConfig({ projects: [] }));
   });
 
@@ -995,12 +995,12 @@ describe("revalidate() duplicate verdict", () => {
   let prevDataRoot: string | undefined;
 
   beforeEach(() => {
-    prevDataRoot = process.env.DEEPSEC_DATA_ROOT;
+    prevDataRoot = process.env.DEEPAUDIT_DATA_ROOT;
   });
 
   afterEach(() => {
-    if (prevDataRoot === undefined) delete process.env.DEEPSEC_DATA_ROOT;
-    else process.env.DEEPSEC_DATA_ROOT = prevDataRoot;
+    if (prevDataRoot === undefined) delete process.env.DEEPAUDIT_DATA_ROOT;
+    else process.env.DEEPAUDIT_DATA_ROOT = prevDataRoot;
     setLoadedConfig(defineConfig({ projects: [] }));
   });
 

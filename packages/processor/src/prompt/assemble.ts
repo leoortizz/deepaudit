@@ -32,7 +32,7 @@ export interface AssembleParams {
   batchSlugs: string[];
   /**
    * Languages of the files in the current batch (canonical names from
-   * `LANGUAGE_EXTENSIONS` in @deepsec/scanner: "typescript", "python",
+   * `LANGUAGE_EXTENSIONS` in @deepaudit/scanner: "typescript", "python",
    * "go", etc.). Used to scope highlights to the files that are actually
    * in this batch — a batch of pure Python files in a polyglot Next.js +
    * Django repo doesn't carry the Next.js highlights, even though the

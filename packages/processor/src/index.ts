@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { FileRecord, Severity } from "@deepsec/core";
+import type { FileRecord, Severity } from "@deepaudit/core";
 import {
   acquireProcessLock,
   completeRun,
@@ -17,8 +17,8 @@ import {
   registerActiveRun,
   writeFileRecord,
   writeRunMeta,
-} from "@deepsec/core";
-import { noiseScore, readTechJson } from "@deepsec/scanner";
+} from "@deepaudit/core";
+import { noiseScore, readTechJson } from "@deepaudit/scanner";
 import { ClaudeAgentSdkPlugin } from "./agents/claude-agent-sdk.js";
 import { CodexAgentSdkPlugin } from "./agents/codex-sdk.js";
 import { AgentRegistry } from "./agents/registry.js";
@@ -62,7 +62,7 @@ export function createDefaultAgentRegistry(): AgentRegistry {
   registry.register(new ClaudeAgentSdkPlugin());
   registry.register(new CodexAgentSdkPlugin());
   // Plugins can contribute additional backends via `agents: []` in their
-  // DeepsecPlugin export. The shape is validated by AgentRegistry at use.
+  // DeepauditPlugin export. The shape is validated by AgentRegistry at use.
   for (const a of getRegistry().agents as AgentPlugin[]) {
     registry.register(a);
   }
@@ -155,7 +155,7 @@ export async function process(params: {
       params.onProgress?.(progress);
     } catch (err) {
       console.error(
-        `[deepsec] progress callback error: ${err instanceof Error ? err.message : String(err)}`,
+        `[deepaudit] progress callback error: ${err instanceof Error ? err.message : String(err)}`,
       );
     }
   };
@@ -170,7 +170,7 @@ export async function process(params: {
     throw new Error(
       `Project root does not exist: ${effectiveRootPath}\n` +
         `  (came from ${source})\n` +
-        `  Re-scan with the correct path: deepsec scan --project-id ${projectId} --root <correct-path>`,
+        `  Re-scan with the correct path: deepaudit scan --project-id ${projectId} --root <correct-path>`,
     );
   }
 
@@ -376,7 +376,7 @@ export async function process(params: {
       }
       if (missing.length > 0) {
         console.warn(
-          `[deepsec] process: ${missing.length} file(s) had no FileRecord and were skipped: ${missing.slice(0, 5).join(", ")}${missing.length > 5 ? "…" : ""}`,
+          `[deepaudit] process: ${missing.length} file(s) had no FileRecord and were skipped: ${missing.slice(0, 5).join(", ")}${missing.length > 5 ? "…" : ""}`,
         );
       }
     } else if (typeof reinvestigate === "number") {
@@ -686,7 +686,7 @@ export async function process(params: {
             enrichFileRecord(record, effectiveRootPath);
           } catch (e) {
             console.error(
-              `[deepsec] enrich failed for ${record.filePath}: ${e instanceof Error ? e.message : e}`,
+              `[deepaudit] enrich failed for ${record.filePath}: ${e instanceof Error ? e.message : e}`,
             );
           }
           writeFileRecord(record);
@@ -867,7 +867,7 @@ export async function revalidate(params: {
       params.onProgress?.(progress);
     } catch (err) {
       console.error(
-        `[deepsec] progress callback error: ${err instanceof Error ? err.message : String(err)}`,
+        `[deepaudit] progress callback error: ${err instanceof Error ? err.message : String(err)}`,
       );
     }
   };
@@ -882,7 +882,7 @@ export async function revalidate(params: {
     throw new Error(
       `Project root does not exist: ${effectiveRootPath}\n` +
         `  (came from ${source})\n` +
-        `  Re-scan with the correct path: deepsec scan --project-id ${projectId} --root <correct-path>`,
+        `  Re-scan with the correct path: deepaudit scan --project-id ${projectId} --root <correct-path>`,
     );
   }
 
@@ -1171,7 +1171,7 @@ export async function revalidate(params: {
             enrichFileRecord(file, effectiveRootPath);
           } catch (e) {
             console.error(
-              `[deepsec] enrich failed for ${file.filePath}: ${e instanceof Error ? e.message : e}`,
+              `[deepaudit] enrich failed for ${file.filePath}: ${e instanceof Error ? e.message : e}`,
             );
           }
           writeFileRecord(file);

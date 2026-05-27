@@ -308,13 +308,13 @@ describe("writeParseFailureDebug", () => {
   let tmp: string;
   let prevDataRoot: string | undefined;
   beforeEach(() => {
-    tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-debug-"));
-    prevDataRoot = process.env.DEEPSEC_DATA_ROOT;
-    process.env.DEEPSEC_DATA_ROOT = tmp;
+    tmp = fs.mkdtempSync(path.join(os.tmpdir(), "deepaudit-debug-"));
+    prevDataRoot = process.env.DEEPAUDIT_DATA_ROOT;
+    process.env.DEEPAUDIT_DATA_ROOT = tmp;
   });
   afterEach(() => {
-    if (prevDataRoot === undefined) delete process.env.DEEPSEC_DATA_ROOT;
-    else process.env.DEEPSEC_DATA_ROOT = prevDataRoot;
+    if (prevDataRoot === undefined) delete process.env.DEEPAUDIT_DATA_ROOT;
+    else process.env.DEEPAUDIT_DATA_ROOT = prevDataRoot;
     fs.rmSync(tmp, { recursive: true, force: true });
   });
 
