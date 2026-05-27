@@ -6,7 +6,7 @@ files inside are append-only across runs.
 ```
 data/<projectId>/
 ├── project.json              # rootPath, githubUrl (auto-managed)
-├── INFO.md                   # repo context injected into AI prompts
+├── RULES.md                   # repo context injected into AI prompts
 ├── config.json               # priorityPaths, promptAppend, ignorePaths (optional)
 ├── files/                    # one JSON per scanned source file (FileRecord)
 │   └── path/to/source.ts.json
@@ -43,7 +43,7 @@ Optional. Read by `scan` and the AI agents.
 | `promptAppend` | `string` | Free-form text appended to the system prompt for this project. |
 | `ignorePaths` | `string[]` | Glob patterns to skip during scan. |
 
-## INFO.md
+## RULES.md
 
 Free-form markdown injected into the AI prompt for `process`,
 `triage`, and `revalidate`. See

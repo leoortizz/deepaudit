@@ -15,7 +15,7 @@ export interface ProjectDeclaration {
   root: string;
   /** Optional GitHub URL of the form `https://github.com/owner/repo/blob/branch`. */
   githubUrl?: string;
-  /** Markdown injected into the AI prompt as repo context (replaces `data/<id>/INFO.md`). */
+  /** Markdown injected into the AI prompt as repo context (replaces `data/<id>/RULES.md`). */
   infoMarkdown?: string;
   /** Free-form text appended to the AI prompt for this project. */
   promptAppend?: string;

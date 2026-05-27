@@ -10,7 +10,7 @@ export interface InvestigateParams {
   batch: FileRecord[];
   projectRoot: string;
   promptTemplate: string;
-  projectInfo: string;
+  projectRules: string;
   config: Record<string, unknown>;
   /**
    * Aborted by the processor when one batch trips a `QuotaExhaustedError`
@@ -65,7 +65,7 @@ export interface InvestigateOutput {
 export interface RevalidateParams {
   batch: FileRecord[];
   projectRoot: string;
-  projectInfo: string;
+  projectRules: string;
   config: Record<string, unknown>;
   /** When true, re-check violations that already have a revalidation verdict */
   force?: boolean;

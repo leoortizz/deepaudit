@@ -38,4 +38,4 @@ pnpm deepaudit ...    # the CLI (runs via tsx)
   plugin package, not in this tree.
 - The AI prompt template lives in `packages/processor/src/index.ts`. It
   is intentionally generic. Don't add organization-specific context
-  there; use `data/<projectId>/INFO.md` or `config.json:promptAppend`.
+  there; use `data/<projectId>/RULES.md` or `config.json:promptAppend`.

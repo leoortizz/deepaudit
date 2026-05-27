@@ -16,7 +16,7 @@ Currently configured project: `deepaudit` (target: `..`).
    `node_modules/deepaudit/dist/docs/vercel-setup.md` after install.
 3. Open the parent repo in your coding agent (Claude Code, Cursor, …)
    and have it follow `data/deepaudit/SETUP.md` to fill in
-   `data/deepaudit/INFO.md`.
+   `data/deepaudit/RULES.md`.
 
 ## Daily commands
 
@@ -43,15 +43,15 @@ pnpm deepaudit init-project ../some-other-package   # path relative to .deepaudi
 ```
 
 Appends an entry to `deepaudit.config.ts` and writes
-`data/<id>/{INFO.md,SETUP.md,project.json}`. Open the new SETUP.md
-in your agent to fill in INFO.md.
+`data/<id>/{RULES.md,SETUP.md,project.json}`. Open the new SETUP.md
+in your agent to fill in RULES.md.
 
 ## Layout
 
 ```
 deepaudit.config.ts        Project list (one entry per scanned repo)
 data/deepaudit/
-  INFO.md                Repo context — checked in, hand-curated
+  RULES.md                Repo context — checked in, hand-curated
   SETUP.md               Agent setup prompt — checked in, deletable
   files/                 One JSON per scanned source file — checked in
                          (the investigation cache; CI reads this)

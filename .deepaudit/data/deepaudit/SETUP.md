@@ -1,7 +1,7 @@
 # Agent setup for `deepaudit`
 
 This is a deepaudit scanning workspace. Project `deepaudit` was just registered
-(target: `..`). Setup is incomplete — `data/deepaudit/INFO.md`
+(target: `..`). Setup is incomplete — `data/deepaudit/RULES.md`
 still has placeholder sections.
 
 ## What to do
@@ -11,7 +11,7 @@ still has placeholder sections.
    under `node_modules/deepaudit/dist/docs/`. Read `getting-started.md`,
    `configuration.md`, and `writing-matchers.md` (skim the rest).
 
-2. **Fill in `data/deepaudit/INFO.md`.** It's auto-injected into the AI
+2. **Fill in `data/deepaudit/RULES.md`.** It's auto-injected into the AI
    prompt for every batch — keep it short and selective.
 
    **Length budget: 50–100 lines total.** Verbose context dilutes

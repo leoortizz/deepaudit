@@ -1,6 +1,6 @@
 <!--
   Scenario: 08-with-info-and-append
-  Next.js batch with a project INFO.md and a config.json:promptAppend addendum — shows their position in the assembled prompt and confirms they aren't double-emitted by the agent layer.
+  Next.js batch with a project RULES.md and a config.json:promptAppend addendum — shows their position in the assembled prompt and confirms they aren't double-emitted by the agent layer.
   Detected tags : ["nextjs","react"]
   Batch files   : ["app/secrets.tsx"]
   Batch langs   : ["typescript"]

@@ -18,7 +18,7 @@ export default defineConfig({
       id: "webapp",
       root: "./your-app",
       githubUrl: "https://github.com/acme/webapp/blob/main",
-      infoMarkdown: fs.readFileSync(path.join(here, "INFO.md"), "utf-8"),
+      infoMarkdown: fs.readFileSync(path.join(here, "RULES.md"), "utf-8"),
       promptAppend: "Pay extra attention to /api/admin/* and /api/billing/* surfaces.",
       priorityPaths: ["src/api/admin/", "src/api/billing/", "src/lib/auth/"],
     },

@@ -177,7 +177,7 @@ export default defineConfig({
       expect(stdout).toContain("First project:");
       expect(stdout).toContain("Paste this into your coding agent");
       expect(stdout).toContain("SKILL.md");
-      expect(stdout).toContain("data/my-app/INFO.md");
+      expect(stdout).toContain("data/my-app/RULES.md");
 
       for (const f of [
         "package.json",
@@ -185,15 +185,15 @@ export default defineConfig({
         "README.md",
         "AGENTS.md",
         ".gitignore",
-        "data/my-app/INFO.md",
+        "data/my-app/RULES.md",
         "data/my-app/SETUP.md",
         "data/my-app/project.json",
       ]) {
         expect(fs.existsSync(path.join(workspace, f)), `missing ${f}`).toBe(true);
       }
       expect(fs.existsSync(path.join(workspace, ".env.local"))).toBe(false);
-      // No top-level INFO.md / SETUP.md — both live under data/<id>/.
-      expect(fs.existsSync(path.join(workspace, "INFO.md"))).toBe(false);
+      // No top-level RULES.md / SETUP.md — both live under data/<id>/.
+      expect(fs.existsSync(path.join(workspace, "RULES.md"))).toBe(false);
       expect(fs.existsSync(path.join(workspace, "SETUP.md"))).toBe(false);
       // No custom matchers / extra files from a sample copy.
       expect(fs.existsSync(path.join(workspace, "matchers"))).toBe(false);
@@ -240,7 +240,7 @@ export default defineConfig({
       expect(setupMd).toContain("`my-app`");
       expect(setupMd).toContain("../my-app");
       expect(setupMd).toContain("node_modules/deepaudit/SKILL.md");
-      expect(setupMd).toContain("data/my-app/INFO.md");
+      expect(setupMd).toContain("data/my-app/RULES.md");
 
       // project.json populated with rootPath.
       const projectJson = JSON.parse(
@@ -249,12 +249,12 @@ export default defineConfig({
       expect(projectJson.projectId).toBe("my-app");
       expect(projectJson.rootPath).toBeTruthy();
 
-      // .gitignore: keeps INFO.md/SETUP.md trackable, ignores generated state.
+      // .gitignore: keeps RULES.md/SETUP.md trackable, ignores generated state.
       const gitignore = fs.readFileSync(path.join(workspace, ".gitignore"), "utf-8");
       expect(gitignore).toContain("data/*/files/");
       expect(gitignore).toContain("data/*/runs/");
       expect(gitignore).toContain("data/*/project.json");
-      // Bare `data/` line should NOT be present — that would shadow INFO.md.
+      // Bare `data/` line should NOT be present — that would shadow RULES.md.
       expect(gitignore).not.toMatch(/^data\/$/m);
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
@@ -273,7 +273,7 @@ export default defineConfig({
       const workspace = path.join(repo, ".deepaudit");
       expect(fs.existsSync(path.join(workspace, "deepaudit.config.ts"))).toBe(true);
       // Project id is derived from cwd basename.
-      expect(fs.existsSync(path.join(workspace, "data/my-repo/INFO.md"))).toBe(true);
+      expect(fs.existsSync(path.join(workspace, "data/my-repo/RULES.md"))).toBe(true);
       // Config's `root` is the parent (target = .).
       const configSrc = fs.readFileSync(path.join(workspace, "deepaudit.config.ts"), "utf-8");
       expect(configSrc).toContain('id: "my-repo"');
@@ -365,10 +365,10 @@ export default defineConfig({
 
       // Both projects have data dirs.
       for (const f of [
-        "data/first-app/INFO.md",
+        "data/first-app/RULES.md",
         "data/first-app/SETUP.md",
         "data/first-app/project.json",
-        "data/second-app/INFO.md",
+        "data/second-app/RULES.md",
         "data/second-app/SETUP.md",
         "data/second-app/project.json",
       ]) {

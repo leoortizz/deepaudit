@@ -182,13 +182,13 @@ export async function process(params: {
     manifestFilePaths = new Set(raw as string[]);
   }
 
-  // Load project INFO.md if it exists
-  const infoPath = path.join(dataDir(projectId), "INFO.md");
-  let projectInfo = "";
+  // Load project RULES.md if it exists
+  const rulesPath = path.join(dataDir(projectId), "RULES.md");
+  let projectRules = "";
   try {
-    projectInfo = fs.readFileSync(infoPath, "utf-8");
+    projectRules = fs.readFileSync(rulesPath, "utf-8");
   } catch {
-    // No INFO.md — that's fine
+    // No RULES.md — that's fine
   }
 
   // Load project config.json for prompt customization and priority
@@ -239,7 +239,7 @@ export async function process(params: {
       detectedTags,
       batchSlugs,
       batchLanguages,
-      projectInfo,
+      projectRules,
       promptAppend: projectConfig.promptAppend,
     });
     return prompt;
@@ -571,18 +571,18 @@ export async function process(params: {
       });
 
       try {
-        // When using the modular assembled prompt, INFO.md is already
+        // When using the modular assembled prompt, RULES.md is already
         // injected by `assemblePrompt()` (between `---` separators after
         // the threat highlights). Pass `""` to the agent layer to avoid a
         // second `## Project Context` block being appended on top of it.
         // Custom-template callers don't go through the assembler, so they
-        // still need the agent layer to inject INFO.md for them.
-        const projectInfoForAgent = customPromptTemplate === undefined ? "" : projectInfo;
+        // still need the agent layer to inject RULES.md for them.
+        const projectInfoForAgent = customPromptTemplate === undefined ? "" : projectRules;
         const gen = agent.investigate({
           batch,
           projectRoot: effectiveRootPath,
           promptTemplate: buildBatchPrompt(batch),
-          projectInfo: projectInfoForAgent,
+          projectRules: projectInfoForAgent,
           config,
           signal: quotaAbort.signal,
           projectId,
@@ -892,10 +892,10 @@ export async function revalidate(params: {
     manifestFilePaths = new Set(raw as string[]);
   }
 
-  const infoPath = path.join(dataDir(projectId), "INFO.md");
-  let projectInfo = "";
+  const rulesPath = path.join(dataDir(projectId), "RULES.md");
+  let projectRules = "";
   try {
-    projectInfo = fs.readFileSync(infoPath, "utf-8");
+    projectRules = fs.readFileSync(rulesPath, "utf-8");
   } catch {}
 
   const model = (config.model as string) ?? "claude-opus-4-7";
@@ -1022,7 +1022,7 @@ export async function revalidate(params: {
         const gen = agent.revalidate({
           batch,
           projectRoot: effectiveRootPath,
-          projectInfo,
+          projectRules,
           config,
           force,
           signal: quotaAbort.signal,

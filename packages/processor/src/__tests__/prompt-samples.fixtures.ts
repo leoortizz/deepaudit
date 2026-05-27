@@ -6,7 +6,7 @@ import { TECH_HIGHLIGHTS } from "../prompt/highlights.js";
  * `prompt-samples/` (committed to git). Each scenario maps to a single
  * file `<name>.md` containing the FULL prompt the model receives — the
  * assembled system-prompt half (core + tech highlights + slug notes +
- * INFO.md + promptAppend) AND the agent-layer wrapper that lists the
+ * RULES.md + promptAppend) AND the agent-layer wrapper that lists the
  * actual target files and the JSON output spec.
  *
  * Define realistic file records here; the generator derives
@@ -32,8 +32,8 @@ interface PromptSampleScenario {
     /** Candidates the scanner produced for this file. */
     candidates: Array<{ slug: string; lines: number[]; pattern: string }>;
   }>;
-  /** Optional INFO.md content (already loaded by caller in production). */
-  projectInfo?: string;
+  /** Optional RULES.md content (already loaded by caller in production). */
+  projectRules?: string;
   /** Optional config.json:promptAppend content. */
   promptAppend?: string;
 }
@@ -246,7 +246,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
   {
     name: "08-with-info-and-append",
     description:
-      "Next.js batch with a project INFO.md and a config.json:promptAppend addendum — shows their position in the assembled prompt and confirms they aren't double-emitted by the agent layer.",
+      "Next.js batch with a project RULES.md and a config.json:promptAppend addendum — shows their position in the assembled prompt and confirms they aren't double-emitted by the agent layer.",
     detectedTags: ["nextjs", "react"],
     files: [
       {
@@ -261,7 +261,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
         ],
       },
     ],
-    projectInfo:
+    projectRules:
       "## Project notes\n\n- Auth helper is `requireUser()` from `lib/auth.ts`.\n- Internal-only routes live under `app/(internal)/**`.",
     promptAppend:
       "Custom: also flag any logger that swallows errors silently — that is a known foot-gun in this repo.",

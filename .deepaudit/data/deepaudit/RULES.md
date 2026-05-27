@@ -77,7 +77,7 @@ Not a webapp. The only auth-adjacent surfaces are:
 - **Token leakage into committed state** — anything that writes
   `process.env.ANTHROPIC_AUTH_TOKEN` / `OPENAI_API_KEY` / `VERCEL_TOKEN`
   (or anything matching the secret-pattern matchers) into
-  `data/<id>/files/*.json`, `INFO.md`, run metadata, violation bodies, log lines,
+  `data/<id>/files/*.json`, `RULES.md`, run metadata, violation bodies, log lines,
   or argv visible to other processes via `ps`.
 - **Prompt template echoing scanned content into tool args** — if `${snippet}`
   or any scanned text reaches a tool's command argument rather than just the

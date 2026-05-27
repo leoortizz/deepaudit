@@ -84,7 +84,7 @@ program
     `
 Run from inside a .deepaudit/ workspace. Appends an entry to
 deepaudit.config.ts (above the marker comment) and writes a fresh
-data/<id>/{INFO.md,SETUP.md,project.json}.
+data/<id>/{RULES.md,SETUP.md,project.json}.
 
 Examples:
   $ pnpm deepaudit init-project ../another-app

@@ -34,7 +34,7 @@ your training data.
 
 `node_modules/deepaudit/dist/samples/webapp/` (or `<deepaudit-clone>/samples/webapp/`)
 is a complete reference setup — `deepaudit.config.ts` with an inline
-plugin, two custom matchers under `matchers/`, an `INFO.md` for AI
+plugin, two custom matchers under `matchers/`, an `RULES.md` for AI
 prompt context, and a per-project `config.json`. When the user asks
 "what should my config look like?", read this directory.
 

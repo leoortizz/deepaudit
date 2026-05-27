@@ -306,10 +306,10 @@ export function parseRefusalReport(raw: string): RefusalReport | undefined {
 
 export function buildInvestigatePrompt(params: {
   promptTemplate: string;
-  projectInfo: string;
+  projectRules: string;
   batch: FileRecord[];
 }): string {
-  const { promptTemplate, projectInfo, batch } = params;
+  const { promptTemplate, projectRules, batch } = params;
 
   const fileList = batch
     .map((r) => {
@@ -336,11 +336,11 @@ export function buildInvestigatePrompt(params: {
   // `promptTemplate`. We just append the per-batch concrete list +
   // procedural steps + output spec — no need to repeat the framing here.
   //
-  // `projectInfo` is only emitted when the caller passes it explicitly.
+  // `projectRules` is only emitted when the caller passes it explicitly.
   // The processor's modular path passes `""` because RULES.md is already
   // in the assembled prompt; custom-template callers (--prompt-template)
   // pass the loaded RULES.md so it still reaches the model.
-  const projectInfoBlock = projectInfo ? `## Project Context\n\n${projectInfo}\n\n` : "";
+  const projectInfoBlock = projectRules ? `## Project Context\n\n${projectRules}\n\n` : "";
 
   return `${promptTemplate}
 
@@ -490,10 +490,10 @@ export function parseInvestigateResults(
 export function buildRevalidatePrompt(params: {
   batch: FileRecord[];
   projectRoot: string;
-  projectInfo: string;
+  projectRules: string;
   force: boolean;
 }): { prompt: string; totalViolations: number } {
-  const { batch, projectRoot, projectInfo, force } = params;
+  const { batch, projectRoot, projectRules, force } = params;
 
   const fileSections: string[] = [];
 
@@ -548,7 +548,7 @@ export function buildRevalidatePrompt(params: {
 
 **Static analysis only.** Do NOT attempt to reproduce, exploit, or trigger any violation. Do not run the target code, send requests against any endpoint, or execute proof-of-concept scripts. Reach your verdict from the source code alone.
 
-${projectInfo ? `## Project Context\n\n${projectInfo}\n` : ""}
+${projectRules ? `## Project Context\n\n${projectRules}\n` : ""}
 
 ${fileSections.join("\n---\n\n")}
 

@@ -19,7 +19,7 @@ information rather than overwriting.
 ```
 data/<projectId>/
 ├── project.json              # rootPath, githubUrl (auto-managed)
-├── INFO.md                   # repo context injected into AI prompts (manual or agent-written)
+├── RULES.md                   # repo context injected into AI prompts (manual or agent-written)
 ├── config.json               # priorityPaths, promptAppend, ignorePaths (optional)
 ├── files/                    # one JSON per scanned file (FileRecord)
 │   └── path/to/file.ts.json
@@ -57,10 +57,10 @@ built-ins by reusing the same slug.
 ### process
 
 - **What it does:** Pick batches of pending files, send each batch to the
-  configured AI agent backend with the system prompt + INFO.md, parse the
+  configured AI agent backend with the system prompt + RULES.md, parse the
   agent's JSON response into `Violation`s, write them back to each FileRecord.
 - **Cost:** $$. The expensive stage.
-- **Inputs:** FileRecords with `status: "pending"`, `INFO.md`, the prompt
+- **Inputs:** FileRecords with `status: "pending"`, `RULES.md`, the prompt
   template (`packages/processor/src/index.ts:DEFAULT_PROMPT_TEMPLATE`).
 - **Outputs:** FileRecord `violations[]` populated, `status: "analyzed"`,
   `analysisHistory[]` appended.

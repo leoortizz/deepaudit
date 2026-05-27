@@ -630,7 +630,7 @@ export class CodexAgentSdkPlugin implements AgentPlugin {
   type = "codex";
 
   async *investigate(params: InvestigateParams): AsyncGenerator<AgentProgress, InvestigateOutput> {
-    const { batch, projectRoot, promptTemplate, projectInfo, config, signal, projectId } = params;
+    const { batch, projectRoot, promptTemplate, projectRules, config, signal, projectId } = params;
     const model = (config.model as string) ?? DEFAULT_MODEL;
     const effort = (config.reasoningEffort as ModelReasoningEffort) ?? DEFAULT_EFFORT;
 
@@ -639,7 +639,7 @@ export class CodexAgentSdkPlugin implements AgentPlugin {
       message: `Investigating ${batch.length} file(s) with Codex SDK (${model}, effort=${effort})`,
     };
 
-    const basePrompt = buildInvestigatePrompt({ promptTemplate, projectInfo, batch });
+    const basePrompt = buildInvestigatePrompt({ promptTemplate, projectRules, batch });
     const prompt = `${codexEnvironmentPreamble(projectRoot)}\n\n${basePrompt}`;
     const invocation = buildCodexInvocation();
     // Idempotent cleanup the finally block runs whether we exit via return,
@@ -889,14 +889,14 @@ export class CodexAgentSdkPlugin implements AgentPlugin {
   }
 
   async *revalidate(params: RevalidateParams): AsyncGenerator<AgentProgress, RevalidateOutput> {
-    const { batch, projectRoot, projectInfo, config, force = false, signal, projectId } = params;
+    const { batch, projectRoot, projectRules, config, force = false, signal, projectId } = params;
     const model = (config.model as string) ?? DEFAULT_MODEL;
     const effort = (config.reasoningEffort as ModelReasoningEffort) ?? DEFAULT_EFFORT;
 
     const built = buildRevalidatePrompt({
       batch,
       projectRoot,
-      projectInfo,
+      projectRules,
       force,
     });
     const totalViolations = built.totalViolations;

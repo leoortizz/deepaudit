@@ -15,14 +15,14 @@ const SAMPLES_DIR = path.resolve(import.meta.dirname, "../../../../prompt-sample
  *   1. `detectTech()` produces the project-level tag list (here, scenario.detectedTags).
  *   2. `assemblePrompt()` builds the system-prompt half — core + tech
  *      highlights filtered by the batch's languages + per-slug notes for
- *      slugs in the batch + INFO.md + promptAppend.
+ *      slugs in the batch + RULES.md + promptAppend.
  *   3. `buildInvestigatePrompt()` (in `agents/shared.ts`) wraps that with
  *      the actual file list, per-file investigation steps, and the JSON
  *      output spec.
  *
- * `projectInfo` is passed to the assembler (not the agent layer) — at
+ * `projectRules` is passed to the assembler (not the agent layer) — at
  * runtime the agent layer gets `""` from `process()` to avoid emitting
- * INFO.md twice. We mirror that here.
+ * RULES.md twice. We mirror that here.
  */
 function fullPromptFor(scenario: (typeof PROMPT_SAMPLE_SCENARIOS)[number]): string {
   const batch = scenarioBatch(scenario);
@@ -32,12 +32,12 @@ function fullPromptFor(scenario: (typeof PROMPT_SAMPLE_SCENARIOS)[number]): stri
     detectedTags: scenario.detectedTags,
     batchSlugs,
     batchLanguages,
-    projectInfo: scenario.projectInfo,
+    projectRules: scenario.projectRules,
     promptAppend: scenario.promptAppend,
   });
   return buildInvestigatePrompt({
     promptTemplate: assembled,
-    projectInfo: "",
+    projectRules: "",
     batch,
   });
 }

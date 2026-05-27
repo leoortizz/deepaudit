@@ -37,19 +37,19 @@ see [`samples/webapp/deepaudit.config.ts`](../samples/webapp/deepaudit.config.ts
 | `id` | `string` | yes | Used as `--project-id` and the data directory name (`data/<id>/`). |
 | `root` | `string` | yes | Absolute or relative path to the codebase. |
 | `githubUrl` | `string` | no | `https://github.com/owner/repo/blob/branch` — used in exports for clickable links. Auto-detected from `git remote` when omitted. |
-| `infoMarkdown` | `string` | no | Repo context injected into AI prompts. Overrides `data/<id>/INFO.md` if both are present. |
+| `infoMarkdown` | `string` | no | Repo context injected into AI prompts. Overrides `data/<id>/RULES.md` if both are present. |
 | `promptAppend` | `string` | no | Free-form text appended to the system prompt for this project. |
 | `priorityPaths` | `string[]` | no | Path prefixes to process first. |
 
-## INFO.md
+## RULES.md
 
 If `infoMarkdown` isn't set in the config, deepaudit looks for
-`data/<id>/INFO.md` and injects its contents into the prompt for
+`data/<id>/RULES.md` and injects its contents into the prompt for
 `process`, `triage`, and `revalidate`. A few hundred words of repo
 context (what the codebase does, the auth shape, the threat model,
 known false-positive sources) is the right length. See
 [getting-started.md](getting-started.md) for a coding-agent prompt that
-writes a good INFO.md.
+writes a good RULES.md.
 
 ## Matcher filtering
 

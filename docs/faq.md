@@ -28,7 +28,7 @@ and only needs `pnpm` (or `npm` / `yarn`) inside that one directory.
 
 ### `.gitignore` policy
 
-The scaffold's `.deepaudit/.gitignore` keeps `INFO.md`, `SETUP.md`, and
+The scaffold's `.deepaudit/.gitignore` keeps `RULES.md`, `SETUP.md`, and
 `deepaudit.config.ts` tracked so teammates inherit project context, but
 ignores generated state (`data/*/files/`, `data/*/runs/`, etc.).
 
@@ -91,7 +91,7 @@ After revalidation: ~10–29% on `HIGH+.
 Two things help most:
 
 1. **Revalidate `HIGH+` before acting on violations.** Worth the cost.
-2. **Write a good `INFO.md` per project.** Even a paragraph describing
+2. **Write a good `RULES.md` per project.** Even a paragraph describing
    the auth shape and threat model improves precision a lot. See
    [getting-started.md](getting-started.md).
 

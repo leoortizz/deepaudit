@@ -175,7 +175,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
   type = "claude-agent-sdk";
 
   async *investigate(params: InvestigateParams): AsyncGenerator<AgentProgress, InvestigateOutput> {
-    const { batch, projectRoot, promptTemplate, projectInfo, config, signal, projectId } = params;
+    const { batch, projectRoot, promptTemplate, projectRules, config, signal, projectId } = params;
     const model = (config.model as string) ?? "claude-opus-4-7";
     const maxTurns = (config.maxTurns as number) ?? 150;
     // Bridge the processor-supplied AbortSignal to an AbortController the
@@ -195,7 +195,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
       message: `Investigating ${batch.length} file(s) with Claude Agent SDK (${model})`,
     };
 
-    const prompt = buildInvestigatePrompt({ promptTemplate, projectInfo, batch });
+    const prompt = buildInvestigatePrompt({ promptTemplate, projectRules, batch });
     const startTime = Date.now();
     let sessionId: string | undefined;
     let resultText = "";
@@ -419,7 +419,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
   }
 
   async *revalidate(params: RevalidateParams): AsyncGenerator<AgentProgress, RevalidateOutput> {
-    const { batch, projectRoot, projectInfo, config, force = false, signal, projectId } = params;
+    const { batch, projectRoot, projectRules, config, force = false, signal, projectId } = params;
     const model = (config.model as string) ?? "claude-opus-4-7";
     const maxTurns = (config.maxTurns as number) ?? 150;
 
@@ -434,7 +434,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
     const { prompt, totalViolations } = buildRevalidatePrompt({
       batch,
       projectRoot,
-      projectInfo,
+      projectRules,
       force,
     });
 

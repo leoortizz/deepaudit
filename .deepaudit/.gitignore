@@ -3,7 +3,7 @@ node_modules/
 
 # Per-file investigation results (`data/*/files/`) ARE tracked: that's
 # what lets CI skip already-analyzed files and only re-investigate
-# the diff. INFO.md and SETUP.md (manually edited) stay tracked too.
+# the diff. RULES.md and SETUP.md (manually edited) stay tracked too.
 #
 # Run metadata, generated reports, and project.json (absolute root
 # path, flips per machine) stay ignored — pure churn otherwise.

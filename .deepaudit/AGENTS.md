@@ -8,7 +8,7 @@ asked to set a project up.
 
 - **Set up a project for scanning**: read `data/<id>/SETUP.md` and
   follow it (read `node_modules/deepaudit/SKILL.md`, then fill
-  `data/<id>/INFO.md` from the target codebase).
+  `data/<id>/RULES.md` from the target codebase).
 - **Add a new project**: run `deepaudit init-project <root>` — it
   scaffolds `data/<id>/` and prints/writes the setup prompt for the
   new project.

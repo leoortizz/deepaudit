@@ -33,7 +33,7 @@ interface RegisterResult {
   targetAbs: string;
   configPath: string;
   setupMdPath: string;
-  infoMdPath: string;
+  rulesMdPath: string;
 }
 
 /**
@@ -43,7 +43,7 @@ interface RegisterResult {
  *
  * Writes:
  *   - data/<id>/project.json (via ensureProject — also auto-detects githubUrl)
- *   - data/<id>/INFO.md (placeholder template)
+ *   - data/<id>/RULES.md (placeholder template)
  *   - data/<id>/SETUP.md (per-project agent setup prompt)
  *   - appends `{ id, root }` to projects[] in deepaudit.config.ts
  */
@@ -90,9 +90,9 @@ export function registerProject(opts: {
     ensureProject(id, targetAbs);
     const projectDir = dataDir(id);
     fs.mkdirSync(projectDir, { recursive: true });
-    const infoMdPath = path.join(projectDir, "INFO.md");
-    if (!fs.existsSync(infoMdPath) || opts.force) {
-      fs.writeFileSync(infoMdPath, infoMdTemplate(id));
+    const rulesMdPath = path.join(projectDir, "RULES.md");
+    if (!fs.existsSync(rulesMdPath) || opts.force) {
+      fs.writeFileSync(rulesMdPath, rulesMdTemplate(id));
     }
     const setupMdPath = path.join(projectDir, "SETUP.md");
     fs.writeFileSync(setupMdPath, setupMdTemplate(id, targetRel));
@@ -105,7 +105,7 @@ export function registerProject(opts: {
       targetAbs,
       configPath,
       setupMdPath: path.resolve(setupMdPath),
-      infoMdPath: path.resolve(infoMdPath),
+      rulesMdPath: path.resolve(rulesMdPath),
     };
   } finally {
     process.chdir(originalCwd);
@@ -152,84 +152,77 @@ function insertProjectIntoConfig(configPath: string, id: string, root: string): 
   fs.writeFileSync(configPath, updated);
 }
 
-function infoMdTemplate(id: string): string {
-  return `# ${id}
+function rulesMdTemplate(id: string): string {
+  return `# Project rules for ${id}
 
-> Replace each section. Target 50–100 lines total. INFO.md is injected
-> into every AI scan batch — verbose context dilutes signal.
-> See \`SETUP.md\` for the rubric + a coding-agent prompt.
+> Replace each section with your project's actual rules. Target 50–100
+> lines total. RULES.md is injected into every AI audit batch — verbose
+> context dilutes signal. See \`SETUP.md\` for a coding-agent prompt that
+> bootstraps this file from your existing convention files.
 
-## What this codebase does
+> **Precedence:** rules below override the deepaudit default pack on
+> conflict. If your repo already has a \`CLAUDE.md\` / \`AGENTS.md\` /
+> \`.cursor/rules/\` you trust, paste or summarize from there.
 
-<one paragraph: what the app does, what stack, what users it serves>
+## Conventions worth enforcing
 
-## Auth shape
+<3–7 rules unique to THIS codebase, stated as imperatives. Examples:
+"Database access must go through the \`db/\` package, never raw drivers."
+"All public exports are documented with a one-line JSDoc.">
 
-<the 3–5 most important auth primitives BY NAME. The scanner doesn't
-need every helper — just enough to recognize when one is missing>
+## Patterns to flag
 
-## Threat model
+<3–5 anti-patterns specific to this project. Examples:
+"Don't use \`console.log\` in committed code — use \`logger\`."
+"Don't catch errors without a comment explaining why they're swallowed.">
 
-<2–4 sentences: what an attacker would want, ranked by impact.
-Skip generic security boilerplate>
+## Known exceptions
 
-## Project-specific patterns to flag
-
-<3–5 patterns unique to THIS codebase, one example each. Avoid
-generic CWE categories — built-in matchers cover those>
-
-## Known false-positives
-
-<3–5 paths/patterns that look risky but are intentional —
-fork-specific stubs, dev fixtures, intended-public endpoints>
+<3–5 paths or files where the rules above do NOT apply — scripts,
+fixtures, migration helpers, anything intentionally divergent>
 `;
 }
 
 function setupMdTemplate(id: string, targetRel: string): string {
   return `# Agent setup for \`${id}\`
 
-This is a deepaudit scanning workspace. Project \`${id}\` was just registered
-(target: \`${targetRel}\`). Setup is incomplete — \`data/${id}/INFO.md\`
+This is a deepaudit workspace. Project \`${id}\` was just registered
+(target: \`${targetRel}\`). Setup is incomplete — \`data/${id}/RULES.md\`
 still has placeholder sections.
 
 ## What to do
 
 1. **Read the deepaudit skill.** After \`pnpm install\`, the file is at
    \`node_modules/deepaudit/SKILL.md\`. It maps every doc topic to a file
-   under \`node_modules/deepaudit/dist/docs/\`. Read \`getting-started.md\`,
-   \`configuration.md\`, and \`writing-matchers.md\` (skim the rest).
+   under \`node_modules/deepaudit/dist/docs/\`. Read \`getting-started.md\`
+   and \`configuration.md\` (skim the rest).
 
-2. **Fill in \`data/${id}/INFO.md\`.** It's auto-injected into the AI
-   prompt for every batch — keep it short and selective.
+2. **Fill in \`data/${id}/RULES.md\`.** It's auto-injected into the AI
+   prompt for every batch — keep it short and rule-shaped.
 
    **Length budget: 50–100 lines total.** Verbose context dilutes
-   signal in the scanner's prompt window. The goal is "what would a
-   reviewer miss if they didn't read this?", not exhaustive enumeration.
+   signal in the prompt window. The goal is "what would a reviewer
+   miss if they didn't read this?", not exhaustive enumeration.
 
    **Per-section rubric**:
-   - Pick 3–5 representative items per section. **Don't list every
-     file, helper, or callsite** — pick the patterns.
-   - Name primitives by their public name (e.g. \`withAuthentication\`,
-     \`auth.can()\`, \`isTeamAdmin\`). **No line numbers.** Don't enumerate
-     more than 5 paths in any list.
-   - Skip generic CWE categories — built-in matchers already cover
-     "SSRF", "SQL injection", "XSS". Cover what's *project-specific*:
-     internal auth helpers, custom middleware names, fork-specific
-     stubs, intended-public endpoints.
-   - One short paragraph or 3–5 short bullets per section. Not both.
+   - Each entry is an imperative: "do X," "don't Y," "prefer X."
+     Descriptive prose (repo layout, dev commands) doesn't belong here.
+   - Pick 3–5 representative rules per section. Don't enumerate every
+     callsite or helper — pick the patterns worth enforcing.
+   - Name primitives by their public name. No line numbers.
+   - Project rules override the default pack on conflict.
 
    Source material (read in this order, stop when you have enough):
-   - \`${targetRel}/README.md\`
-   - any \`AGENTS.md\` / \`CLAUDE.md\` in \`${targetRel}\`
+   - any existing \`CLAUDE.md\` / \`AGENTS.md\` / \`.cursor/rules/\` in \`${targetRel}\`
+   - \`${targetRel}/README.md\` and \`CONTRIBUTING.md\`
    - \`${targetRel}/package.json\` (or \`go.mod\`, \`pyproject.toml\`, etc.)
-   - 5–10 representative code files (entry points, auth helpers) — not
-     a full code tour.
+   - 5–10 representative code files — enough to see the conventions in
+     action, not a full code tour.
 
-3. **(Optional) Add custom matchers** for repo-specific patterns the
-   built-in matchers won't catch. Read
-   \`node_modules/deepaudit/dist/docs/writing-matchers.md\` first; the
-   workflow there starts from a confirmed violation and grows the matcher
-   from it. Don't add matchers speculatively — wait for a real TP.
+3. **(Optional) Add conformance matchers** for repo-specific patterns
+   the built-in matchers won't catch. Don't add matchers speculatively
+   — wait for a real violation, then write a matcher that would have
+   flagged it.
 
 ## When you're done
 
@@ -295,13 +288,13 @@ function printAgentPrompt(id: string, targetRel: string): void {
     `Read node_modules/deepaudit/SKILL.md to understand the tool. Then`,
     `read data/${id}/SETUP.md and follow it: open ${targetRel}, skim`,
     `its README + AGENTS.md/CLAUDE.md + a handful of representative`,
-    `code files, then replace each section of data/${id}/INFO.md.`,
+    `code files, then replace each section of data/${id}/RULES.md.`,
     ``,
     `Keep it SHORT — target 50–100 lines total. Pick 3–5 examples per`,
     `section, not exhaustive enumeration. Name primitives (auth`,
     `helpers, middleware) but no line numbers. Skip generic CWE`,
     `categories — built-in matchers cover those. Cover only what's`,
-    `project-specific. INFO.md is injected into every scan batch;`,
+    `project-specific. RULES.md is injected into every scan batch;`,
     `verbose context dilutes signal.`,
   ];
   for (const l of lines) console.log(`    ${CYAN}${l}${RESET}`);

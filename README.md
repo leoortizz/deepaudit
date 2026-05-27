@@ -29,13 +29,13 @@ and prompt:
 > tool. Then read `.deepaudit/data/<id>/SETUP.md` and follow it:
 > skim this repo's README, any AGENTS.md/CLAUDE.md, and a handful
 > of representative code files, then replace each section of
-> `.deepaudit/data/<id>/INFO.md`.
+> `.deepaudit/data/<id>/RULES.md`.
 >
 > Keep it SHORT — target 50–100 lines total. Pick 3–5 examples per
 > section, not exhaustive enumeration. Name primitives (auth helpers,
 > middleware) but no line numbers. Skip generic CWE categories —
 > built-in matchers cover those. Cover only what's project-specific.
-> INFO.md is injected into every scan batch; verbose context dilutes
+> RULES.md is injected into every scan batch; verbose context dilutes
 > signal.
 
 Then scan from inside `.deepaudit/`:

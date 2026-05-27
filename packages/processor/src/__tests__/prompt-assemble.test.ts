@@ -18,16 +18,16 @@ describe("assemblePrompt", () => {
     expect(meta.includedTags).toEqual([]);
   });
 
-  it("appends projectInfo and promptAppend at the end, in that order", () => {
+  it("appends projectRules and promptAppend at the end, in that order", () => {
     const { prompt } = assemblePrompt({
       detectedTags: [],
       batchSlugs: [],
-      projectInfo: "## Project conventions\n\nAuth helper is `requireUser()`.",
+      projectRules: "## Project conventions\n\nAuth helper is `requireUser()`.",
       promptAppend: "Custom: also flag any logger that swallows errors.",
     });
     expect(prompt).toContain("## Project conventions");
     expect(prompt).toContain("Custom: also flag any logger");
-    // promptAppend follows projectInfo
+    // promptAppend follows projectRules
     expect(prompt.indexOf("Custom: also flag")).toBeGreaterThan(
       prompt.indexOf("## Project conventions"),
     );

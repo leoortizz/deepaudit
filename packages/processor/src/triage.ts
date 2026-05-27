@@ -47,9 +47,9 @@ export async function triage(params: {
 
   const project = readProjectConfig(projectId);
 
-  let projectInfo = "";
+  let projectRules = "";
   try {
-    projectInfo = fs.readFileSync(path.join(dataDir(projectId), "INFO.md"), "utf-8");
+    projectRules = fs.readFileSync(path.join(dataDir(projectId), "RULES.md"), "utf-8");
   } catch {}
 
   const startLoad = Date.now();
@@ -134,7 +134,7 @@ export async function triage(params: {
 
     const prompt = `You are a security triage expert. Given a list of vulnerability violations, classify each by priority for remediation.
 
-${projectInfo ? `## Project Context (summary only)\n\n${projectInfo.slice(0, 2000)}\n` : ""}
+${projectRules ? `## Project Context (summary only)\n\n${projectRules.slice(0, 2000)}\n` : ""}
 
 ## Violations to Triage
 

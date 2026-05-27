@@ -44,10 +44,10 @@ export interface AssembleParams {
    */
   batchLanguages?: string[];
   /**
-   * Optional project-specific INFO.md content (already loaded by caller).
+   * Optional project-specific RULES.md content (already loaded by caller).
    * Appended verbatim if present.
    */
-  projectInfo?: string;
+  projectRules?: string;
   /**
    * Optional `config.json:promptAppend` content from the project. Appended
    * verbatim if present.
@@ -157,7 +157,7 @@ export interface AssembleResult {
  *       - bullet
  *   ## Slug-specific reviewer notes
  *     - `slug`: one sentence
- *   [project INFO.md, verbatim]
+ *   [project RULES.md, verbatim]
  *   [config.json:promptAppend, verbatim]
  *
  * Highlights are scoped to the techs that apply (from detectedTags); slug
@@ -166,7 +166,7 @@ export interface AssembleResult {
  * is empty or exceeds the size budget.
  */
 export function assemblePrompt(params: AssembleParams): AssembleResult {
-  const { detectedTags, batchSlugs, batchLanguages, projectInfo, promptAppend } = params;
+  const { detectedTags, batchSlugs, batchLanguages, projectRules, promptAppend } = params;
 
   const sections: string[] = [CORE_PROMPT];
 
@@ -176,12 +176,12 @@ export function assemblePrompt(params: AssembleParams): AssembleResult {
   const slugSection = renderSlugSection(batchSlugs);
   if (slugSection) sections.push(slugSection);
 
-  // INFO.md and promptAppend are user-authored — they often start with
+  // RULES.md and promptAppend are user-authored — they often start with
   // their own H1/H2. Separate with horizontal rules instead of wrapping
   // them in our own header so we never produce two consecutive H2s with
   // nothing between them.
-  if (projectInfo && projectInfo.trim().length > 0) {
-    sections.push(`---\n\n${projectInfo.trim()}`);
+  if (projectRules && projectRules.trim().length > 0) {
+    sections.push(`---\n\n${projectRules.trim()}`);
   }
   if (promptAppend && promptAppend.trim().length > 0) {
     sections.push(`---\n\n${promptAppend.trim()}`);

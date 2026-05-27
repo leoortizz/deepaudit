@@ -20,7 +20,7 @@ pnpm install                                       # installs deepaudit
 
 `init` lays down a minimal scaffold inside `.deepaudit/`: `package.json`,
 `deepaudit.config.ts` (one `projects[]` entry pointing at `..`, id
-derived from your repo dir's basename), `data/<id>/INFO.md` (template
+derived from your repo dir's basename), `data/<id>/RULES.md` (template
 with section placeholders), `data/<id>/SETUP.md` (per-project agent
 prompt), workspace-level `AGENTS.md`, `.env.local`, `.gitignore`. No
 custom matchers in the scaffold — add those later, only when a real
@@ -47,9 +47,9 @@ To scan a *different* codebase from the same `.deepaudit/`, run
 `pnpm deepaudit init-project <path>` — relative paths resolve against
 `.deepaudit/`'s parent.
 
-## Fill in INFO.md
+## Fill in RULES.md
 
-`INFO.md` is what makes deepaudit project-aware. It's injected into the
+`RULES.md` is what makes deepaudit project-aware. It's injected into the
 AI prompt for every batch — vague content here means vague violations.
 
 ### Option A: let your coding agent do it (recommended)
@@ -61,16 +61,16 @@ that `deepaudit init` printed. It walks the agent through:
 1. Read `.deepaudit/node_modules/deepaudit/SKILL.md` to understand the tool.
 2. Open `.deepaudit/data/<id>/SETUP.md` for project-specific instructions.
 3. Skim the codebase, then replace each section of
-   `.deepaudit/data/<id>/INFO.md`.
+   `.deepaudit/data/<id>/RULES.md`.
 
 The same prompt is shown in the project root README and is what `init`
 prints to stdout after scaffold.
 
 ### Option B: by hand
 
-The processor auto-loads `data/<id>/INFO.md` from the workspace's data
+The processor auto-loads `data/<id>/RULES.md` from the workspace's data
 dir. Edit it directly — no extra wiring needed in
-`deepaudit.config.ts`. INFO.md is optional but worth keeping; even a
+`deepaudit.config.ts`. RULES.md is optional but worth keeping; even a
 paragraph noticeably improves the AI's output.
 
 ## Run a scan
@@ -78,7 +78,7 @@ paragraph noticeably improves the AI's output.
 Before the first command: deepaudit writes per-project state to
 `./data/<project-id>/` next to your config — `files/` (one JSON per
 scanned source file), `runs/`, plus `project.json` and the optional
-`INFO.md` / `config.json`. The directory is gitignored by default; see
+`RULES.md` / `config.json`. The directory is gitignored by default; see
 [data-layout.md](data-layout.md) for the full schema.
 
 ```bash
