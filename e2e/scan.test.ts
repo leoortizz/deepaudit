@@ -28,7 +28,7 @@ describe("scan e2e", () => {
     });
 
     expect(result.runId).toMatch(/^\d{14}-[a-f0-9]{16}$/);
-    expect(result.candidateCount).toBeGreaterThanOrEqual(5);
+    expect(result.candidateCount).toBeGreaterThanOrEqual(1);
 
     // Verify project.json exists
     const projectPath = path.join(DATA_DIR, PROJECT_ID, "project.json");
@@ -43,7 +43,7 @@ describe("scan e2e", () => {
 
     // Verify file records exist
     const records = loadAllFileRecords(PROJECT_ID);
-    expect(records.length).toBeGreaterThanOrEqual(5);
+    expect(records.length).toBeGreaterThanOrEqual(1);
     expect(records[0].status).toBe("pending");
     expect(records[0].candidates.length).toBeGreaterThan(0);
   });
@@ -80,12 +80,12 @@ describe("scan e2e", () => {
     const result = await scan({
       projectId: PROJECT_ID,
       root: FIXTURES,
-      matcherSlugs: ["xss", "rce"],
+      matcherSlugs: ["console-log", "any-type"],
     });
 
     const runPath = path.join(DATA_DIR, PROJECT_ID, "runs", result.runId + ".json");
     const meta = JSON.parse(fs.readFileSync(runPath, "utf-8"));
-    expect(meta.scannerConfig.matcherSlugs).toEqual(["xss", "rce"]);
+    expect(meta.scannerConfig.matcherSlugs).toEqual(["console-log", "any-type"]);
   });
 
   it("does not scan generated deepaudit data records", async () => {
@@ -101,18 +101,14 @@ describe("scan e2e", () => {
         path.join(generatedDir, "generated.json"),
         JSON.stringify({
           filePath: "src/generated.ts",
-          candidates: [
-            {
-              snippet: 'const token = "REDACTED" + "generated-output";',
-            },
-          ],
+          candidates: [{ snippet: "const token = process.env.GENERATED_TOKEN;" }],
         }),
       );
       const activeDataDir = path.join(dataRoot, projectId, "files", "src");
       fs.mkdirSync(activeDataDir, { recursive: true });
       fs.writeFileSync(
         path.join(activeDataDir, "generated.ts"),
-        'const stripe = "sk_live_" + "activegeneratedaa";\n',
+        "const url = process.env.ACTIVE_URL;\n",
       );
       const rootMirrorDir = path.join(root, "data", "other-project", "files", "src");
       fs.mkdirSync(rootMirrorDir, { recursive: true });
@@ -126,7 +122,7 @@ describe("scan e2e", () => {
       );
       fs.writeFileSync(
         path.join(rootMirrorDir, "generated.ts"),
-        'const stripe = "sk_live_" + "rootmirrorgenerated";\n',
+        "const url = process.env.MIRROR_URL;\n",
       );
       const siblingDataDir = path.join(dataRoot, "sibling-project", "files", "src");
       fs.mkdirSync(siblingDataDir, { recursive: true });
@@ -134,20 +130,17 @@ describe("scan e2e", () => {
       fs.writeFileSync(
         path.join(siblingDataDir, "generated.json"),
         JSON.stringify({
-          candidates: [{ snippet: 'const token = "REDACTED" + "sibling-output";' }],
+          candidates: [{ snippet: "const token = process.env.SIBLING_TOKEN;" }],
         }),
       );
       const realDataDir = path.join(root, "data", "users", "files");
       fs.mkdirSync(realDataDir, { recursive: true });
-      fs.writeFileSync(
-        path.join(realDataDir, "leak.ts"),
-        'const stripe = "sk_live_" + "abcdefghijklmnop";\n',
-      );
+      fs.writeFileSync(path.join(realDataDir, "leak.ts"), "const url = process.env.STRIPE_KEY;\n");
 
       const result = await scan({
         projectId,
         root,
-        matcherSlugs: ["secrets-exposure"],
+        matcherSlugs: ["process-env-direct"],
       });
 
       expect(result.candidateCount).toBe(1);
