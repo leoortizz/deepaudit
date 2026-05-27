@@ -542,35 +542,33 @@ export function buildRevalidatePrompt(params: {
     0,
   );
 
-  const prompt = `You are a world-class security researcher performing an adversarial review of vulnerability violations. Your goal is to determine, with high confidence, whether each violation is real and exploitable. You must be thorough — incorrect verdicts here directly impact security decisions.
+  const prompt = `You are a meticulous senior engineer performing a second-pass review of rule violations flagged in an earlier audit. Your goal is to determine, with high confidence, whether each violation still holds against the current code AND the project's rules. Incorrect verdicts here directly affect what shows up in audit reports.
 
-**Take your time.** Read every relevant file. Trace every code path. Do not make assumptions — verify.
+**Take your time.** Read every relevant file. Re-read the rule the violation cites. Do not make assumptions — verify.
 
-**Static analysis only.** Do NOT attempt to reproduce, exploit, or trigger any violation. Do not run the target code, send requests against any endpoint, or execute proof-of-concept scripts. Reach your verdict from the source code alone.
+**Static analysis only.** Do NOT run, build, or test the target code. Reach your verdict from the source code and git history alone.
 
-${projectRules ? `## Project Context\n\n${projectRules}\n` : ""}
+${projectRules ? `## Project Rules\n\n${projectRules}\n` : ""}
 
 ${fileSections.join("\n---\n\n")}
 
-## Investigation Process
+## Review Process
 
 For EACH violation, perform ALL of these steps before rendering a verdict:
 
-1. **Read the target file fully** — not just the flagged lines, the entire file
-2. **Read all imports that matter** — middleware, auth utilities, validation helpers, the framework's request pipeline
-3. **Trace the data flow end-to-end** — Where does the input enter? What transformations happen? Is there validation or sanitization?
-4. **Think like an attacker** — Construct a concrete attack scenario. If you can't, it's likely a false positive.
-5. **Check for framework-level protections** — Next.js middleware, withSchema auth strategies, CSRF tokens, CORS headers
-6. **Check the current code vs. the violation** — Has the vulnerable code been modified or removed? Check git history.
-7. **Assess confidence honestly** — If you're not sure, say "uncertain". Don't guess.
+1. **Read the target file fully** — not just the flagged lines, the entire file.
+2. **Re-read the rule** the violation claims is broken. Is the violation a fair reading of the rule, or does it stretch the rule's intent?
+3. **Check current code vs. the violation** — Has the offending code been modified or removed? Use the recent git history below.
+4. **Look for documented exceptions** — Is there an inline comment that explicitly opts out of the rule, with reasoning?
+5. **Assess confidence honestly** — If you're not sure, say "uncertain". Don't guess.
 
 ## Verdicts
 
-- **true-positive** — Real AND exploitable. You can describe a concrete attack.
-- **false-positive** — Not exploitable. Name the specific mitigation.
-- **fixed** — Was real but has been patched. Cite the change.
+- **true-positive** — Violation still holds. Cite the lines and the rule it breaks.
+- **false-positive** — The original violation misapplied the rule, or the rule doesn't actually apply here. Name the specific reason.
+- **fixed** — Was a real violation but has been addressed. Cite the change (commit or current state).
 - **uncertain** — Can't determine. Explain what's ambiguous.
-- **duplicate** — This violation describes the **same underlying vulnerability** at the **same code location** as another violation in the **same file** (e.g., two matchers flagged the same line range from different angles, or the same auth bypass surfaced twice with different phrasing). Set \`duplicateOf\` to the exact \`title\` of the primary violation — the one that should keep the canonical verdict. Same vuln class in a different location is **not** a duplicate.
+- **duplicate** — This violation describes the **same underlying issue** at the **same code location** as another violation in the **same file** (e.g., two matchers flagged the same line from different angles). Set \`duplicateOf\` to the exact \`title\` of the primary violation — the one that should keep the canonical verdict. The same rule broken at a different location is **not** a duplicate.
 
 If severity should change, set \`adjustedSeverity\`. Omit if correct.
 
@@ -589,7 +587,7 @@ If severity should change, set \`adjustedSeverity\`. Omit if correct.
     "filePath": "exact/path/to/file.ts",
     "title": "exact title from the violation",
     "verdict": "true-positive" | "false-positive" | "fixed" | "uncertain" | "duplicate",
-    "adjustedSeverity": "CRITICAL" | "HIGH" | "MEDIUM" | "HIGH" | "MEDIUM",
+    "adjustedSeverity": "CRITICAL" | "HIGH" | "MEDIUM" | "NIT",
     "duplicateOf": "title of the primary violation (only when verdict is duplicate)",
     "reasoning": "Detailed explanation (5-10 sentences). Show your work."
   }
