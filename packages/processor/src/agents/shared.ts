@@ -331,16 +331,15 @@ export function buildInvestigatePrompt(params: {
     .join("\n");
 
   // Composition note: when called from the modular `assemblePrompt`
-  // pipeline, the system-prompt half (intro, severity, FP guidance,
-  // tech highlights, slug notes, INFO.md) already lives in
+  // pipeline, the system-prompt half (intro, severity, mitigation
+  // guidance, tech highlights, slug notes, RULES.md) already lives in
   // `promptTemplate`. We just append the per-batch concrete list +
-  // procedural steps + output spec — no need to repeat the "scanner
-  // casts a wide net" intro here.
+  // procedural steps + output spec — no need to repeat the framing here.
   //
   // `projectInfo` is only emitted when the caller passes it explicitly.
-  // The processor's modular path passes `""` because INFO.md is already
+  // The processor's modular path passes `""` because RULES.md is already
   // in the assembled prompt; custom-template callers (--prompt-template)
-  // pass the loaded INFO.md so it still reaches the model.
+  // pass the loaded RULES.md so it still reaches the model.
   const projectInfoBlock = projectInfo ? `## Project Context\n\n${projectInfo}\n\n` : "";
 
   return `${promptTemplate}
@@ -349,18 +348,18 @@ ${projectInfoBlock}## Target Files
 
 ${fileList}
 
-## Investigation Instructions
+## Review Instructions
 
 For each file:
-1. **Read the file fully** using the Read tool
-2. **Trace data flows** — where does input come from? Is it user-controlled?
-3. **Follow imports** — read related files (middleware, utils, shared libs) to understand the full picture
-4. **Check for mitigations** — is there sanitization, validation, auth middleware, or framework protection?
-5. **Think broadly** — look for issues beyond what the scanner flagged. The scanner only finds surface patterns; you should reason about logic bugs, race conditions, missing checks, etc.
+1. **Read the file fully** using the Read tool.
+2. **Hold the rules in mind** — re-read RULES.md if you're not sure which rule applies.
+3. **Follow imports** when the rule's scope depends on what's being called (e.g. a rule about validating inputs at boundaries needs you to know what's a boundary).
+4. **Check for in-source mitigations** — an explicit comment documenting an intentional exception is reason NOT to flag.
+5. **Stay focused** — only flag genuine violations of rules that were given to you. Skip drive-by style suggestions.
 
 ## Output Format
 
-After your investigation, output a JSON block with your violations for EACH file. Use this exact format:
+After your review, output a JSON block with your violations for EACH file. Use this exact format:
 
 \`\`\`json
 [
@@ -368,12 +367,12 @@ After your investigation, output a JSON block with your violations for EACH file
     "filePath": "relative/path/to/file.ts",
     "violations": [
       {
-        "severity": "CRITICAL|HIGH|MEDIUM|HIGH|MEDIUM",
-        "ruleSlug": "the-vuln-slug-or-other",
-        "title": "Brief title of the issue",
-        "description": "Detailed description of the vulnerability, the attack scenario, and evidence from the code",
+        "severity": "CRITICAL|HIGH|MEDIUM|NIT",
+        "ruleSlug": "the-rule-slug",
+        "title": "Brief title of the violation",
+        "description": "What the code does, which rule it violates, and the evidence",
         "lineNumbers": [10, 15],
-        "recommendation": "How to fix this vulnerability",
+        "recommendation": "Concretely, what should change",
         "confidence": "high|medium|low"
       }
     ]
@@ -382,13 +381,14 @@ After your investigation, output a JSON block with your violations for EACH file
 \`\`\`
 
 **Severity levels:**
-- **CRITICAL / HIGH / MEDIUM** — security vulnerabilities (exploitable by an attacker)
-- **HIGH** — major non-security bugs that could cause data loss, corruption, outages, or seriously broken behavior
-- **MEDIUM** — notable non-security bugs (logic errors, race conditions, resource leaks) that don't rise to HIGH
+- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, security regressions, broken builds, leaked secrets).
+- **HIGH** — Clear violation with material impact.
+- **MEDIUM** — Real violation but limited blast radius.
+- **NIT** — Minor, subjective, or stylistic. Use sparingly.
 
-**ruleSlug** can be any of the known categories OR a custom slug for issues not covered by the scanner. Use \`"other"\` as the slug prefix for novel violations (e.g., \`"other-race-condition"\`, \`"other-logic-bug"\`, \`"other-info-disclosure"\`).
+**ruleSlug** identifies which rule was broken. Use the slug from the matcher when one fired; otherwise pick a short kebab-case identifier that names the rule (e.g. \`no-console-log\`, \`prefer-named-exports\`, \`document-public-apis\`). Prefix with \`other-\` for violations that aren't covered by any registered rule slug.
 
-If a file has no real vulnerabilities after thorough investigation, include it with an empty violations array.`;
+If a file has no violations after careful review, include it with an empty violations array.`;
 }
 
 /**

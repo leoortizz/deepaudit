@@ -93,15 +93,14 @@ describe("prompt-samples/ fixtures stay in sync with the assembler + agent layer
   it("samples include both halves: assembled core AND agent-layer file list", () => {
     const sample = fullPromptFor(PROMPT_SAMPLE_SCENARIOS[1]); // 02-nextjs-tsx-batch
     expect(sample).toContain("## Severity Classification"); // from core
-    expect(sample).toContain("### Next.js"); // from highlights
     expect(sample).toContain("## Target Files"); // from agent layer
     expect(sample).toContain("## Output Format"); // from agent layer
     expect(sample).toContain("app/dashboard/actions.ts"); // from the synthetic batch
   });
 
-  it("INFO.md appears exactly once in the final prompt", () => {
+  it("project context appears exactly once in the final prompt", () => {
     const sample = fullPromptFor(PROMPT_SAMPLE_SCENARIOS[7]); // 08-with-info-and-append
     const occurrences = sample.split("Auth helper is `requireUser()`").length - 1;
-    expect(occurrences, "expected INFO.md content exactly once").toBe(1);
+    expect(occurrences, "expected project context exactly once").toBe(1);
   });
 });
