@@ -1,4 +1,4 @@
-import type { CandidateMatch, FileRecord, Finding, OwnershipData } from "./types.js";
+import type { CandidateMatch, FileRecord, OwnershipData, Violation } from "./types.js";
 
 // --- Scanner ---
 
@@ -109,13 +109,13 @@ export interface PeopleProvider {
 // --- Notifiers ---
 
 export interface NotifyParams {
-  finding: Finding;
+  violation: Violation;
   record: FileRecord;
   projectId: string;
 }
 
-/** Generic record describing where a finding has been reported. */
-export interface FindingNotification {
+/** Generic record describing where a violation has been reported. */
+export interface ViolationNotification {
   notifierName: string;
   notifiedAt: string;
   /** Notifier-defined identifier — Slack message ts, GitHub issue id, etc. */
@@ -126,7 +126,7 @@ export interface FindingNotification {
 
 export interface NotifierPlugin {
   name: string;
-  notify(params: NotifyParams): Promise<FindingNotification>;
+  notify(params: NotifyParams): Promise<ViolationNotification>;
 }
 
 // --- Remote executor ---

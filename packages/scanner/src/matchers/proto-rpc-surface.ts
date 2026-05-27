@@ -67,7 +67,7 @@ export const protoRpcSurfaceMatcher: MatcherPlugin = {
       const s = Math.max(0, firstMessage - 1);
       const e = Math.min(lines.length, firstMessage + 4);
       const match: CandidateMatch = {
-        vulnSlug: "proto-rpc-surface",
+        ruleSlug: "proto-rpc-surface",
         lineNumbers: [firstMessage + 1],
         snippet: lines.slice(s, e).join("\n"),
         matchedPattern: "proto message/enum (no service block)",
@@ -75,7 +75,7 @@ export const protoRpcSurfaceMatcher: MatcherPlugin = {
       return [match];
     }
     const match: CandidateMatch = {
-      vulnSlug: "proto-rpc-surface",
+      ruleSlug: "proto-rpc-surface",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(", "),

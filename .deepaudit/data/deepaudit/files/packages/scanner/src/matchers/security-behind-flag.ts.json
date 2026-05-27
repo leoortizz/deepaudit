@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         11,
         30
@@ -20,7 +20,7 @@
       "matchedPattern": "auth verification call"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         10
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         13
       ],
@@ -36,7 +36,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         16
       ],
@@ -44,7 +44,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         19
       ],
@@ -52,7 +52,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         23
       ],
@@ -60,7 +60,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         26
       ],
@@ -68,7 +68,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         29
       ],
@@ -76,7 +76,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         32
       ],
@@ -84,7 +84,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         35
       ],
@@ -92,7 +92,7 @@
       "matchedPattern": "Security operation gated by feature flag — verify fail-safe when flag is off"
     },
     {
-      "vulnSlug": "security-behind-flag",
+      "ruleSlug": "security-behind-flag",
       "lineNumbers": [
         39
       ],
@@ -103,7 +103,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.599Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "4798192125c918426b0a30ddbb8361aacbed277ef934cf09e5a2d41bf8286574",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -116,7 +116,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "69ed0493-8625-4abd-8306-37c866228f23",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.21502700000000002,
       "usage": {
@@ -141,7 +141,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b5a-79c1-8782-d679e7129e7b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.05059860000000001,

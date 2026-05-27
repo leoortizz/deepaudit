@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "github-workflow-security",
+      "ruleSlug": "github-workflow-security",
       "lineNumbers": [
         23,
         27,
@@ -21,10 +21,10 @@
   "lastScannedAt": "2026-05-06T21:46:56.812Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "7cd4691acbe1a3a0427727fb9e38c3d47cb01e25ce4f1f348e0c6fbd27ccf662",
-  "findings": [
+  "violations": [
     {
       "severity": "HIGH",
-      "vulnSlug": "other-ci-command-injection",
+      "ruleSlug": "other-ci-command-injection",
       "title": "Pull request base ref is interpolated directly into a shell command",
       "description": "The analyze job runs with AI_GATEWAY_API_KEY in the environment and builds a shell script containing `--diff origin/${{ github.event.pull_request.base.ref }}`. GitHub expression interpolation happens before bash parsing, so a pull request base ref containing shell metacharacters can alter the command executed in the secret-bearing step. The same-repo PR check limits this to actors who can create or target branches in the repository, but within that boundary it can lead to arbitrary command execution in CI and exposure of the AI gateway credential.",
       "lineNumbers": [
@@ -45,7 +45,7 @@
     },
     {
       "severity": "MEDIUM",
-      "vulnSlug": "other-github-actions-supply-chain",
+      "ruleSlug": "other-github-actions-supply-chain",
       "title": "GitHub Actions are referenced by mutable tags instead of immutable SHAs",
       "description": "The workflow uses mutable action refs such as `actions/checkout@v4`, `pnpm/action-setup@v4`, `actions/setup-node@v4`, `actions/upload-artifact@v4`, `actions/download-artifact@v4`, and `actions/github-script@v7`. If one of these tags is retargeted or an action maintainer account is compromised, attacker-controlled action code can run in the workflow. In the analyze job this can tamper with later steps that receive AI_GATEWAY_API_KEY, and in the comment job `actions/github-script` runs with pull-requests:write.",
       "lineNumbers": [
@@ -61,7 +61,7 @@
       "producedByRunId": "20260506214906-e8344a39c222e863",
       "revalidation": {
         "verdict": "fixed",
-        "reasoning": "The current workflow pins every referenced action to a full commit SHA rather than a mutable version tag. actions/checkout, pnpm/action-setup, actions/setup-node, actions/upload-artifact, actions/download-artifact, and actions/github-script are all referenced with 40-character commit hashes, with the human-readable version retained only as a comment. That removes the specific mutable-tag retargeting attack described in the finding. The analyze job still has a secret-bearing step and the comment job still has pull-requests:write, so action supply-chain integrity matters here, but the cited action refs are no longer mutable tags. I did not find any remaining uses of the listed action@vN forms in the workflow. Git history is unavailable in this checkout, so this verdict is based on the current file contents.",
+        "reasoning": "The current workflow pins every referenced action to a full commit SHA rather than a mutable version tag. actions/checkout, pnpm/action-setup, actions/setup-node, actions/upload-artifact, actions/download-artifact, and actions/github-script are all referenced with 40-character commit hashes, with the human-readable version retained only as a comment. That removes the specific mutable-tag retargeting attack described in the violation. The analyze job still has a secret-bearing step and the comment job still has pull-requests:write, so action supply-chain integrity matters here, but the cited action refs are no longer mutable tags. I did not find any remaining uses of the listed action@vN forms in the workflow. Git history is unavailable in this checkout, so this verdict is based on the current file contents.",
         "revalidatedAt": "2026-05-06T22:53:17.568Z",
         "runId": "20260506225213-a24434e8e112616a",
         "model": "gpt-5.5"
@@ -79,7 +79,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-305a-7b10-b4f8-ec1465617bb1",
-      "findingCount": 2,
+      "violationCount": 2,
       "numTurns": 0.3333333333333333,
       "phase": "process",
       "costUsd": 0.12562633333333334,
@@ -105,7 +105,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b6b-7761-82db-0547b8609d5b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1292618,
@@ -132,7 +132,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff72-8994-7cb0-87ce-5db24fe83e1b",
-      "findingCount": 2,
+      "violationCount": 2,
       "numTurns": 0.2,
       "phase": "revalidate",
       "costUsd": 0.1468248,
@@ -158,7 +158,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f8cd-7013-8dc9-2787b888e7c2",
-      "findingCount": 2,
+      "violationCount": 2,
       "numTurns": 0.5,
       "phase": "revalidate",
       "costUsd": 0.101808,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         53,
         116,
@@ -14,7 +14,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         93,
         96,
@@ -26,7 +26,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         56,
         101,
@@ -36,7 +36,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         238,
         650
@@ -45,7 +45,7 @@
       "matchedPattern": "readFile with request-derived path"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         223,
         635
@@ -54,7 +54,7 @@
       "matchedPattern": "path.resolve with request-derived input"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         44,
         87
@@ -63,7 +63,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         126
       ],
@@ -71,7 +71,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         56
       ],
@@ -79,7 +79,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         101
       ],
@@ -87,7 +87,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         103
       ],
@@ -95,7 +95,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         123
       ],
@@ -103,7 +103,7 @@
       "matchedPattern": "Token refresh logic (verify validation)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         101
       ],
@@ -111,7 +111,7 @@
       "matchedPattern": "JSON.stringify near HTML injection point (safeJsonStringify in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         103
       ],
@@ -119,7 +119,7 @@
       "matchedPattern": "JSON.stringify near HTML injection point (safeJsonStringify in scope — verify usage)"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         158,
         737
@@ -128,7 +128,7 @@
       "matchedPattern": "readFile with request-derived path"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         143,
         722
@@ -140,12 +140,12 @@
   "lastScannedAt": "2026-05-06T21:46:56.441Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "65a6d19f1725b0a93fd2549dd8540c4f736072cb89f75b079dcd4cb452298c70",
-  "findings": [
+  "violations": [
     {
-      "severity": "HIGH_BUG",
-      "vulnSlug": "other-race-condition",
+      "severity": "HIGH",
+      "ruleSlug": "other-race-condition",
       "title": "Concurrent process runs can claim and write the same file records",
-      "description": "The processor selects work from a snapshot of all file records, then later writes `status = \"processing\"` and `lockedByRunId` for every selected record without an atomic claim or re-read. If two `process()` invocations start at the same time against the same project, both can observe the same `pending` or `error` records before either lock is written. Both then process the same files and later call `writeFileRecord`, so the last writer can clobber findings, analysis history, status, and lock metadata from the other run. The stale-lock logic only helps with records that were already marked `processing` before selection; it does not protect the pending-to-processing transition.",
+      "description": "The processor selects work from a snapshot of all file records, then later writes `status = \"processing\"` and `lockedByRunId` for every selected record without an atomic claim or re-read. If two `process()` invocations start at the same time against the same project, both can observe the same `pending` or `error` records before either lock is written. Both then process the same files and later call `writeFileRecord`, so the last writer can clobber violations, analysis history, status, and lock metadata from the other run. The stale-lock logic only helps with records that were already marked `processing` before selection; it does not protect the pending-to-processing transition.",
       "lineNumbers": [
         307,
         357,
@@ -157,7 +157,7 @@
       "producedByRunId": "20260506215246-3a3061e5bb87dbb9",
       "revalidation": {
         "verdict": "true-positive",
-        "reasoning": "The current processor has been improved from the snapshot-only behavior described in the finding: after selecting records from `loadAllFileRecords`, it re-reads each record before claiming it, writes `status = \"processing\"`, and then reads the record back to verify `lockedByRunId`. That reduces the common race, but it is still not an atomic claim. `writeFileRecord` in `packages/core/src/run.ts` is a plain `fs.writeFileSync` of the JSON file, with no exclusive lock, compare-and-swap, hard-link lock, or atomic rename conditioned on prior state. A concrete interleaving remains possible: run A and run B both read the same pending record, A writes and verifies its own lock, then B writes and verifies its own lock; both have pushed the record into `claimed` and both proceed to process and later write results. The comment in the current code explicitly acknowledges this limitation, saying `writeFileRecord is not a true CAS` and that last-writer races are still possible. Force modes make the behavior even weaker because `reinvestigate` or direct `filePaths` bypass the normal claimability skip and can overwrite another run's processing lock. The stale-lock logic only governs records already observed as `processing`; it does not provide an atomic pending-to-processing transition. This is a real local data-integrity bug rather than a remote security boundary issue, so the original `HIGH_BUG` severity is appropriate.",
+        "reasoning": "The current processor has been improved from the snapshot-only behavior described in the violation: after selecting records from `loadAllFileRecords`, it re-reads each record before claiming it, writes `status = \"processing\"`, and then reads the record back to verify `lockedByRunId`. That reduces the common race, but it is still not an atomic claim. `writeFileRecord` in `packages/core/src/run.ts` is a plain `fs.writeFileSync` of the JSON file, with no exclusive lock, compare-and-swap, hard-link lock, or atomic rename conditioned on prior state. A concrete interleaving remains possible: run A and run B both read the same pending record, A writes and verifies its own lock, then B writes and verifies its own lock; both have pushed the record into `claimed` and both proceed to process and later write results. The comment in the current code explicitly acknowledges this limitation, saying `writeFileRecord is not a true CAS` and that last-writer races are still possible. Force modes make the behavior even weaker because `reinvestigate` or direct `filePaths` bypass the normal claimability skip and can overwrite another run's processing lock. The stale-lock logic only governs records already observed as `processing`; it does not provide an atomic pending-to-processing transition. This is a real local data-integrity bug rather than a remote security boundary issue, so the original `HIGH` severity is appropriate.",
         "revalidatedAt": "2026-05-06T22:53:31.741Z",
         "runId": "20260506225212-5caaae95a2b00493",
         "model": "gpt-5.5"
@@ -176,7 +176,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "8065c73f-0323-4e92-b23a-ddf054c61090",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 10,
       "costUsd": 2.08821755,
       "usage": {
@@ -201,7 +201,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c3c-7b43-b419-c899fb7eac8f",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1639258,
@@ -228,7 +228,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff72-8994-71d3-9be2-dbac69e4c2f1",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.25,
       "phase": "revalidate",
       "costUsd": 0.13210575,
@@ -254,7 +254,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f2a9-7dc3-bd44-c78eb1048e33",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.5,
       "phase": "revalidate",
       "costUsd": 0.1678645,

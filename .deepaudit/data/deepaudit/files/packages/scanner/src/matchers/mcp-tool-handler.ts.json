@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         8,
         10,
@@ -13,7 +13,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "mcp-tool-handler",
+      "ruleSlug": "mcp-tool-handler",
       "lineNumbers": [
         32
       ],
@@ -21,7 +21,7 @@
       "matchedPattern": "MCP tool registration: server.tool(...)"
     },
     {
-      "vulnSlug": "mcp-tool-handler",
+      "ruleSlug": "mcp-tool-handler",
       "lineNumbers": [
         33
       ],
@@ -32,7 +32,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.483Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5cbfcbe8b1a9dfb4a89fb9909daf692c1e5320d43a651e3e184a72ca3771f0e1",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -45,7 +45,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "6e1bc416-d19e-4cf0-9899-296107ff9cc4",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4026835,
       "usage": {
@@ -70,7 +70,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c27-7280-923b-dd092bb40b71",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.044457,

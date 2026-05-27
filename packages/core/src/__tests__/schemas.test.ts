@@ -8,7 +8,7 @@ describe("fileRecordSchema", () => {
       projectId: "test",
       candidates: [
         {
-          vulnSlug: "xss",
+          ruleSlug: "xss",
           lineNumbers: [10, 15],
           snippet: "some code",
           matchedPattern: "dangerouslySetInnerHTML",
@@ -17,14 +17,14 @@ describe("fileRecordSchema", () => {
       lastScannedAt: "2026-04-01T14:30:52.000Z",
       lastScannedRunId: "20260401-a1b2",
       fileHash: "abc123",
-      findings: [],
+      violations: [],
       analysisHistory: [],
       status: "pending",
     };
     expect(() => fileRecordSchema.parse(valid)).not.toThrow();
   });
 
-  it("accepts analyzed file record with findings and history", () => {
+  it("accepts analyzed file record with violations and history", () => {
     const valid = {
       filePath: "src/api/users.ts",
       projectId: "test",
@@ -32,10 +32,10 @@ describe("fileRecordSchema", () => {
       lastScannedAt: "2026-04-01T14:30:52.000Z",
       lastScannedRunId: "run1",
       fileHash: "abc",
-      findings: [
+      violations: [
         {
           severity: "HIGH",
-          vulnSlug: "xss",
+          ruleSlug: "xss",
           title: "XSS via innerHTML",
           description: "desc",
           lineNumbers: [10],
@@ -51,7 +51,7 @@ describe("fileRecordSchema", () => {
           agentType: "claude-agent-sdk",
           model: "claude-opus-4-6",
           modelConfig: {},
-          findingCount: 1,
+          violationCount: 1,
         },
       ],
       status: "analyzed",
@@ -67,7 +67,7 @@ describe("fileRecordSchema", () => {
       lastScannedAt: "2026-04-01",
       lastScannedRunId: "x",
       fileHash: "x",
-      findings: [],
+      violations: [],
       analysisHistory: [],
       status: "invalid",
     };
@@ -104,7 +104,7 @@ describe("runMetaSchema", () => {
         model: "claude-opus-4-6",
         modelConfig: { maxTurns: 50 },
       },
-      stats: { filesProcessed: 3, findingsCount: 2 },
+      stats: { filesProcessed: 3, violationsCount: 2 },
     };
     expect(() => runMetaSchema.parse(valid)).not.toThrow();
   });

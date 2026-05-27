@@ -8,7 +8,7 @@ function makeRecord(filePath: string): FileRecord {
     projectId: "test",
     candidates: [
       {
-        vulnSlug: "xss",
+        ruleSlug: "xss",
         lineNumbers: [1],
         snippet: "code",
         matchedPattern: "test",
@@ -17,7 +17,7 @@ function makeRecord(filePath: string): FileRecord {
     lastScannedAt: "2026-04-01T00:00:00Z",
     lastScannedRunId: "run1",
     fileHash: "abc",
-    findings: [],
+    violations: [],
     analysisHistory: [],
     status: "pending",
   };

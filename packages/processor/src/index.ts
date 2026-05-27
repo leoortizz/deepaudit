@@ -123,10 +123,10 @@ export async function process(params: {
 }): Promise<{
   runId: string;
   analysisCount: number;
-  findingCount: number;
+  violationCount: number;
   /**
    * Batches whose agent threw — i.e. produced no usable result text after
-   * retries. Distinct from a clean run with zero findings: a non-zero
+   * retries. Distinct from a clean run with zero violations: a non-zero
    * count means the agent failed to run (missing binary, gateway error,
    * crashed CLI). CI gates on this so a silent fail doesn't pass.
    */
@@ -227,7 +227,7 @@ export async function process(params: {
       return p;
     }
     const batchSlugs = Array.from(
-      new Set(batch.flatMap((r) => r.candidates.map((c) => c.vulnSlug))),
+      new Set(batch.flatMap((r) => r.candidates.map((c) => c.ruleSlug))),
     );
     // Per-batch tech filtering: keep only the highlights whose language
     // matches a file in this specific batch. A batch of pure Python
@@ -258,7 +258,7 @@ export async function process(params: {
         type: "all_complete",
         message: `Run ${runId} already completed`,
       });
-      return { runId, analysisCount: 0, findingCount: 0, errorBatchCount: 0 };
+      return { runId, analysisCount: 0, violationCount: 0, errorBatchCount: 0 };
     }
   } else {
     // Create new run
@@ -300,7 +300,7 @@ export async function process(params: {
     // race we're protecting against: two `process()` invocations against
     // the same project at the same time. Without this check, the second
     // run grabs files the first run is mid-investigation on, both write
-    // back, and findings/history get clobbered.
+    // back, and violations/history get clobbered.
     //
     // A lock is reclaimable when ANY of:
     //   1. The owning run's RunMeta says it's done/error/missing — the
@@ -431,7 +431,7 @@ export async function process(params: {
       params.skipSlugs && params.skipSlugs.length > 0 ? new Set(params.skipSlugs) : undefined;
     if (onlySet || skipSet) {
       toProcess = toProcess.filter((r) => {
-        const slugs = r.candidates.map((c) => c.vulnSlug);
+        const slugs = r.candidates.map((c) => c.ruleSlug);
         if (onlySet && !slugs.some((s) => onlySet.has(s))) return false;
         // Keep the record if any slug is NOT in the skip set — if all are skipped, drop it
         if (skipSet && slugs.length > 0 && slugs.every((s) => skipSet.has(s))) return false;
@@ -442,8 +442,8 @@ export async function process(params: {
     // Sort: noise tier first (precise > normal > noisy), then priority paths
     toProcess.sort((a, b) => {
       // Primary: noise tier (precise matchers first)
-      const aSlugs = a.candidates.map((c) => c.vulnSlug);
-      const bSlugs = b.candidates.map((c) => c.vulnSlug);
+      const aSlugs = a.candidates.map((c) => c.ruleSlug);
+      const bSlugs = b.candidates.map((c) => c.ruleSlug);
       const noiseDiff = noiseScore(aSlugs) - noiseScore(bSlugs);
       if (noiseDiff !== 0) return noiseDiff;
 
@@ -467,7 +467,7 @@ export async function process(params: {
         message: "No files to process",
       });
       completeRun(projectId, runId, "done", { filesProcessed: 0 });
-      return { runId, analysisCount: 0, findingCount: 0, errorBatchCount: 0 };
+      return { runId, analysisCount: 0, violationCount: 0, errorBatchCount: 0 };
     }
 
     // Apply path filter
@@ -537,12 +537,12 @@ export async function process(params: {
         message: "Nothing to claim — another run owned every candidate file.",
       });
       completeRun(projectId, runId, "done", { filesProcessed: 0 });
-      return { runId, analysisCount: 0, findingCount: 0, errorBatchCount: 0 };
+      return { runId, analysisCount: 0, violationCount: 0, errorBatchCount: 0 };
     }
 
     const batches = batchCandidates(toProcess, params.batchSize);
     let totalAnalyses = 0;
-    let totalFindings = 0;
+    let totalViolations = 0;
     let totalCostUsd = 0;
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
@@ -638,28 +638,28 @@ export async function process(params: {
 
         // Update file records with results + metadata.
         //
-        // Re-investigation always *merges* — existing findings are preserved
-        // and only the agent's net-new findings (signature not already on the
-        // file) get appended. Signature: vulnSlug + normalized title
+        // Re-investigation always *merges* — existing violations are preserved
+        // and only the agent's net-new violations (signature not already on the
+        // file) get appended. Signature: ruleSlug + normalized title
         // (lowercase, trimmed). This tolerates minor wording drift while still
         // suppressing duplicates from re-runs. The first analysis on a file
-        // (no prior findings) lands as-is.
+        // (no prior violations) lands as-is.
         for (const res of results) {
           const record = batch.find((r) => r.filePath === res.filePath);
           if (!record) continue;
 
           const sig = (slug: string | undefined, title: string | undefined) =>
             `${slug ?? ""}::${(title ?? "").trim().toLowerCase()}`;
-          const existing = new Set((record.findings ?? []).map((f) => sig(f.vulnSlug, f.title)));
-          const newFindings = res.findings
-            .filter((f) => !existing.has(sig(f.vulnSlug, f.title)))
+          const existing = new Set((record.violations ?? []).map((f) => sig(f.ruleSlug, f.title)));
+          const newViolations = res.violations
+            .filter((f) => !existing.has(sig(f.ruleSlug, f.title)))
             // Stamp the originating run so PR comments and post-run
-            // tooling can filter to net-new findings only. Findings from
+            // tooling can filter to net-new violations only. Violations from
             // earlier runs keep their (older) producedByRunId — or
-            // undefined for findings written before this field existed.
+            // undefined for violations written before this field existed.
             .map((f) => ({ ...f, producedByRunId: runId }));
-          record.findings = [...(record.findings ?? []), ...newFindings];
-          const findingsForHistoryCount = newFindings.length;
+          record.violations = [...(record.violations ?? []), ...newViolations];
+          const violationsForHistoryCount = newViolations.length;
 
           record.analysisHistory.push({
             runId,
@@ -670,7 +670,7 @@ export async function process(params: {
             model,
             modelConfig: config,
             agentSessionId: batchMeta.agentSessionId,
-            findingCount: findingsForHistoryCount,
+            violationCount: violationsForHistoryCount,
             numTurns: perFileNumTurns,
             phase: "process",
             costUsd: perFileCost,
@@ -693,9 +693,9 @@ export async function process(params: {
 
           totalAnalyses++;
           // Count net-new only — re-runs of analyzed files that produce
-          // duplicates of existing findings shouldn't inflate the run
+          // duplicates of existing violations shouldn't inflate the run
           // total (and shouldn't fail the CLI exit gate in direct mode).
-          totalFindings += newFindings.length;
+          totalViolations += newViolations.length;
         }
 
         // Mark any files not in results as error
@@ -712,7 +712,7 @@ export async function process(params: {
         batchesCompleted++;
         emitProgress({
           type: "batch_complete",
-          message: `Batch ${i + 1}/${batches.length} complete: ${results.length} analyses, ${results.reduce((s, r) => s + r.findings.length, 0)} findings (${batchesInFlight} in flight, ${batchesCompleted}/${batches.length} done)`,
+          message: `Batch ${i + 1}/${batches.length} complete: ${results.length} analyses, ${results.reduce((s, r) => s + r.violations.length, 0)} violations (${batchesInFlight} in flight, ${batchesCompleted}/${batches.length} done)`,
           batchIndex: i,
           totalBatches: batches.length,
         });
@@ -768,7 +768,7 @@ export async function process(params: {
 
     completeRun(projectId, runId, "done", {
       filesProcessed: totalAnalyses,
-      findingsCount: totalFindings,
+      violationsCount: totalViolations,
       totalCostUsd,
       totalInputTokens,
       totalOutputTokens,
@@ -779,13 +779,13 @@ export async function process(params: {
       type: "all_complete",
       message: quotaExhausted
         ? `Processing stopped: ${quotaExhausted.source} quota/credits exhausted (${totalAnalyses} analyses, ${batchesFailed} batch(es) failed before stop)`
-        : `Processing complete: ${totalAnalyses} analyses, ${totalFindings} findings${batchesFailed > 0 ? `, ${batchesFailed} batch(es) failed` : ""}`,
+        : `Processing complete: ${totalAnalyses} analyses, ${totalViolations} violations${batchesFailed > 0 ? `, ${batchesFailed} batch(es) failed` : ""}`,
     });
 
     return {
       runId,
       analysisCount: totalAnalyses,
-      findingCount: totalFindings,
+      violationCount: totalViolations,
       errorBatchCount: batchesFailed,
       quotaExhausted,
     };
@@ -811,9 +811,7 @@ const SEVERITY_ORDER: Record<Severity, number> = {
   CRITICAL: 0,
   HIGH: 1,
   MEDIUM: 2,
-  HIGH_BUG: 3,
-  BUG: 4,
-  LOW: 5,
+  NIT: 3,
 };
 
 export async function revalidate(params: {
@@ -831,9 +829,9 @@ export async function revalidate(params: {
   rootPathOverride?: string;
   /** Path to JSON manifest file listing exact file paths to revalidate */
   manifestPath?: string;
-  /** Only revalidate findings with one of these vulnSlugs */
+  /** Only revalidate violations with one of these ruleSlugs */
   onlySlugs?: string[];
-  /** Skip findings with any of these vulnSlugs */
+  /** Skip violations with any of these ruleSlugs */
   skipSlugs?: string[];
   onProgress?: (progress: ProcessProgress) => void;
 }): Promise<{
@@ -930,21 +928,21 @@ export async function revalidate(params: {
     }
     const agent = maybeAgent;
 
-    // Load files that have findings needing revalidation
+    // Load files that have violations needing revalidation
     const revalOnlySet =
       params.onlySlugs && params.onlySlugs.length > 0 ? new Set(params.onlySlugs) : undefined;
     const revalSkipSet =
       params.skipSlugs && params.skipSlugs.length > 0 ? new Set(params.skipSlugs) : undefined;
     const allRecords = loadAllFileRecords(projectId);
     let toRevalidate = allRecords.filter((r) => {
-      if (r.findings.length === 0) return false;
+      if (r.violations.length === 0) return false;
       if (params.filter && !r.filePath.startsWith(params.filter)) return false;
 
-      const unrevalidated = r.findings.filter((f) => {
+      const unrevalidated = r.violations.filter((f) => {
         if (!force && f.revalidation) return false;
         if (minSeverity && SEVERITY_ORDER[f.severity] > SEVERITY_ORDER[minSeverity]) return false;
-        if (revalOnlySet && !revalOnlySet.has(f.vulnSlug)) return false;
-        if (revalSkipSet?.has(f.vulnSlug)) return false;
+        if (revalOnlySet && !revalOnlySet.has(f.ruleSlug)) return false;
+        if (revalSkipSet?.has(f.ruleSlug)) return false;
         return true;
       });
       return unrevalidated.length > 0;
@@ -957,12 +955,12 @@ export async function revalidate(params: {
 
     // Sort by severity (CRITICAL first) then noise tier
     toRevalidate.sort((a, b) => {
-      const aBest = Math.min(...a.findings.map((f) => SEVERITY_ORDER[f.severity]));
-      const bBest = Math.min(...b.findings.map((f) => SEVERITY_ORDER[f.severity]));
+      const aBest = Math.min(...a.violations.map((f) => SEVERITY_ORDER[f.severity]));
+      const bBest = Math.min(...b.violations.map((f) => SEVERITY_ORDER[f.severity]));
       if (aBest !== bBest) return aBest - bBest;
       return (
-        noiseScore(a.candidates.map((c) => c.vulnSlug)) -
-        noiseScore(b.candidates.map((c) => c.vulnSlug))
+        noiseScore(a.candidates.map((c) => c.ruleSlug)) -
+        noiseScore(b.candidates.map((c) => c.ruleSlug))
       );
     });
 
@@ -973,9 +971,9 @@ export async function revalidate(params: {
     if (toRevalidate.length === 0) {
       emitProgress({
         type: "all_complete",
-        message: "No findings to revalidate",
+        message: "No violations to revalidate",
       });
-      completeRun(projectId, runId, "done", { findingsRevalidated: 0 });
+      completeRun(projectId, runId, "done", { violationsRevalidated: 0 });
       return {
         runId,
         revalidated: 0,
@@ -1009,13 +1007,13 @@ export async function revalidate(params: {
 
     async function revalidateBatch(batch: FileRecord[], idx: number) {
       batchesInFlight++;
-      const findingCount = batch.reduce(
-        (s, f) => s + f.findings.filter((ff) => (!force ? !ff.revalidation : true)).length,
+      const violationCount = batch.reduce(
+        (s, f) => s + f.violations.filter((ff) => (!force ? !ff.revalidation : true)).length,
         0,
       );
       emitProgress({
         type: "batch_started",
-        message: `Revalidating batch ${idx + 1}/${batches.length} (${batch.length} files, ${findingCount} findings, ${batchesInFlight} in flight)`,
+        message: `Revalidating batch ${idx + 1}/${batches.length} (${batch.length} files, ${violationCount} violations, ${batchesInFlight} in flight)`,
         batchIndex: idx,
         totalBatches: batches.length,
       });
@@ -1066,9 +1064,9 @@ export async function revalidate(params: {
           }
           const file = batch.find((f) => f.filePath === verdict.filePath);
           if (!file) continue;
-          const finding = file.findings.find((f) => f.title === verdict.title);
-          if (!finding) continue;
-          finding.revalidation = {
+          const violation = file.violations.find((f) => f.title === verdict.title);
+          if (!violation) continue;
+          violation.revalidation = {
             verdict: verdict.verdict,
             reasoning: verdict.reasoning,
             adjustedSeverity: verdict.adjustedSeverity,
@@ -1077,7 +1075,7 @@ export async function revalidate(params: {
             model,
           };
           if (verdict.adjustedSeverity) {
-            finding.severity = verdict.adjustedSeverity;
+            violation.severity = verdict.adjustedSeverity;
           }
           totalRevalidated++;
           if (verdict.verdict === "true-positive") totalTP++;
@@ -1089,18 +1087,18 @@ export async function revalidate(params: {
         for (const verdict of dupeVerdicts) {
           const file = batch.find((f) => f.filePath === verdict.filePath);
           if (!file) continue;
-          const finding = file.findings.find((f) => f.title === verdict.title);
-          if (!finding) continue;
+          const violation = file.violations.find((f) => f.title === verdict.title);
+          if (!violation) continue;
           // Reject self-reference, missing reference, and pointing at
           // another DUPE — these all violate the single-primary
-          // invariant. The agent will re-see this finding as
+          // invariant. The agent will re-see this violation as
           // unrevalidated on the next run and can re-classify it.
           const ref = verdict.duplicateOf;
           if (!ref || ref === verdict.title) {
             totalDupeRejected++;
             continue;
           }
-          const primary = file.findings.find((f) => f.title === ref);
+          const primary = file.violations.find((f) => f.title === ref);
           if (!primary) {
             totalDupeRejected++;
             continue;
@@ -1109,7 +1107,7 @@ export async function revalidate(params: {
             totalDupeRejected++;
             continue;
           }
-          finding.revalidation = {
+          violation.revalidation = {
             verdict: "duplicate",
             reasoning: verdict.reasoning,
             duplicateOf: ref,
@@ -1158,7 +1156,7 @@ export async function revalidate(params: {
             model,
             modelConfig: config,
             agentSessionId: batchMeta.agentSessionId,
-            findingCount: verdictsForFile,
+            violationCount: verdictsForFile,
             numTurns: perFileNumTurns,
             phase: "revalidate",
             costUsd: perFileCost,
@@ -1221,7 +1219,7 @@ export async function revalidate(params: {
     }
 
     completeRun(projectId, runId, "done", {
-      findingsRevalidated: totalRevalidated,
+      violationsRevalidated: totalRevalidated,
       truePositives: totalTP,
       falsePositives: totalFP,
       fixed: totalFixed,
@@ -1235,7 +1233,7 @@ export async function revalidate(params: {
       type: "all_complete",
       message: quotaExhausted
         ? `Revalidation stopped: ${quotaExhausted.source} quota/credits exhausted (${totalRevalidated} verdicts before stop)`
-        : `Revalidation complete: ${totalRevalidated} findings — TP: ${totalTP}, FP: ${totalFP}, Fixed: ${totalFixed}, Uncertain: ${totalUncertain}, Dupe: ${totalDuplicate}${dupeRejectedSuffix}`,
+        : `Revalidation complete: ${totalRevalidated} violations — TP: ${totalTP}, FP: ${totalFP}, Fixed: ${totalFixed}, Uncertain: ${totalUncertain}, Dupe: ${totalDuplicate}${dupeRejectedSuffix}`,
     });
 
     return {

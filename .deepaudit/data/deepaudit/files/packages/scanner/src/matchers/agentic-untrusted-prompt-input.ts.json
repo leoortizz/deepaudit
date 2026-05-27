@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         22,
         35,
@@ -13,7 +13,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         22,
         44,
@@ -23,7 +23,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "agentic-untrusted-prompt-input",
+      "ruleSlug": "agentic-untrusted-prompt-input",
       "lineNumbers": [
         25
       ],
@@ -31,7 +31,7 @@
       "matchedPattern": "prompt interpolates untrusted: notes"
     },
     {
-      "vulnSlug": "agentic-untrusted-prompt-input",
+      "ruleSlug": "agentic-untrusted-prompt-input",
       "lineNumbers": [
         27
       ],
@@ -39,7 +39,7 @@
       "matchedPattern": "prompt interpolates untrusted: transcript"
     },
     {
-      "vulnSlug": "agentic-untrusted-prompt-input",
+      "ruleSlug": "agentic-untrusted-prompt-input",
       "lineNumbers": [
         28
       ],
@@ -47,7 +47,7 @@
       "matchedPattern": "prompt interpolates untrusted: scraped"
     },
     {
-      "vulnSlug": "agentic-untrusted-prompt-input",
+      "ruleSlug": "agentic-untrusted-prompt-input",
       "lineNumbers": [
         29
       ],
@@ -55,7 +55,7 @@
       "matchedPattern": "prompt interpolates untrusted: kbDocs"
     },
     {
-      "vulnSlug": "agent-loop-no-cap",
+      "ruleSlug": "agent-loop-no-cap",
       "lineNumbers": [
         25
       ],
@@ -63,7 +63,7 @@
       "matchedPattern": "agent/LLM call without maxSteps/maxTurns/stopWhen/signal"
     },
     {
-      "vulnSlug": "agent-loop-no-cap",
+      "ruleSlug": "agent-loop-no-cap",
       "lineNumbers": [
         26
       ],
@@ -71,7 +71,7 @@
       "matchedPattern": "agent/LLM call without maxSteps/maxTurns/stopWhen/signal"
     },
     {
-      "vulnSlug": "agent-loop-no-cap",
+      "ruleSlug": "agent-loop-no-cap",
       "lineNumbers": [
         27
       ],
@@ -79,7 +79,7 @@
       "matchedPattern": "agent/LLM call without maxSteps/maxTurns/stopWhen/signal"
     },
     {
-      "vulnSlug": "agent-loop-no-cap",
+      "ruleSlug": "agent-loop-no-cap",
       "lineNumbers": [
         30
       ],
@@ -87,7 +87,7 @@
       "matchedPattern": "agent/LLM call without maxSteps/maxTurns/stopWhen/signal"
     },
     {
-      "vulnSlug": "agent-loop-no-cap",
+      "ruleSlug": "agent-loop-no-cap",
       "lineNumbers": [
         31
       ],
@@ -98,7 +98,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.830Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "8675e22e07a1856a21ebaba3090c295088df2d8340bb38fa2182aee7c01d06e5",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -111,7 +111,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "d517afb6-ca17-4bda-83aa-911304bf5d54",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.248668,
       "usage": {
@@ -136,7 +136,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7863-93e9-93441614ba27",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0592852,

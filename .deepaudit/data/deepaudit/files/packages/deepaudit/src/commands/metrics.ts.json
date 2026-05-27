@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         88
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         199
       ],
@@ -22,10 +22,10 @@
   "lastScannedAt": "2026-05-06T21:46:56.501Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "a27772aa19fef621a1f86d0b3e8c979b71e7bf05d9567c5caa1f779f557d3554",
-  "findings": [
+  "violations": [
     {
-      "severity": "BUG",
-      "vulnSlug": "other-env-var-ignored",
+      "severity": "MEDIUM",
+      "ruleSlug": "other-env-var-ignored",
       "title": "discoverProjects() ignores DEEPAUDIT_DATA_ROOT environment variable",
       "description": "Line 28 uses `path.resolve(\"data\")` directly instead of `getDataRoot()` from `packages/core/src/paths.ts` (which honors `process.env.DEEPAUDIT_DATA_ROOT`). When the env var is set, `dataDir(id)` reads/writes records under the configured root, but `discoverProjects()` still enumerates `./data`. Running `pnpm deepaudit metrics` without `--project-id` returns no projects (or the wrong projects from a stale `./data/` directory) instead of the projects actually being managed. Same bug as `export.ts:223`, `data-commit.ts:4`, and `sandbox-all.ts:23`.",
       "lineNumbers": [
@@ -54,7 +54,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "88ed0b7c-a3fd-4046-8aac-ec8125710cdf",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 19,
       "costUsd": 1.8812119999999997,
       "usage": {
@@ -79,7 +79,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b7e-7fc1-9515-b35b5e5c7706",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.110869,
@@ -106,7 +106,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f306-77b1-8b94-829bb88dfdef",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.5,
       "phase": "revalidate",
       "costUsd": 0.1317885,

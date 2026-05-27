@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         137
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "exec with string"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         31,
         34,
@@ -24,7 +24,7 @@
       "matchedPattern": "template literal SELECT with interpolation"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         33
       ],
@@ -32,7 +32,7 @@
       "matchedPattern": "template literal UPDATE with interpolation"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         30
       ],
@@ -40,7 +40,7 @@
       "matchedPattern": "string concat SELECT"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         38
       ],
@@ -48,7 +48,7 @@
       "matchedPattern": "sql.raw() — raw SQL (verify parameterized)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         26
       ],
@@ -56,7 +56,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         30
       ],
@@ -64,7 +64,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         31
       ],
@@ -72,7 +72,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         39
       ],
@@ -80,7 +80,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         40
       ],
@@ -88,7 +88,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         41
       ],
@@ -96,7 +96,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         50
       ],
@@ -104,7 +104,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         53
       ],
@@ -112,7 +112,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         143
       ],
@@ -120,7 +120,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         145
       ],
@@ -128,7 +128,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         50
       ],
@@ -136,7 +136,7 @@
       "matchedPattern": "node-postgres/pg: client/pool/conn.query with template-literal interpolation — SQL injection"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         30
       ],
@@ -144,7 +144,7 @@
       "matchedPattern": ".query('...') with string concatenation — SQL injection"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         33
       ],
@@ -152,7 +152,7 @@
       "matchedPattern": "TypeORM repository/manager.query — raw SQL, must use parameter array not interpolation"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         35
       ],
@@ -160,7 +160,7 @@
       "matchedPattern": "Sequelize.literal — bypasses escaping; must not include user input"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         37
       ],
@@ -168,7 +168,7 @@
       "matchedPattern": "Knex .whereRaw — verify bindings are passed as second argument, not interpolated"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         38
       ],
@@ -176,7 +176,7 @@
       "matchedPattern": "Kysely sql.raw — bypasses parameterization, must not include user input"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         39
       ],
@@ -184,7 +184,7 @@
       "matchedPattern": "postgres.js sql.unsafe — bypasses parameterization, must not include user input"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         131
       ],
@@ -192,7 +192,7 @@
       "matchedPattern": "better-sqlite3 db.prepare with template-literal interpolation — use bound parameters"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         137
       ],
@@ -200,7 +200,7 @@
       "matchedPattern": "better-sqlite3 db.exec with template-literal interpolation — db.exec cannot bind, refactor to prepare()"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         30,
         32
@@ -212,7 +212,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.856Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "8e6da34315798ef2a280d27bf0eab85a0f6c52ddc1445f8c606fb5d0c8fa3d4f",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-ab77ad581398dd81",
@@ -224,7 +224,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3009-7b10-96bf-3827eb699d84",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.047835,
@@ -250,7 +250,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e73-7dd3-b6a8-093f2eb1e172",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.06494775,

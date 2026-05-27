@@ -158,7 +158,7 @@ export async function pay() {
           const start = Math.max(0, i - 2);
           const end = Math.min(lines.length, i + 3);
           matches.push({
-            vulnSlug: "expensive-api-abuse",
+            ruleSlug: "expensive-api-abuse",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: `Expensive API call: ${label} — check for abuse protection (auth, rate limit, captcha)`,

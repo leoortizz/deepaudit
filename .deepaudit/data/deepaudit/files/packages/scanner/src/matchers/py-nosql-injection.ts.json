@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         19
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         25
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "db call without await"
     },
     {
-      "vulnSlug": "js-nosql-injection",
+      "ruleSlug": "js-nosql-injection",
       "lineNumbers": [
         27
       ],
@@ -30,7 +30,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.872Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "948f7ca81ba1d78284fda6ca3934e118a858b440f49210c894717dc37c17c009",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214907-9891f87568394613",
@@ -42,7 +42,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3256-74b1-b5e4-3e09e151f284",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.06127525,
@@ -68,7 +68,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bb4-7181-ad37-d57fc7b77fb6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0572824,

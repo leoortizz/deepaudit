@@ -89,7 +89,7 @@ export const githubWorkflowSecurityMatcher: MatcherPlugin = {
       const s = Math.max(0, anchor);
       const e = Math.min(lines.length, anchor + 5);
       const match: CandidateMatch = {
-        vulnSlug: "github-workflow-security",
+        ruleSlug: "github-workflow-security",
         lineNumbers: [anchor + 1],
         snippet: lines.slice(s, e).join("\n"),
         matchedPattern: "GitHub workflow file (path-based, no specific risk pattern)",
@@ -98,7 +98,7 @@ export const githubWorkflowSecurityMatcher: MatcherPlugin = {
     }
 
     const match: CandidateMatch = {
-      vulnSlug: "github-workflow-security",
+      ruleSlug: "github-workflow-security",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 4).join(", "),

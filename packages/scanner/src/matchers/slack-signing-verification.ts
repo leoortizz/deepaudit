@@ -78,7 +78,7 @@ export const slackSigningVerificationMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 1);
           const end = Math.min(lines.length, i + 6);
           matches.push({
-            vulnSlug: "slack-signing-verification",
+            ruleSlug: "slack-signing-verification",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: label,

@@ -49,7 +49,7 @@ export const catchallRouterMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 1);
           const end = Math.min(lines.length, i + 4);
           matches.push({
-            vulnSlug: "catchall-router",
+            ruleSlug: "catchall-router",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: label,
@@ -70,7 +70,7 @@ export const catchallRouterMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 1);
           const end = Math.min(lines.length, i + 4);
           matches.push({
-            vulnSlug: "catchall-router",
+            ruleSlug: "catchall-router",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: "Catch-all route handler — all sub-paths funneled here",

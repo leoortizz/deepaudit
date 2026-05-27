@@ -80,10 +80,10 @@ export async function revalidateCommand(opts: {
 
   assertAgentCredential(agentType);
 
-  console.log(`${BOLD}Revalidating${RESET} findings for project ${BOLD}${projectId}${RESET}`);
+  console.log(`${BOLD}Revalidating${RESET} violations for project ${BOLD}${projectId}${RESET}`);
   console.log(`  Agent: ${agentType} (${model})`);
   if (minSeverity) console.log(`  Min severity: ${minSeverity}`);
-  if (opts.force) console.log(`  ${YELLOW}Force re-checking all findings${RESET}`);
+  if (opts.force) console.log(`  ${YELLOW}Force re-checking all violations${RESET}`);
   if (opts.filter) console.log(`  Filter: ${opts.filter}`);
   if (onlySlugs) console.log(`  Only slugs: ${onlySlugs.join(", ")}`);
   if (skipSlugs) console.log(`  Skip slugs: ${skipSlugs.join(", ")}`);
@@ -129,7 +129,7 @@ export async function revalidateCommand(opts: {
   }
   if (result.revalidated === 0 && !opts.force) {
     console.log(
-      `  ${DIM}Tip: pass ${RESET}${BOLD}--force${RESET}${DIM} to revalidate findings again (e.g. after fixes).${RESET}`,
+      `  ${DIM}Tip: pass ${RESET}${BOLD}--force${RESET}${DIM} to revalidate violations again (e.g. after fixes).${RESET}`,
     );
   }
 }

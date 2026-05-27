@@ -81,7 +81,7 @@ export const devAuthBypassMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 2);
           const end = Math.min(lines.length, i + 3);
           matches.push({
-            vulnSlug: "dev-auth-bypass",
+            ruleSlug: "dev-auth-bypass",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: label,

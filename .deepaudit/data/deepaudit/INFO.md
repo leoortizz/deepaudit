@@ -32,7 +32,7 @@ them:
 - **`projectId` / `runId` / `filePath` segments fed to `path.join` under
   `data/<id>/`** — the safety guards in `packages/core/src/paths.ts`
   (`assertSafeSegment`, `assertSafeFilePath`) defend against bugs in the
-  scanner's own code, not against an attacker. Findings of the form "this path
+  scanner's own code, not against an attacker. Violations of the form "this path
   could contain `..`" are noise *unless* the segment originates from the one
   real boundary below.
 - **`execSync` / `spawn` calls in `packages/core/src/run.ts`,
@@ -77,7 +77,7 @@ Not a webapp. The only auth-adjacent surfaces are:
 - **Token leakage into committed state** — anything that writes
   `process.env.ANTHROPIC_AUTH_TOKEN` / `OPENAI_API_KEY` / `VERCEL_TOKEN`
   (or anything matching the secret-pattern matchers) into
-  `data/<id>/files/*.json`, `INFO.md`, run metadata, finding bodies, log lines,
+  `data/<id>/files/*.json`, `INFO.md`, run metadata, violation bodies, log lines,
   or argv visible to other processes via `ps`.
 - **Prompt template echoing scanned content into tool args** — if `${snippet}`
   or any scanned text reaches a tool's command argument rather than just the
@@ -95,14 +95,14 @@ Not a webapp. The only auth-adjacent surfaces are:
   literal string contains words like "RCE", "SQL injection", "secrets",
   "eval" because that's the agent's vocabulary. Not code.
 - **`fixtures/vulnerable-app/`** — intentionally vulnerable test data
-  (excluded from lint/knip per `CONTRIBUTING.md`). All findings here are
+  (excluded from lint/knip per `CONTRIBUTING.md`). All violations here are
   by design.
 - **`samples/webapp/`** — illustrative starter for new users; may contain
   deliberately bad patterns to demo matcher behavior.
 - **`e2e/` and any `**/__tests__/**`** — fixtures, mocks, stub tokens, literal
   "password"/"secret" strings. Test data unless the test logic is wrong.
 - **`assertSafeSegment` / `assertSafeFilePath` callers** — those guards ARE
-  the validation. A finding noting "input could contain `..`" at a guarded
+  the validation. A violation noting "input could contain `..`" at a guarded
   callsite is the guard working. Flag the *absence* of a guard, not its
   presence.
 - **`jiti.import(configPath)` in `packages/deepaudit/src/load-config.ts`** —

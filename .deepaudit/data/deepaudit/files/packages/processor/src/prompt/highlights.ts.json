@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         171
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         64,
         98,
@@ -39,7 +39,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         44,
         54
@@ -48,7 +48,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         336
       ],
@@ -56,7 +56,7 @@
       "matchedPattern": "spawn"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         259,
         421,
@@ -72,7 +72,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         44
       ],
@@ -80,7 +80,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         54
       ],
@@ -88,7 +88,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         817
       ],
@@ -96,7 +96,7 @@
       "matchedPattern": "JWT verification (verify algorithm pinning)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         147,
         468
@@ -105,7 +105,7 @@
       "matchedPattern": "Session cookie handling"
     },
     {
-      "vulnSlug": "cache-key-poisoning",
+      "ruleSlug": "cache-key-poisoning",
       "lineNumbers": [
         358
       ],
@@ -113,7 +113,7 @@
       "matchedPattern": "Cache key includes query params"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         817
       ],
@@ -121,7 +121,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         145
       ],
@@ -129,7 +129,7 @@
       "matchedPattern": "db call without await"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         817
       ],
@@ -137,7 +137,7 @@
       "matchedPattern": "JWT sign/verify"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         838
       ],
@@ -148,7 +148,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.862Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "ea1c8c24c145e4b56a93efe3910e87ff76c114c8e48c06e774557ae189fc53e8",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-056be5ab9843df54",
@@ -160,7 +160,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-309a-7a90-bdf3-7755afe84ae1",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.08156725,
@@ -186,7 +186,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b6b-7761-82db-0547b8609d5b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1292618,

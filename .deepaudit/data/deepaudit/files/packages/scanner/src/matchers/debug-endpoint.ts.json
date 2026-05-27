@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         21
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "Debug/internal header"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         11
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Dev/test auth endpoint — may be reachable in production"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         18
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         26
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         30
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         38
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         22
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         40
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         29,
         31,
@@ -86,7 +86,7 @@
       "matchedPattern": "Debug/internal header"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         35
       ],
@@ -94,7 +94,7 @@
       "matchedPattern": "process.env.NODE_ENV"
     },
     {
-      "vulnSlug": "test-header-bypass",
+      "ruleSlug": "test-header-bypass",
       "lineNumbers": [
         29
       ],
@@ -102,7 +102,7 @@
       "matchedPattern": "x-debug header — may bypass security in production"
     },
     {
-      "vulnSlug": "test-header-bypass",
+      "ruleSlug": "test-header-bypass",
       "lineNumbers": [
         31
       ],
@@ -113,7 +113,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.751Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "74eede2fdf79e4ebb66719efd45e68725e2381e0312191df86800911366001f2",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -126,7 +126,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "854302a2-95f8-4240-939f-0123848e5eb2",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.464015,
       "usage": {
@@ -151,7 +151,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bbe-7872-8058-bc2832193f0f",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0533665,

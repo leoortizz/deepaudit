@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         20
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         25
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         26
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         28
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         29
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         31
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         32
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         99
       ],
@@ -70,7 +70,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.732Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5ccff3d9692e7a8b7fb9564ef577424420dd736c81c6ecc55f7336130909bb2d",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214907-70fbf7924106c870",
@@ -82,7 +82,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-344f-79d3-a7fc-1066aa444326",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0534315,

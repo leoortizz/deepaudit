@@ -94,7 +94,7 @@ fs.symlinkSync(\`/links/\${name}\`, target);`,
 
       if (hitLines.length > 0) {
         matches.push({
-          vulnSlug: "fs-write-symlink-boundary",
+          ruleSlug: "fs-write-symlink-boundary",
           lineNumbers: hitLines,
           snippet: snippets[0],
           matchedPattern: label,

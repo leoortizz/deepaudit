@@ -3,15 +3,15 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         235
       ],
-      "snippet": "function findingFilename(f: ExportedFinding): string {\n  const hash = crypto\n    .createHash(\"sha1\")\n    .update(\n      `${f.metadata.projectId}\\0${f.metadata.filePath}\\0${f.metadata.lineNumbers.join(\",\")}\\0${f.metadata.vulnSlug}`,",
+      "snippet": "function violationFilename(f: ExportedViolation): string {\n  const hash = crypto\n    .createHash(\"sha1\")\n    .update(\n      `${f.metadata.projectId}\\0${f.metadata.filePath}\\0${f.metadata.lineNumbers.join(\",\")}\\0${f.metadata.ruleSlug}`,",
       "matchedPattern": "SHA1 hash"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         29,
         120,
@@ -19,11 +19,11 @@
         265,
         428
       ],
-      "snippet": "interface ExportedFinding {\n  title: string;\n  description: string;\n  severity: Severity;\n  labels: string[];",
+      "snippet": "interface ExportedViolation {\n  title: string;\n  description: string;\n  severity: Severity;\n  labels: string[];",
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         158
       ],
@@ -31,7 +31,7 @@
       "matchedPattern": "GitHub URL with interpolated path"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         1,
         235
@@ -40,15 +40,15 @@
       "matchedPattern": "Node crypto import, Node crypto.create*"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         236
       ],
-      "snippet": "function findingFilename(f: ExportedFinding): string {\n  const hash = crypto\n    .createHash(\"sha1\")\n    .update(\n      `${f.metadata.projectId}\\0${f.metadata.filePath}\\0${f.metadata.lineNumbers.join(\",\")}\\0${f.metadata.vulnSlug}`,",
+      "snippet": "function violationFilename(f: ExportedViolation): string {\n  const hash = crypto\n    .createHash(\"sha1\")\n    .update(\n      `${f.metadata.projectId}\\0${f.metadata.filePath}\\0${f.metadata.lineNumbers.join(\",\")}\\0${f.metadata.ruleSlug}`,",
       "matchedPattern": "SHA1 hash"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         30,
         121,
@@ -56,11 +56,11 @@
         266,
         430
       ],
-      "snippet": "interface ExportedFinding {\n  title: string;\n  description: string;\n  severity: Severity;\n  labels: string[];",
+      "snippet": "interface ExportedViolation {\n  title: string;\n  description: string;\n  severity: Severity;\n  labels: string[];",
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         159
       ],
@@ -68,7 +68,7 @@
       "matchedPattern": "GitHub URL with interpolated path"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         1,
         236
@@ -80,10 +80,10 @@
   "lastScannedAt": "2026-05-06T21:46:56.799Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5108bbb2ee9c658ff089aefb143530698efbadca6862387c72bde215c7f4e715",
-  "findings": [
+  "violations": [
     {
-      "severity": "BUG",
-      "vulnSlug": "other-env-var-ignored",
+      "severity": "MEDIUM",
+      "ruleSlug": "other-env-var-ignored",
       "title": "listProjectIds() ignores DEEPAUDIT_DATA_ROOT environment variable",
       "description": "Line 223 uses `path.resolve(\"data\")` directly instead of the `getDataRoot()` helper from `packages/core/src/paths.ts`, which respects the `DEEPAUDIT_DATA_ROOT` env var (`process.env.DEEPAUDIT_DATA_ROOT || \"data\"`). When `DEEPAUDIT_DATA_ROOT` is set, project storage goes to the alternate location via `dataDir(id)`, but `listProjectIds()` still scans `./data`, returning either no projects or the wrong list. Running `pnpm deepaudit export` without `--project-id` then produces empty/inconsistent output. The same bug exists in `metrics.ts:28`, `data-commit.ts:4`, and `sandbox-all.ts:23`.",
       "lineNumbers": [
@@ -93,7 +93,7 @@
       "confidence": "high",
       "revalidation": {
         "verdict": "fixed",
-        "reasoning": "The current export.ts imports getDataRoot from @deepaudit/core and listProjectIds() resolves path.resolve(getDataRoot()), not path.resolve('data'). getDataRoot() in packages/core/src/paths.ts returns process.env.DEEPAUDIT_DATA_ROOT || 'data', which is the same root used by dataDir(projectId). The export path is internally consistent as well: projectRepoUrl reads path.join(dataDir(projectId), 'project.json'), and loadAllFileRecords also operates on the core data paths. I also checked the related locations mentioned in the finding: sandbox-all.ts discoverProjects(), metrics.ts discoverProjects(), and data-commit.ts now all use path.resolve(getDataRoot()). That means setting DEEPAUDIT_DATA_ROOT will affect project discovery and storage consistently in the current code. Git history was unavailable in this sandbox, but the present source has the recommended helper-based fix.",
+        "reasoning": "The current export.ts imports getDataRoot from @deepaudit/core and listProjectIds() resolves path.resolve(getDataRoot()), not path.resolve('data'). getDataRoot() in packages/core/src/paths.ts returns process.env.DEEPAUDIT_DATA_ROOT || 'data', which is the same root used by dataDir(projectId). The export path is internally consistent as well: projectRepoUrl reads path.join(dataDir(projectId), 'project.json'), and loadAllFileRecords also operates on the core data paths. I also checked the related locations mentioned in the violation: sandbox-all.ts discoverProjects(), metrics.ts discoverProjects(), and data-commit.ts now all use path.resolve(getDataRoot()). That means setting DEEPAUDIT_DATA_ROOT will affect project discovery and storage consistently in the current code. Git history was unavailable in this sandbox, but the present source has the recommended helper-based fix.",
         "revalidatedAt": "2026-05-06T22:53:17.537Z",
         "runId": "20260506225212-fb12ca99e8519e3d",
         "model": "gpt-5.5"
@@ -112,7 +112,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "88ed0b7c-a3fd-4046-8aac-ec8125710cdf",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 19,
       "costUsd": 1.8812119999999997,
       "usage": {
@@ -137,7 +137,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b7e-7593-9578-497e60738dbd",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1004848,
@@ -164,7 +164,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f430-7ea0-ac2d-55265033d6c6",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.3333333333333333,
       "phase": "revalidate",
       "costUsd": 0.10596100000000001,

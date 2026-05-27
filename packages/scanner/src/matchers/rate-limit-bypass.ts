@@ -67,7 +67,7 @@ export const rateLimitBypassMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 4);
         matches.push({
-          vulnSlug: "rate-limit-bypass",
+          ruleSlug: "rate-limit-bypass",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Sensitive endpoint without rate limiting",

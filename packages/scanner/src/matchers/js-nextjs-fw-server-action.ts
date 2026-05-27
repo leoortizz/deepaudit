@@ -71,7 +71,7 @@ export const frameworkServerActionMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0 && isHandlerByPath) {
       const match: CandidateMatch = {
-        vulnSlug: "framework-server-action",
+        ruleSlug: "framework-server-action",
         lineNumbers: [1],
         snippet: lines.slice(0, 5).join("\n"),
         matchedPattern: "action handler file (path)",
@@ -81,7 +81,7 @@ export const frameworkServerActionMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "framework-server-action",
+      ruleSlug: "framework-server-action",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(", "),

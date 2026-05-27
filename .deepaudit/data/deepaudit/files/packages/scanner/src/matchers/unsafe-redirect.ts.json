@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         41,
         42,
@@ -21,7 +21,7 @@
       "matchedPattern": "redirect URL parameter"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         45
       ],
@@ -29,7 +29,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         15,
         16,
@@ -39,7 +39,7 @@
       "matchedPattern": "redirect with request-derived URL"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         19
       ],
@@ -47,7 +47,7 @@
       "matchedPattern": "redirect with interpolated URL"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         20,
         22,
@@ -61,7 +61,7 @@
       "matchedPattern": "redirect URL parameter"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         15
       ],
@@ -69,7 +69,7 @@
       "matchedPattern": "redirect() with request-derived URL (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         16
       ],
@@ -77,7 +77,7 @@
       "matchedPattern": "redirect() with request-derived URL (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         17
       ],
@@ -85,7 +85,7 @@
       "matchedPattern": "redirect() with request-derived URL (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         18
       ],
@@ -93,7 +93,7 @@
       "matchedPattern": "redirect() with request-derived URL (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         19
       ],
@@ -101,7 +101,7 @@
       "matchedPattern": "redirect() with interpolated URL (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         20
       ],
@@ -109,7 +109,7 @@
       "matchedPattern": "NextResponse.redirect with dynamic URL (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         21
       ],
@@ -117,7 +117,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         22
       ],
@@ -125,7 +125,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         23
       ],
@@ -133,7 +133,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         24
       ],
@@ -141,7 +141,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         25
       ],
@@ -149,7 +149,7 @@
       "matchedPattern": "Redirect URL from header/param (validNextRedirect in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         58
       ],
@@ -160,7 +160,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.513Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "4c1995362c495a2d3b4d566ee0ff26fe73bda01dd6f8c33355a9eb5c7a7a47c4",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -173,7 +173,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "66229215-48c4-47cc-9a9f-0265b9cf65ab",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.5060955,
       "usage": {
@@ -198,7 +198,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8ba1-7460-ad8b-33c65a58b451",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.073563,

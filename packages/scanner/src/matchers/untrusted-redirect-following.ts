@@ -60,7 +60,7 @@ got.get(imageUrl);`,
         const start = Math.max(0, i - 2);
         const end = Math.min(lines.length, i + 3);
         matches.push({
-          vulnSlug: "untrusted-redirect-following",
+          ruleSlug: "untrusted-redirect-following",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "explicit redirect: 'follow' — verify URL is allowlisted",
@@ -81,7 +81,7 @@ got.get(imageUrl);`,
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 3);
         matches.push({
-          vulnSlug: "untrusted-redirect-following",
+          ruleSlug: "untrusted-redirect-following",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: `fetch(${m[1].slice(0, 40).trim()}) — default redirect: follow + caller-style URL`,

@@ -22,9 +22,6 @@ export type {
   ExecutorStatus,
   FileRecord,
   FileStatus,
-  // Domain types
-  Finding,
-  FindingNotification,
   MatcherPlugin,
   NoiseTier,
   NotifierPlugin,
@@ -45,6 +42,9 @@ export type {
   Severity,
   Triage,
   TriagePriority,
+  // Domain types
+  Violation,
+  ViolationNotification,
 } from "@deepaudit/core";
 export {
   defineConfig,

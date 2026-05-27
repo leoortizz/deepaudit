@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         15,
         18
@@ -20,7 +20,7 @@
       "matchedPattern": "CORS wildcard origin"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         15,
         18,
@@ -30,7 +30,7 @@
       "matchedPattern": "CORS origin reflection (verify validation)"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         23
       ],
@@ -38,7 +38,7 @@
       "matchedPattern": "CORS credentials + origin (dangerous combo)"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         10,
         11,
@@ -49,7 +49,7 @@
       "matchedPattern": "CORS wildcard origin"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         12,
         13,
@@ -63,7 +63,7 @@
       "matchedPattern": "CORS origin reflection (verify validation)"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         14,
         32
@@ -72,7 +72,7 @@
       "matchedPattern": "CORS credentials + origin (dangerous combo)"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         15
       ],
@@ -80,7 +80,7 @@
       "matchedPattern": "CORS middleware with origin: true (reflects all)"
     },
     {
-      "vulnSlug": "cors-wildcard",
+      "ruleSlug": "cors-wildcard",
       "lineNumbers": [
         16
       ],
@@ -91,7 +91,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.646Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "cc060c4b5c021f95490ce1a83aa3f6ee4cbdf465c4fd7262873056cb05bd7641",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -104,7 +104,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "ff7f6164-5dbf-4b41-a0ba-89648fbae13a",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.81450425,
       "usage": {
@@ -129,7 +129,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b5a-7f10-a112-112258c4569b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05889275,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         19
       ],
@@ -14,7 +14,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.470Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "a0130588193db7b4c57cb51814645d49a67de86c1b9f78d3e309257eee024db7",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-f220f11856a9cbbb",
@@ -26,7 +26,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3113-7e52-896e-4cecbb17bd3e",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.3333333333333333,
       "phase": "process",
       "costUsd": 0.120446,
@@ -52,7 +52,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b6b-7682-adb8-29e50f2b9567",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.5,
       "phase": "process",
       "costUsd": 0.1118475,

@@ -16,7 +16,7 @@ import { connectrpcHandlerImplMatcher } from "./connectrpc-handler-impl.js";
 import { corsWildcardMatcher } from "./cors-wildcard.js";
 import { crKemalRouteMatcher } from "./cr-kemal-route.js";
 import { cronSecretCheckMatcher } from "./cron-secret-check.js";
-// --- Finding-driven matchers ---
+// --- Violation-driven matchers ---
 import { crossTenantIdMatcher } from "./cross-tenant-id.js";
 import { cryptoUsageMatcher } from "./crypto-usage.js";
 import { dangerousHtmlMatcher } from "./dangerous-html.js";
@@ -207,7 +207,7 @@ import { unixSocketListenerMatcher } from "./unix-socket-listener.js";
 import { unsafeDeserializationMatcher } from "./unsafe-deserialization.js";
 import { unsafeRedirectMatcher } from "./unsafe-redirect.js";
 import { untrustedRedirectFollowingMatcher } from "./untrusted-redirect-following.js";
-// --- v2 finding-driven matchers ---
+// --- v2 violation-driven matchers ---
 import { unverifiedLookupMatcher } from "./unverified-lookup.js";
 import { urlRegexValidationMatcher } from "./url-regex-validation.js";
 import { webhookHandlerMatcher } from "./webhook-handler.js";
@@ -245,7 +245,7 @@ export function createDefaultRegistry(): MatcherRegistry {
   registry.register(envExposureMatcher);
   registry.register(rateLimitBypassMatcher);
 
-  // Finding-driven
+  // Violation-driven
   registry.register(crossTenantIdMatcher);
   registry.register(secretInFallbackMatcher);
   registry.register(secretInLogMatcher);
@@ -267,7 +267,7 @@ export function createDefaultRegistry(): MatcherRegistry {
   registry.register(cacheKeyPoisoningMatcher);
   registry.register(secretEnvVarMatcher);
 
-  // v2 finding-driven
+  // v2 violation-driven
   registry.register(unverifiedLookupMatcher);
   registry.register(catchAllRouteAuthMatcher);
   registry.register(serverActionNoAuthMatcher);

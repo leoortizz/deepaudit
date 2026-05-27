@@ -37,7 +37,7 @@ export async function enrichCommand(opts: {
   });
 
   if (result.enriched === 0) {
-    console.log("No files to enrich (no findings, or already enriched — use --force).");
+    console.log("No files to enrich (no violations, or already enriched — use --force).");
   } else {
     commitAndPushData(`enrich: ${projectId} (${result.enriched} files)`);
   }

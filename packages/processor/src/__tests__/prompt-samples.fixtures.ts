@@ -46,7 +46,7 @@ interface PromptSampleScenario {
 export function scenarioBatch(scenario: PromptSampleScenario): FileRecord[] {
   return scenario.files.map((f) => {
     const candidates: CandidateMatch[] = f.candidates.map((c) => ({
-      vulnSlug: c.slug,
+      ruleSlug: c.slug,
       lineNumbers: c.lines,
       snippet: "",
       matchedPattern: c.pattern,
@@ -58,7 +58,7 @@ export function scenarioBatch(scenario: PromptSampleScenario): FileRecord[] {
       lastScannedAt: "1970-01-01T00:00:00.000Z",
       lastScannedRunId: "sample",
       fileHash: "",
-      findings: [],
+      violations: [],
       analysisHistory: [],
       status: "pending",
     };

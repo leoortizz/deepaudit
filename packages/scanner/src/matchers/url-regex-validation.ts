@@ -44,7 +44,7 @@ if (re.test(url)) good();`,
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 3);
         matches.push({
-          vulnSlug: "url-regex-validation",
+          ruleSlug: "url-regex-validation",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern:
@@ -54,7 +54,7 @@ if (re.test(url)) good();`,
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 3);
         matches.push({
-          vulnSlug: "url-regex-validation",
+          ruleSlug: "url-regex-validation",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "new URL() from request input without hostname validation",

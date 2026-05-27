@@ -3,8 +3,8 @@ import path from "node:path";
 import {
   type AnalysisEntry,
   type FileRecord,
-  type Finding,
   fileRecordSchema,
+  type Violation,
 } from "@deepaudit/core";
 
 /**
@@ -71,8 +71,8 @@ export function snapshotFileRecords(destDir: string): Map<string, FileRecord> {
  *   - `analysisHistory`: union by `runId` (each run is globally unique).
  *     For the same runId on both sides, prefer `incoming` since the
  *     tarball is the more recent serialization.
- *   - `findings`: union by `(vulnSlug, normalized title)` signature, the
- *     same key `process()` uses to dedupe re-runs. For matching findings,
+ *   - `violations`: union by `(ruleSlug, normalized title)` signature, the
+ *     same key `process()` uses to dedupe re-runs. For matching violations,
  *     merge field-by-field so a `revalidation` / `triage` set on either
  *     side survives.
  *   - `gitInfo`: prefer whichever side has it set — enrich runs only
@@ -98,16 +98,16 @@ export function mergeFileRecord(host: FileRecord, incoming: FileRecord): FileRec
     (a, b) => new Date(a.investigatedAt).getTime() - new Date(b.investigatedAt).getTime(),
   );
 
-  const findingsBySig = new Map<string, Finding>();
-  for (const f of host.findings ?? []) {
-    findingsBySig.set(findingSignature(f), f);
+  const violationsBySig = new Map<string, Violation>();
+  for (const f of host.violations ?? []) {
+    violationsBySig.set(violationSignature(f), f);
   }
-  for (const f of incoming.findings ?? []) {
-    const sig = findingSignature(f);
-    const existing = findingsBySig.get(sig);
-    findingsBySig.set(sig, existing ? mergeFinding(existing, f) : f);
+  for (const f of incoming.violations ?? []) {
+    const sig = violationSignature(f);
+    const existing = violationsBySig.get(sig);
+    violationsBySig.set(sig, existing ? mergeViolation(existing, f) : f);
   }
-  const mergedFindings = Array.from(findingsBySig.values());
+  const mergedViolations = Array.from(violationsBySig.values());
 
   const status =
     host.status === "analyzed" || incoming.status === "analyzed" ? "analyzed" : incoming.status;
@@ -115,17 +115,17 @@ export function mergeFileRecord(host: FileRecord, incoming: FileRecord): FileRec
   return {
     ...incoming,
     gitInfo: incoming.gitInfo ?? host.gitInfo,
-    findings: mergedFindings,
+    violations: mergedViolations,
     analysisHistory: mergedHistory,
     status,
   };
 }
 
-function findingSignature(f: Finding): string {
-  return `${f.vulnSlug ?? ""}::${(f.title ?? "").trim().toLowerCase()}`;
+function violationSignature(f: Violation): string {
+  return `${f.ruleSlug ?? ""}::${(f.title ?? "").trim().toLowerCase()}`;
 }
 
-function mergeFinding(host: Finding, incoming: Finding): Finding {
+function mergeViolation(host: Violation, incoming: Violation): Violation {
   return {
     ...host,
     ...incoming,

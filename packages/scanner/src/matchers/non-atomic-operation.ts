@@ -53,7 +53,7 @@ await orders.modify({ id: order.id });`,
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 5);
         matches.push({
-          vulnSlug: "non-atomic-operation",
+          ruleSlug: "non-atomic-operation",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Read-then-write without transaction — verify atomicity",

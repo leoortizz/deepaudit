@@ -50,7 +50,7 @@ export const zodPassthroughMassAssignmentMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 2);
         const end = Math.min(lines.length, i + 4);
         matches.push({
-          vulnSlug: "zod-passthrough-mass-assignment",
+          ruleSlug: "zod-passthrough-mass-assignment",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: writeContext

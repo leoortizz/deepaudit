@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         27,
         45,
@@ -24,7 +24,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         326
       ],
@@ -32,7 +32,7 @@
       "matchedPattern": "process.env.DEEPAUDIT_DEBUG"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         34,
         52,
@@ -53,7 +53,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         333
       ],
@@ -61,7 +61,7 @@
       "matchedPattern": "process.env.DEEPAUDIT_DEBUG"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         29,
         47,
@@ -82,7 +82,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         350
       ],
@@ -93,7 +93,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.681Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "3132e16cdc9139034aa50cd16081df121ba6967105847640a67802ff06dcaa99",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -106,7 +106,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "b5f12bc1-6638-4dbb-b6a9-fcf123d53d73",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 11,
       "costUsd": 0.721455,
       "usage": {
@@ -131,7 +131,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e1a-7420-b92b-51642164ef5d",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.090545,

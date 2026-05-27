@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         7,
         13
@@ -12,7 +12,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -20,7 +20,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         7
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         13
       ],
@@ -36,7 +36,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         7,
         10,
@@ -46,7 +46,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         11
       ],
@@ -54,7 +54,7 @@
       "matchedPattern": "innerHTML assignment"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         12
       ],
@@ -62,7 +62,7 @@
       "matchedPattern": "outerHTML assignment"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         13
       ],
@@ -70,7 +70,7 @@
       "matchedPattern": "document.write"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         14
       ],
@@ -78,7 +78,7 @@
       "matchedPattern": "template literal in HTML"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         15
       ],
@@ -86,7 +86,7 @@
       "matchedPattern": "Vue v-html directive"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         16
       ],
@@ -94,7 +94,7 @@
       "matchedPattern": "Angular innerHTML binding"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         10
       ],
@@ -102,7 +102,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         11
       ],
@@ -110,7 +110,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         22
       ],
@@ -121,7 +121,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.516Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "1304af4284fb977350c1f356fd876d355d731721f42d718c2c0c84f0051a0332",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -134,7 +134,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "cd084360-af75-4dd9-a59d-04e0c819a753",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4970532499999999,
       "usage": {
@@ -159,7 +159,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8ba1-7460-ad8b-33c65a58b451",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.073563,

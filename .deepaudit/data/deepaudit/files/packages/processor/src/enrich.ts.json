@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         24,
         65,
@@ -13,7 +13,7 @@
       "matchedPattern": "execSync"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         39
       ],
@@ -21,7 +21,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         24
       ],
@@ -29,7 +29,7 @@
       "matchedPattern": "execSync"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         67,
         109
@@ -41,10 +41,10 @@
   "lastScannedAt": "2026-05-06T21:46:56.546Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "98d6fa19770904b7d4cef3a252d93bd11d87581e9d0bc6b15429502e7225ff13",
-  "findings": [
+  "violations": [
     {
       "severity": "HIGH",
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "title": "Command injection via filePath in git log execSync",
       "description": "`getRecentCommitters` builds a shell command string by interpolating `absPath` (derived from `path.join(rootPath, filePath)`) into a shell template literal: ``git log --pretty=format:\"%an\\t%ae\\t%aI\" -n ${count} -- \"${absPath}\"``. The path is wrapped in double quotes only — no escaping. `filePath` originates from `glob` results in `packages/scanner/src/index.ts:158` (`relPath`) which preserves whatever filename exists in the user's project directory verbatim. On Linux/macOS, valid filenames can contain `\"`, `` ` ``, `$`, `;`, `&`, `|`, `(`, `)`. A repo containing a file named e.g. `foo\";touch /tmp/PWN;\"bar.js` would cause `execSync` to spawn `sh -c 'git log ... -- \"…/foo\";touch /tmp/PWN;\"bar.js\"'`, executing the injected command. The scanner host is impacted; in normal local-run mode the developer's machine is fully exposed (read SSH keys, write authorized_keys, etc.). The 10s timeout does not mitigate — most exploitation completes in milliseconds. The project's own threat model in CLAUDE.md flags exactly this pattern: \"`execSync` / `spawn` calls that interpolate `rootPath`, `filePath`, … especially in core/src/run.ts, processor/src/agents/codex-*\".",
       "lineNumbers": [
@@ -73,7 +73,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "8065c73f-0323-4e92-b23a-ddf054c61090",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 10,
       "costUsd": 2.08821755,
       "usage": {
@@ -98,7 +98,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c3c-7b43-b419-c899fb7eac8f",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1639258,
@@ -125,7 +125,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f306-77b1-8b94-829bb88dfdef",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.5,
       "phase": "revalidate",
       "costUsd": 0.1317885,

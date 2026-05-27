@@ -95,7 +95,7 @@ export const sandboxRuntimeScriptMatcher: MatcherPlugin = {
       const s = Math.max(0, anchor - 2);
       const e = Math.min(lines.length, anchor + 5);
       const match: CandidateMatch = {
-        vulnSlug: "sandbox-runtime-script",
+        ruleSlug: "sandbox-runtime-script",
         lineNumbers: [anchor],
         snippet: lines.slice(s, e).join("\n"),
         matchedPattern: "container-runtime script (path-based)",
@@ -103,7 +103,7 @@ export const sandboxRuntimeScriptMatcher: MatcherPlugin = {
       return [match];
     }
     const match: CandidateMatch = {
-      vulnSlug: "sandbox-runtime-script",
+      ruleSlug: "sandbox-runtime-script",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 4).join(", "),

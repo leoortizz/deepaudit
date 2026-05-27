@@ -50,7 +50,7 @@ await query("DELETE FROM tokens WHERE id = $1", [id]);`,
             const start = Math.max(0, i - 1);
             const end = Math.min(lines.length, i + 5);
             matches.push({
-              vulnSlug: "non-atomic-read-delete",
+              ruleSlug: "non-atomic-read-delete",
               lineNumbers: [i + 1],
               snippet: lines.slice(start, end).join("\n"),
               matchedPattern: "Redis get-then-delete/set without transaction — TOCTOU race",
@@ -70,7 +70,7 @@ await query("DELETE FROM tokens WHERE id = $1", [id]);`,
             const start = Math.max(0, i - 1);
             const end = Math.min(lines.length, i + 5);
             matches.push({
-              vulnSlug: "non-atomic-read-delete",
+              ruleSlug: "non-atomic-read-delete",
               lineNumbers: [i + 1],
               snippet: lines.slice(start, end).join("\n"),
               matchedPattern: "Read-then-modify without transaction — potential TOCTOU race",

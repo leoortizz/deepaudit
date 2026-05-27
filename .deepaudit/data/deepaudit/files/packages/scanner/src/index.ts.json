@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         260,
         272
@@ -12,7 +12,7 @@
       "matchedPattern": "path.resolve with request-derived input"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         1,
         186
@@ -21,7 +21,7 @@
       "matchedPattern": "Node crypto import, Node crypto.create*"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         261,
         273
@@ -30,7 +30,7 @@
       "matchedPattern": "path.resolve with request-derived input"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         1,
         187
@@ -39,7 +39,7 @@
       "matchedPattern": "Node crypto import, Node crypto.create*"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         397,
         421,
@@ -51,7 +51,7 @@
       "matchedPattern": "path.resolve with request-derived input"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         59,
         336
@@ -60,7 +60,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         1,
         268,
@@ -73,10 +73,10 @@
   "lastScannedAt": "2026-05-06T21:46:56.764Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "727a5699e65dbc3c3f9302ea90b799a48724e6ddcb0ca54749a85114b3c72e91",
-  "findings": [
+  "violations": [
     {
-      "severity": "BUG",
-      "vulnSlug": "other-data-root-mismatch",
+      "severity": "MEDIUM",
+      "ruleSlug": "other-data-root-mismatch",
       "title": "Scanner hardcodes 'data/' instead of using dataDir(), ignoring DEEPAUDIT_DATA_ROOT",
       "description": "At L260, the fallback that loads per-project ignorePaths uses path.resolve(`data/${params.projectId}/config.json`) with a hardcoded 'data/' prefix. The rest of the codebase (paths.ts, processor, sandbox orchestrator, init-project, export, triage) consistently uses dataDir(projectId) which honors process.env.DEEPAUDIT_DATA_ROOT. When DEEPAUDIT_DATA_ROOT is set to anything other than 'data', this fallback silently misses the user's config.json (the catch swallows ENOENT/JSON errors), so config.json:ignorePaths is never applied. Because the IGNORE_DIRS defaults are then the only filter, files the user explicitly told the scanner to skip will be scanned and stored as candidate snippets in data/<id>/files/*.json. If those excluded paths contain credentials, secrets, or other sensitive content, the snippets land in the local mirror — a data-handling concern even though the directory is gitignored. Recommend: import dataDir from @deepaudit/core and use path.resolve(dataDir(params.projectId), 'config.json'), matching the rest of the codebase.",
       "lineNumbers": [
@@ -86,7 +86,7 @@
       "confidence": "high",
       "revalidation": {
         "verdict": "fixed",
-        "reasoning": "The current scanner imports dataDir from @deepaudit/core and uses path.resolve(dataDir(params.projectId), \"config.json\") when loading project config ignorePaths. In packages/core/src/paths.ts, dataDir(projectId) is backed by getDataRoot(), which returns process.env.DEEPAUDIT_DATA_ROOT or falls back to \"data\", so the environment override is honored. I searched the scanner file for the reported hardcoded data/${params.projectId}/config.json pattern and did not find it. The remaining comments mention data/<projectId>/config.json as documentation, not as a path construction bug. With the current code, a user setting DEEPAUDIT_DATA_ROOT will have the same config root used by this fallback and the rest of the core path helpers. I could not cite the patch commit because the sandbox lacks git metadata, but the vulnerable line described in the finding has been replaced in the current source.",
+        "reasoning": "The current scanner imports dataDir from @deepaudit/core and uses path.resolve(dataDir(params.projectId), \"config.json\") when loading project config ignorePaths. In packages/core/src/paths.ts, dataDir(projectId) is backed by getDataRoot(), which returns process.env.DEEPAUDIT_DATA_ROOT or falls back to \"data\", so the environment override is honored. I searched the scanner file for the reported hardcoded data/${params.projectId}/config.json pattern and did not find it. The remaining comments mention data/<projectId>/config.json as documentation, not as a path construction bug. With the current code, a user setting DEEPAUDIT_DATA_ROOT will have the same config root used by this fallback and the rest of the core path helpers. I could not cite the patch commit because the sandbox lacks git metadata, but the vulnerable line described in the violation has been replaced in the current source.",
         "revalidatedAt": "2026-05-06T22:53:17.568Z",
         "runId": "20260506225213-a24434e8e112616a",
         "model": "gpt-5.5"
@@ -105,7 +105,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "08d7a51e-42e1-40cc-a9f0-182ed2a3cf1f",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 8,
       "costUsd": 0.53009325,
       "usage": {
@@ -130,7 +130,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e1a-7800-b002-1dfd4b82478b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.3333333333333333,
       "phase": "process",
       "costUsd": 0.08173666666666667,
@@ -157,7 +157,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f8cd-7013-8dc9-2787b888e7c2",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.5,
       "phase": "revalidate",
       "costUsd": 0.101808,

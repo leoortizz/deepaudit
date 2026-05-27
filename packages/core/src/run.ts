@@ -125,7 +125,7 @@ export function createRunMeta(params: {
  * PID exists but is owned by a different user, which on a single-user
  * developer machine effectively never happens; we treat it as "alive" to
  * stay on the safe side. Returns `true` on any other failure for the same
- * reason — false-positive reclaims clobber findings, false negatives just
+ * reason — false-positive reclaims clobber violations, false negatives just
  * cost a retry on the next run.
  */
 export function isPidAlive(pid: number): boolean {

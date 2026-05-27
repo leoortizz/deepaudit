@@ -74,7 +74,7 @@ export const promptLeaksSystemPromptMatcher: MatcherPlugin = {
         if (!label) continue;
         const start = Math.max(0, i - 1);
         matches.push({
-          vulnSlug: "prompt-leaks-system-prompt",
+          ruleSlug: "prompt-leaks-system-prompt",
           lineNumbers: [j + 1],
           snippet: lines.slice(start, Math.min(lines.length, j + 3)).join("\n"),
           matchedPattern: label,

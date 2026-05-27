@@ -4,7 +4,7 @@
  *
  * This is the gap the unit tests + the per-step bundle e2e tests left:
  * `process` and `revalidate` invoked through the published binary, with
- * findings + verdicts persisted to disk and inspected. No network calls,
+ * violations + verdicts persisted to disk and inspected. No network calls,
  * no real model — the stub agent emits canned output so the pipeline is
  * deterministic.
  *
@@ -44,7 +44,7 @@ function runBundle(args: string[], cwd: string): RunResult {
 
 function readAllRecords(dir: string): Array<{
   filePath: string;
-  findings: Array<{
+  violations: Array<{
     title: string;
     severity: string;
     revalidation?: { verdict: string; reasoning: string; runId: string };
@@ -53,7 +53,7 @@ function readAllRecords(dir: string): Array<{
 }> {
   const out: Array<{
     filePath: string;
-    findings: Array<{
+    violations: Array<{
       title: string;
       severity: string;
       revalidation?: { verdict: string; reasoning: string; runId: string };
@@ -80,8 +80,8 @@ function readAllRecords(dir: string): Array<{
  * We use a `.mjs` here to keep things simple — the plugin only needs
  * default-export of `{ name, agents: [...] }` matching `DeepauditPlugin`.
  *
- * The agent emits one HIGH finding per candidate-bearing file in
- * investigate(), and one true-positive verdict per finding in
+ * The agent emits one HIGH violation per candidate-bearing file in
+ * investigate(), and one true-positive verdict per violation in
  * revalidate(). Mirrors the StubAgent in
  * packages/processor/src/__tests__/stub-agent.ts but rewritten as ESM
  * for the bundled-CLI loader.
@@ -95,11 +95,11 @@ const stub = {
     return {
       results: params.batch.map((rec) => ({
         filePath: rec.filePath,
-        findings: rec.candidates.length
+        violations: rec.candidates.length
           ? [{
               severity: "HIGH",
-              vulnSlug: rec.candidates[0].vulnSlug,
-              title: \`stub finding for \${rec.filePath}\`,
+              ruleSlug: rec.candidates[0].ruleSlug,
+              title: \`stub violation for \${rec.filePath}\`,
               description: "stub investigation result",
               lineNumbers: rec.candidates[0].lineNumbers ?? [1],
               recommendation: "stub: fix it",
@@ -122,7 +122,7 @@ const stub = {
     yield { type: "started", message: "stub: revalidating" };
     return {
       verdicts: params.batch.flatMap((rec) =>
-        rec.findings.map((f) => ({
+        rec.violations.map((f) => ({
           filePath: rec.filePath,
           title: f.title,
           verdict: "true-positive",
@@ -215,38 +215,42 @@ describe("pipeline e2e", () => {
       expect(proc.status, `process stderr: ${proc.stderr}\nstdout: ${proc.stdout}`).toBe(0);
 
       const afterProcess = readAllRecords(filesDir);
-      const recsWithFindings = afterProcess.filter((r) => r.findings.length > 0);
-      expect(recsWithFindings.length, "process should have produced findings").toBeGreaterThan(0);
+      const recsWithViolations = afterProcess.filter((r) => r.violations.length > 0);
+      expect(recsWithViolations.length, "process should have produced violations").toBeGreaterThan(
+        0,
+      );
       // Stub emits a deterministic title — confirms our plugin actually ran.
-      expect(recsWithFindings[0].findings[0].title).toMatch(/^stub finding for /);
+      expect(recsWithViolations[0].violations[0].title).toMatch(/^stub violation for /);
       // analysisHistory carries the agentType through end-to-end.
-      expect(recsWithFindings[0].analysisHistory.some((h) => h.agentType === "stub")).toBe(true);
+      expect(recsWithViolations[0].analysisHistory.some((h) => h.agentType === "stub")).toBe(true);
       // No verdicts yet — revalidate hasn't run.
-      expect(recsWithFindings[0].findings[0].revalidation).toBeUndefined();
+      expect(recsWithViolations[0].violations[0].revalidation).toBeUndefined();
 
       // 5. revalidate --agent stub — should add a true-positive verdict
-      // to every finding from step 4.
+      // to every violation from step 4.
       const reval = runBundle(["revalidate", "--agent", "stub"], workspaceDir);
       expect(reval.status, `revalidate stderr: ${reval.stderr}\nstdout: ${reval.stdout}`).toBe(0);
 
       const afterRevalidate = readAllRecords(filesDir);
-      const revalidated = afterRevalidate.flatMap((r) => r.findings.filter((f) => f.revalidation));
+      const revalidated = afterRevalidate.flatMap((r) =>
+        r.violations.filter((f) => f.revalidation),
+      );
       expect(revalidated.length, "revalidate should have produced verdicts").toBeGreaterThan(0);
       expect(revalidated[0].revalidation?.verdict).toBe("true-positive");
       expect(revalidated[0].revalidation?.reasoning).toContain("stub");
 
       // 6. Read-only commands that consume the data dir produced above.
-      // These don't go through the agent; they just verify our findings
+      // These don't go through the agent; they just verify our violations
       // round-trip cleanly through the export/report/metrics surfaces.
 
-      // metrics — text-table summary, prints findings counts + verdict
+      // metrics — text-table summary, prints violations counts + verdict
       // breakdown. We just assert it lists our project + the TP count we
       // know from the stub.
       const metrics = runBundle(["metrics"], workspaceDir);
       expect(metrics.status, `metrics stderr: ${metrics.stderr}`).toBe(0);
       expect(metrics.stdout).toContain("fixture");
       expect(metrics.stdout).toMatch(/HIGH/);
-      // Stub returns true-positive for every finding; ensure the TP
+      // Stub returns true-positive for every violation; ensure the TP
       // column reflects that.
       expect(metrics.stdout).toMatch(/True Positives by Vulnerability Type/);
 
@@ -258,13 +262,13 @@ describe("pipeline e2e", () => {
       expect(fs.existsSync(path.join(reportsDir, "report.md"))).toBe(true);
       const reportJson = JSON.parse(fs.readFileSync(path.join(reportsDir, "report.json"), "utf-8"));
       expect(reportJson.projectId).toBe("fixture");
-      expect(reportJson.summary.totalFindings).toBeGreaterThan(0);
+      expect(reportJson.summary.totalViolations).toBeGreaterThan(0);
       expect(reportJson.summary.high).toBeGreaterThan(0); // stub emits HIGH
       expect(Array.isArray(reportJson.files)).toBe(true);
-      const fileWithFindings = reportJson.files.find(
-        (f: { findings: unknown[] }) => f.findings.length > 0,
+      const fileWithViolations = reportJson.files.find(
+        (f: { violations: unknown[] }) => f.violations.length > 0,
       );
-      expect(fileWithFindings).toBeDefined();
+      expect(fileWithViolations).toBeDefined();
 
       // export --format json --out <file> — write to a file so stdout
       // banners don't get mixed into the parsed JSON.
@@ -278,7 +282,7 @@ describe("pipeline e2e", () => {
       expect(Array.isArray(exported)).toBe(true);
       expect(exported.length).toBeGreaterThan(0);
       // True-positive filter — must drop nothing since stub returns
-      // true-positive for every finding.
+      // true-positive for every violation.
       const exportTpPath = path.join(workspaceDir, "exported-tp.json");
       const exportTp = runBundle(
         ["export", "--format", "json", "--only-true-positive", "--out", exportTpPath],
@@ -287,7 +291,7 @@ describe("pipeline e2e", () => {
       expect(exportTp.status).toBe(0);
       expect(JSON.parse(fs.readFileSync(exportTpPath, "utf-8")).length).toBe(exported.length);
 
-      // export --format md-dir — directory of one .md per finding.
+      // export --format md-dir — directory of one .md per violation.
       const mdDir = path.join(workspaceDir, "exported");
       const exportMd = runBundle(["export", "--format", "md-dir", "--out", mdDir], workspaceDir);
       expect(exportMd.status, `export-md stderr: ${exportMd.stderr}`).toBe(0);

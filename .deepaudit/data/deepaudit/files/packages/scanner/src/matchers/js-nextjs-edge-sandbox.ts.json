@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         23
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "eval"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         22
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "new Function()"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         26
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "vm context execution"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         18
       ],
@@ -38,7 +38,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.486Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "8f46135ca8c84d4ecc323bda3d282e023d026c40861e0f7d6ac490454d19d0ec",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-65dc94bca8cbf80e",
@@ -50,7 +50,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3045-7302-8227-b4ee5e620897",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0613255,
@@ -76,7 +76,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8baa-74b1-97e8-4be68be65e02",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0748896,

@@ -52,7 +52,7 @@ export const testHeaderBypassMatcher: MatcherPlugin = {
             const start = Math.max(0, i - 2);
             const end = Math.min(lines.length, i + 3);
             matches.push({
-              vulnSlug: "test-header-bypass",
+              ruleSlug: "test-header-bypass",
               lineNumbers: [i + 1],
               snippet: lines.slice(start, end).join("\n"),
               matchedPattern: `${label} — may bypass security in production`,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         4,
         6,
@@ -15,7 +15,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         17
       ],
@@ -23,7 +23,7 @@
       "matchedPattern": "eval"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         18
       ],
@@ -31,7 +31,7 @@
       "matchedPattern": "new Function()"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         4,
         6,
@@ -43,7 +43,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "unsafe-deserialization",
+      "ruleSlug": "unsafe-deserialization",
       "lineNumbers": [
         10,
         11,
@@ -55,7 +55,7 @@
       "matchedPattern": "JSON.parse of request input (verify schema validation)"
     },
     {
-      "vulnSlug": "unsafe-deserialization",
+      "ruleSlug": "unsafe-deserialization",
       "lineNumbers": [
         15,
         16
@@ -64,7 +64,7 @@
       "matchedPattern": "JSON.parse of raw request text"
     },
     {
-      "vulnSlug": "unsafe-deserialization",
+      "ruleSlug": "unsafe-deserialization",
       "lineNumbers": [
         17
       ],
@@ -72,7 +72,7 @@
       "matchedPattern": "eval of parsed JSON"
     },
     {
-      "vulnSlug": "unsafe-deserialization",
+      "ruleSlug": "unsafe-deserialization",
       "lineNumbers": [
         18
       ],
@@ -80,7 +80,7 @@
       "matchedPattern": "new Function from parsed JSON"
     },
     {
-      "vulnSlug": "unsafe-deserialization",
+      "ruleSlug": "unsafe-deserialization",
       "lineNumbers": [
         19,
         20
@@ -92,7 +92,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.650Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "3f3b9f071adcc5584d5a1190554123f1ff6facbfdc12df9eb6f3af5e374bbbb9",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -105,7 +105,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "c0d09f95-7ba2-439a-91c5-142da7edb665",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.22457,
       "usage": {
@@ -130,7 +130,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c2a-7f31-aa6f-a3fa7439972c",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.059522399999999996,

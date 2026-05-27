@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         20
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         11,
         12
@@ -28,7 +28,7 @@
       "matchedPattern": "GitHub API URL with interpolation"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         11,
         12,
@@ -38,7 +38,7 @@
       "matchedPattern": "GitHub URL with interpolated path"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         14
       ],
@@ -46,7 +46,7 @@
       "matchedPattern": "GitLab URL with interpolation"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         15
       ],
@@ -54,7 +54,7 @@
       "matchedPattern": "Bitbucket URL with interpolation"
     },
     {
-      "vulnSlug": "git-provider-url-injection",
+      "ruleSlug": "git-provider-url-injection",
       "lineNumbers": [
         11,
         12,
@@ -69,7 +69,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.557Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "e714eddc4c3fd6058675d87a38bafa66be0246683c0989963d42bf4d6feb8468",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -82,7 +82,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "41de6492-d93b-43db-9e1d-4a2babea4197",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.52210075,
       "usage": {
@@ -107,7 +107,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bc9-7e13-a44f-2c7a5a34e197",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0469084,

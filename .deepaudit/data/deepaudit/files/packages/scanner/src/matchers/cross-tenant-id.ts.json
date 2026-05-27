@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         18
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         19
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         20
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         27
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         28
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         29
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         30
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         31
       ],
@@ -78,7 +78,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.591Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "441ae6a6510d53db0e809ab247bfa5fe3e3a49ba3383e0c1c34f4efb77c9f4e5",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -91,7 +91,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "7044606c-acf1-4534-96c0-8271cb1ede3d",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.215787,
       "usage": {
@@ -116,7 +116,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b5a-7f10-a112-112258c4569b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05889275,

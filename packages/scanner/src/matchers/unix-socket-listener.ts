@@ -66,7 +66,7 @@ export const unixSocketListenerMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "unix-socket-listener",
+      ruleSlug: "unix-socket-listener",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 4).join(", "),

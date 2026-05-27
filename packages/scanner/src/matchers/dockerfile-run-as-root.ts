@@ -57,7 +57,7 @@ export const dockerfileRunAsRootMatcher: MatcherPlugin = {
     const snipStart = Math.max(0, finalStageStart);
     const snipEnd = Math.min(lines.length, finalStageStart + 3);
     const match: CandidateMatch = {
-      vulnSlug: "dockerfile-run-as-root",
+      ruleSlug: "dockerfile-run-as-root",
       lineNumbers: [finalStageStart + 1],
       snippet: lines.slice(snipStart, snipEnd).join("\n"),
       matchedPattern:

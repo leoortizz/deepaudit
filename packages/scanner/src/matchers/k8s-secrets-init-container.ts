@@ -68,7 +68,7 @@ export const k8sSecretsInitContainerMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "k8s-secrets-init-container",
+      ruleSlug: "k8s-secrets-init-container",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 5).join(", "),

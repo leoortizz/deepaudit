@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         30,
         31,
@@ -13,7 +13,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -21,7 +21,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         30
       ],
@@ -29,7 +29,7 @@
       "matchedPattern": "Auth skipped in development/test — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         34
       ],
@@ -37,7 +37,7 @@
       "matchedPattern": "Auth bypass gated by NODE_ENV — check production guard"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         21,
         23,
@@ -49,7 +49,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         21
       ],
@@ -57,7 +57,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         19
       ],
@@ -65,7 +65,7 @@
       "matchedPattern": "HTTP entry point: router method handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         16
       ],
@@ -73,7 +73,7 @@
       "matchedPattern": "HTTP entry point: app method handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         20
       ],
@@ -81,7 +81,7 @@
       "matchedPattern": "HTTP entry point: app method handler (weak candidate)"
     },
     {
-      "vulnSlug": "secret-in-log",
+      "ruleSlug": "secret-in-log",
       "lineNumbers": [
         17
       ],
@@ -89,7 +89,7 @@
       "matchedPattern": "Secret variable in log statement"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         16
       ],
@@ -97,7 +97,7 @@
       "matchedPattern": "Dev/test auth endpoint — may be reachable in production"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         19
       ],
@@ -105,7 +105,7 @@
       "matchedPattern": "Dev/test auth endpoint — may be reachable in production"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         20
       ],
@@ -113,7 +113,7 @@
       "matchedPattern": "Dev/test auth endpoint — may be reachable in production"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         21
       ],
@@ -121,7 +121,7 @@
       "matchedPattern": "Auth skipped in development/test — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         22
       ],
@@ -129,7 +129,7 @@
       "matchedPattern": "Auth skipped in development/test — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         50
       ],
@@ -137,7 +137,7 @@
       "matchedPattern": "Auth skipped in development/test — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         23
       ],
@@ -145,7 +145,7 @@
       "matchedPattern": "Auth bypass gated by NODE_ENV — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         54
       ],
@@ -153,7 +153,7 @@
       "matchedPattern": "Auth bypass gated by NODE_ENV — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         24
       ],
@@ -161,7 +161,7 @@
       "matchedPattern": "Auth conditional on isDev/isTest flag — fails open risk"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         27
       ],
@@ -169,7 +169,7 @@
       "matchedPattern": "Auth conditional on isDev/isTest flag — fails open risk"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         28
       ],
@@ -177,7 +177,7 @@
       "matchedPattern": "Test token/secret reference — may be accepted in production"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         29
       ],
@@ -185,7 +185,7 @@
       "matchedPattern": "Test token/secret reference — may be accepted in production"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         22
       ],
@@ -193,7 +193,7 @@
       "matchedPattern": "Mock session/auth pattern — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         30
       ],
@@ -201,7 +201,7 @@
       "matchedPattern": "Mock session/auth pattern — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         31
       ],
@@ -209,7 +209,7 @@
       "matchedPattern": "Mock session/auth pattern — check production guard"
     },
     {
-      "vulnSlug": "dev-auth-bypass",
+      "ruleSlug": "dev-auth-bypass",
       "lineNumbers": [
         32
       ],
@@ -220,7 +220,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.665Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "2b4ac99ae0ad86dbc6cbc1ab0c21b80387e1ab1795d1a8f9c1e9b96b9b817290",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -233,7 +233,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "854302a2-95f8-4240-939f-0123848e5eb2",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.464015,
       "usage": {
@@ -258,7 +258,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e73-7001-b338-b63d694b4240",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0524188,

@@ -85,17 +85,17 @@ function scrubCommittedDataDir(): void {
       }
       if (!parsed || typeof parsed !== "object") continue;
       const rec = parsed as {
-        candidates?: Array<{ vulnSlug?: string; snippet?: string }>;
+        candidates?: Array<{ ruleSlug?: string; snippet?: string }>;
       };
       let changed = false;
       for (const c of rec.candidates ?? []) {
-        if (c.vulnSlug && SECRET_SLUGS.has(c.vulnSlug) && c.snippet) {
+        if (c.ruleSlug && SECRET_SLUGS.has(c.ruleSlug) && c.snippet) {
           c.snippet = "[redacted: secret-bearing snippet]";
           changed = true;
           continue;
         }
         if (c.snippet && CREDENTIAL_RE.test(c.snippet)) {
-          offenders.push(`${p} (slug=${c.vulnSlug ?? "?"})`);
+          offenders.push(`${p} (slug=${c.ruleSlug ?? "?"})`);
         }
       }
       if (changed) {

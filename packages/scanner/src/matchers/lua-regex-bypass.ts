@@ -35,7 +35,7 @@ export const luaRegexBypassMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 2);
         const end = Math.min(lines.length, i + 3);
         matches.push({
-          vulnSlug: "lua-regex-bypass",
+          ruleSlug: "lua-regex-bypass",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: hasUrlRegex

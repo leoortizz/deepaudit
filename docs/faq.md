@@ -46,7 +46,7 @@ The expensive stage is `process`. With Claude Opus and default settings
 Costs swing 2–3x based on file complexity. Run `--limit 50` first to
 calibrate before committing to a full pass.
 
-`triage` is ~1¢/finding. `revalidate` is comparable to `process`.
+`triage` is ~1¢/violation. `revalidate` is comparable to `process`.
 
 ## Should I use Claude or Codex?
 
@@ -57,8 +57,8 @@ Both work. Different strengths:
 - **Codex (gpt-5.5):** runs in a strict sandbox (read-only, no network).
   Fast at grep-heavy investigations. Cheaper.
 
-Mix them. Run Claude first, then re-process unconvincing findings with
-`--agent codex --reinvestigate` for a second opinion. Findings dedupe
+Mix them. Run Claude first, then re-process unconvincing violations with
+`--agent codex --reinvestigate` for a second opinion. Violations dedupe
 across agents.
 
 ## Should I use Vercel AI Gateway or Anthropic directly?
@@ -90,7 +90,7 @@ After revalidation: ~10–29% on `HIGH+.
 
 Two things help most:
 
-1. **Revalidate `HIGH+` before acting on findings.** Worth the cost.
+1. **Revalidate `HIGH+` before acting on violations.** Worth the cost.
 2. **Write a good `INFO.md` per project.** Even a paragraph describing
    the auth shape and threat model improves precision a lot. See
    [getting-started.md](getting-started.md).
@@ -129,7 +129,7 @@ Yes. The natural shape:
 pnpm deepaudit scan --project-id main --root .
 pnpm deepaudit process --project-id main --concurrency 5
 pnpm deepaudit revalidate --project-id main --min-severity HIGH
-pnpm deepaudit export --project-id main --format json --out findings.json
+pnpm deepaudit export --project-id main --format json --out violations.json
 
 # Per-PR — incremental scan on changed files only
 pnpm deepaudit scan --project-id main --root .
@@ -149,7 +149,7 @@ Yes:
   pass `--reinvestigate` (re-investigate everything) or
   `--reinvestigate <N>` (re-investigate, tagged with wave marker N — a
   later run with the same N skips files already processed in this wave).
-- `revalidate` only touches findings without a `revalidation` field
+- `revalidate` only touches violations without a `revalidation` field
   unless `--force` is set.
 
 ## What if a run errors out partway through?

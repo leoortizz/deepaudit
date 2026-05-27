@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         24
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "exec with string"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         16
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         77
       ],
@@ -38,7 +38,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.732Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "0c739b916cd3e04aceb55d2d9a698bc55a471f4039e43c46686c16d58741aa90",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-5b833cf1c8aa279e",
@@ -50,7 +50,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-311c-7640-879e-2d8e3b62d7ea",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0941865,
@@ -76,7 +76,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8baa-7842-b44c-83cebf446c82",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.04750175,

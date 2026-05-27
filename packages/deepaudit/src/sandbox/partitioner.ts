@@ -9,8 +9,7 @@ const SEVERITY_ORDER: Record<string, number> = {
   CRITICAL: 0,
   HIGH: 1,
   MEDIUM: 2,
-  HIGH_BUG: 3,
-  BUG: 4,
+  NIT: 3,
 };
 
 /**
@@ -65,8 +64,8 @@ export function partitionFiles(
 
     case "revalidate":
       eligible = allRecords.filter((r) => {
-        if (r.findings.length === 0) return false;
-        const unrevalidated = r.findings.filter((f) => {
+        if (r.violations.length === 0) return false;
+        const unrevalidated = r.violations.filter((f) => {
           if (!opts.force && f.revalidation) return false;
           if (opts.minSeverity && SEVERITY_ORDER[f.severity] > SEVERITY_ORDER[opts.minSeverity])
             return false;
@@ -95,13 +94,13 @@ export function partitionFiles(
   eligible.sort((a, b) => {
     if (command === "revalidate") {
       // Sort by severity (CRITICAL first)
-      const aBest = Math.min(...a.findings.map((f) => SEVERITY_ORDER[f.severity] ?? 99));
-      const bBest = Math.min(...b.findings.map((f) => SEVERITY_ORDER[f.severity] ?? 99));
+      const aBest = Math.min(...a.violations.map((f) => SEVERITY_ORDER[f.severity] ?? 99));
+      const bBest = Math.min(...b.violations.map((f) => SEVERITY_ORDER[f.severity] ?? 99));
       if (aBest !== bBest) return aBest - bBest;
     }
 
-    const aSlugs = a.candidates.map((c) => c.vulnSlug);
-    const bSlugs = b.candidates.map((c) => c.vulnSlug);
+    const aSlugs = a.candidates.map((c) => c.ruleSlug);
+    const bSlugs = b.candidates.map((c) => c.ruleSlug);
     const noiseDiff = noiseScore(aSlugs) - noiseScore(bSlugs);
     if (noiseDiff !== 0) return noiseDiff;
 

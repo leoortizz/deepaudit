@@ -60,9 +60,9 @@ follow-up reinvestigation passes.
 
 ### `claude-sonnet-4-6` for `triage`
 
-Triage buckets findings into P0/P1/P2/skip without re-reading the code
-— it just looks at the finding text. That's a cheap task; Opus is
-overkill. Sonnet keeps `triage` at ~1¢/finding.
+Triage buckets violations into P0/P1/P2/skip without re-reading the code
+— it just looks at the violation text. That's a cheap task; Opus is
+overkill. Sonnet keeps `triage` at ~1¢/violation.
 
 ## Refusals
 
@@ -85,7 +85,7 @@ Claude Opus and `gpt-5.5` refuse less than 1% of batches in practice. A
 refused batch produces no false negatives — affected files stay
 `pending` (revalidation keeps the original verdict), so re-running
 `--reinvestigate` against the other backend picks up the dropped sites.
-Findings dedupe across agents, so you don't pay twice.
+Violations dedupe across agents, so you don't pay twice.
 
 If a single file consistently triggers a refusal (>5% of batches), it's
 usually one path with a hard-to-disambiguate exploit pattern. Add it to
@@ -121,12 +121,12 @@ Two small integration points:
 When a new model becomes the right default, change the relevant entry
 in `packages/deepaudit/src/agent-defaults.ts` (one string per backend) and
 the `DEFAULT_MODEL` constant in the corresponding agent file. Existing
-data and findings are unaffected — deepaudit records which agent + model
-produced each finding, so a model change shows up cleanly in the
+data and violations are unaffected — deepaudit records which agent + model
+produced each violation, so a model change shows up cleanly in the
 `analysisHistory` of any re-investigated file.
 
 A useful pattern when a new model lands: re-run `process` with
 `--reinvestigate <N>` (a wave marker) against the existing
-high-severity findings to see whether the new model overturns
+high-severity violations to see whether the new model overturns
 verdicts. The wave marker tags the new analysis without losing the
 old one.

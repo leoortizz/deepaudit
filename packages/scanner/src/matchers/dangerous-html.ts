@@ -51,7 +51,7 @@ export const dangerousHtmlMatcher: MatcherPlugin = {
         }
 
         matches.push({
-          vulnSlug: "dangerous-html",
+          ruleSlug: "dangerous-html",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: label,

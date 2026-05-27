@@ -1,7 +1,7 @@
 import { type FileRecord, loadAllFileRecords, type Severity } from "@deepaudit/core";
 
 /**
- * Severity ordering used to sort findings within the PR comment. Mirrors
+ * Severity ordering used to sort violations within the PR comment. Mirrors
  * the order in `packages/processor/src/index.ts:SEVERITY_ORDER` — keep them
  * in sync if you add a tier.
  */
@@ -9,33 +9,29 @@ const SEVERITY_ORDER: Record<Severity, number> = {
   CRITICAL: 0,
   HIGH: 1,
   MEDIUM: 2,
-  HIGH_BUG: 3,
-  BUG: 4,
-  LOW: 5,
+  NIT: 3,
 };
 
 const SEVERITY_BADGE: Record<Severity, string> = {
   CRITICAL: "🔴 CRITICAL",
   HIGH: "🟠 HIGH",
   MEDIUM: "🟡 MEDIUM",
-  HIGH_BUG: "🟣 HIGH BUG",
-  BUG: "🟣 BUG",
-  LOW: "⚪ LOW",
+  NIT: "⚪ NIT",
 };
 
 /**
  * Render a PR-comment-shaped markdown string for the **net-new**
- * findings produced by a specific `process` run. Pre-existing findings
+ * violations produced by a specific `process` run. Pre-existing violations
  * on touched files (carried over from prior runs) are intentionally
  * excluded — a PR comment should reflect what this change introduced,
  * not surface old baseline noise.
  *
- * Filtering is by `Finding.producedByRunId === runId` (stamped by the
- * processor when each new finding is appended). Findings written
+ * Filtering is by `Violation.producedByRunId === runId` (stamped by the
+ * processor when each new violation is appended). Violations written
  * before this field existed have `producedByRunId === undefined` and
  * are always excluded from PR comments.
  *
- * Returns `null` when the run produced no net-new findings; the
+ * Returns `null` when the run produced no net-new violations; the
  * caller can skip commenting entirely on green runs.
  */
 export function renderPrComment(params: {
@@ -47,13 +43,13 @@ export function renderPrComment(params: {
   const { projectId, runId, source } = params;
   const records = loadAllFileRecords(projectId);
 
-  const findingsForRun: Array<{
+  const violationsForRun: Array<{
     file: FileRecord;
-    finding: NonNullable<FileRecord["findings"]>[number];
+    violation: NonNullable<FileRecord["violations"]>[number];
   }> = [];
 
   for (const file of records) {
-    for (const f of file.findings ?? []) {
+    for (const f of file.violations ?? []) {
       if (f.producedByRunId !== runId) continue;
       // PR comments surface unresolved risk only — drop anything already
       // resolved (fixed / false-positive / accepted-risk) and drop
@@ -62,27 +58,27 @@ export function renderPrComment(params: {
       const v = f.revalidation?.verdict;
       if (v === "accepted-risk" || v === "false-positive" || v === "fixed" || v === "duplicate")
         continue;
-      findingsForRun.push({ file, finding: f });
+      violationsForRun.push({ file, violation: f });
     }
   }
 
-  if (findingsForRun.length === 0) return null;
+  if (violationsForRun.length === 0) return null;
 
   // Sort: severity asc (CRITICAL first), then by file path for stability.
-  findingsForRun.sort((a, b) => {
-    const sa = SEVERITY_ORDER[a.finding.severity] ?? 99;
-    const sb = SEVERITY_ORDER[b.finding.severity] ?? 99;
+  violationsForRun.sort((a, b) => {
+    const sa = SEVERITY_ORDER[a.violation.severity] ?? 99;
+    const sb = SEVERITY_ORDER[b.violation.severity] ?? 99;
     if (sa !== sb) return sa - sb;
     if (a.file.filePath !== b.file.filePath) {
       return a.file.filePath < b.file.filePath ? -1 : 1;
     }
-    return (a.finding.title ?? "").localeCompare(b.finding.title ?? "");
+    return (a.violation.title ?? "").localeCompare(b.violation.title ?? "");
   });
 
   // Tally for the header.
   const counts: Partial<Record<Severity, number>> = {};
-  for (const { finding } of findingsForRun) {
-    counts[finding.severity] = (counts[finding.severity] ?? 0) + 1;
+  for (const { violation } of violationsForRun) {
+    counts[violation.severity] = (counts[violation.severity] ?? 0) + 1;
   }
   const tally = (Object.keys(counts) as Severity[])
     .sort((a, b) => (SEVERITY_ORDER[a] ?? 99) - (SEVERITY_ORDER[b] ?? 99))
@@ -91,7 +87,7 @@ export function renderPrComment(params: {
 
   const lines: string[] = [];
   lines.push(
-    `## 🔎 deepaudit found ${findingsForRun.length} finding${findingsForRun.length === 1 ? "" : "s"}`,
+    `## 🔎 deepaudit found ${violationsForRun.length} violation${violationsForRun.length === 1 ? "" : "s"}`,
   );
   lines.push("");
   lines.push(tally);
@@ -101,23 +97,25 @@ export function renderPrComment(params: {
   }
   lines.push("");
 
-  for (const { file, finding } of findingsForRun) {
-    const lineRef = finding.lineNumbers?.length
-      ? `:L${finding.lineNumbers[0]}${finding.lineNumbers.length > 1 ? `-L${finding.lineNumbers[finding.lineNumbers.length - 1]}` : ""}`
+  for (const { file, violation } of violationsForRun) {
+    const lineRef = violation.lineNumbers?.length
+      ? `:L${violation.lineNumbers[0]}${violation.lineNumbers.length > 1 ? `-L${violation.lineNumbers[violation.lineNumbers.length - 1]}` : ""}`
       : "";
-    lines.push(`### ${SEVERITY_BADGE[finding.severity]} · \`${file.filePath}${lineRef}\``);
+    lines.push(`### ${SEVERITY_BADGE[violation.severity]} · \`${file.filePath}${lineRef}\``);
     lines.push("");
-    lines.push(`**${finding.title}**`);
-    if (finding.vulnSlug) {
-      lines.push(`<sub>slug: \`${finding.vulnSlug}\` · confidence: ${finding.confidence}</sub>`);
+    lines.push(`**${violation.title}**`);
+    if (violation.ruleSlug) {
+      lines.push(
+        `<sub>slug: \`${violation.ruleSlug}\` · confidence: ${violation.confidence}</sub>`,
+      );
     }
     lines.push("");
-    if (finding.description) {
-      lines.push(truncate(finding.description, 600));
+    if (violation.description) {
+      lines.push(truncate(violation.description, 600));
       lines.push("");
     }
-    if (finding.recommendation) {
-      lines.push(`**Recommendation:** ${truncate(finding.recommendation, 400)}`);
+    if (violation.recommendation) {
+      lines.push(`**Recommendation:** ${truncate(violation.recommendation, 400)}`);
       lines.push("");
     }
     lines.push("---");

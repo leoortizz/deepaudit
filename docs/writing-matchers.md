@@ -103,8 +103,8 @@ agent so it can read both the source and `.deepaudit/data/`. Then paste:
 >
 > **Then do the analysis:**
 > 1. Walk `.deepaudit/data/<projectId>/files/` and look at what the
->    default matchers already cover. Note which `vulnSlug`s show up in
->    `candidates[]` and where the AI's `findings[]` ended up landing
+>    default matchers already cover. Note which `ruleSlug`s show up in
+>    `candidates[]` and where the AI's `violations[]` ended up landing
 >    after revalidation.
 > 2. Compare that against the **target repository** (root above
 >    `.deepaudit/`). Identify the **major entry points** to the code:

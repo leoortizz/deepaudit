@@ -63,7 +63,7 @@ export const agenticUntrustedPromptInputMatcher: MatcherPlugin = {
         if (UNTRUSTED_VAR.test(m[1])) {
           const start = Math.max(0, i - 2);
           matches.push({
-            vulnSlug: "agentic-untrusted-prompt-input",
+            ruleSlug: "agentic-untrusted-prompt-input",
             lineNumbers: [j + 1],
             snippet: lines.slice(start, Math.min(lines.length, j + 3)).join("\n"),
             matchedPattern: `prompt interpolates untrusted: ${m[1].slice(0, 80)}`,

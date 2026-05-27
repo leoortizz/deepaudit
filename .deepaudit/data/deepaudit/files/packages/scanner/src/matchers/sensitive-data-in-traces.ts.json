@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         33
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         33
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "process.env.MY_SECRET"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         16
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "Datadog span tags in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         19
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "Datadog tracer in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         22
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "Datadog span tag in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         25
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "Sentry exception capture in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         28
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "Sentry context in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         31
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "Sentry extra data in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         34
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "OTel span attribute in file with sensitive data — check what's being traced"
     },
     {
-      "vulnSlug": "sensitive-data-in-traces",
+      "ruleSlug": "sensitive-data-in-traces",
       "lineNumbers": [
         37
       ],
@@ -94,7 +94,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.703Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "fc96bcc7decfd0f29d54f5e7464ecc170cb53e66d7e716217b9f79b97b3fdf2b",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -107,7 +107,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "69ed0493-8625-4abd-8306-37c866228f23",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.21502700000000002,
       "usage": {
@@ -132,7 +132,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7863-93e9-93441614ba27",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0592852,

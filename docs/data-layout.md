@@ -55,7 +55,7 @@ writes a good one.
 The core per-file accumulator. Every stage *adds to* this record;
 nothing is overwritten. Re-scanning merges new candidates.
 Re-processing appends to `analysisHistory`. Revalidation annotates
-findings rather than replacing them.
+violations rather than replacing them.
 
 The on-disk path mirrors the source path under `<rootPath>` plus a
 `.json` suffix (`src/api/auth.ts` → `files/src/api/auth.ts.json`).
@@ -70,7 +70,7 @@ The on-disk path mirrors the source path under `<rootPath>` plus a
 | `lastScannedAt` | `string` (ISO) | Most recent scan timestamp. |
 | `lastScannedRunId` | `string` | runId of the scan that last touched this file. |
 | `fileHash` | `string` (sha-256) | Source content hash at last scan. |
-| `findings` | `Finding[]` | Latest set of AI-produced findings. |
+| `violations` | `Violation[]` | Latest set of AI-produced violations. |
 | `analysisHistory` | `AnalysisEntry[]` | Append-only log of every AI investigation. |
 | `gitInfo` | `object?` | Git committer info + ownership data, written by `enrich`. |
 | `status` | `"pending" \| "processing" \| "analyzed" \| "error"` | Lifecycle state. |
@@ -80,17 +80,17 @@ The on-disk path mirrors the source path under `<rootPath>` plus a
 
 | Field | Type | Purpose |
 |---|---|---|
-| `vulnSlug` | `string` | Matcher slug that fired. |
+| `ruleSlug` | `string` | Matcher slug that fired. |
 | `lineNumbers` | `number[]` | 1-indexed source lines. |
 | `snippet` | `string` | Short excerpt around the first match. |
 | `matchedPattern` | `string` | Human-readable label of the regex (the matcher's `label`). |
 
-### `Finding`
+### `Violation`
 
 | Field | Type | Purpose |
 |---|---|---|
-| `severity` | `"CRITICAL" \| "HIGH" \| "MEDIUM" \| "HIGH_BUG" \| "BUG" \| "LOW"` | See README severity table. |
-| `vulnSlug` | `string` | Matcher slug or `other-<topic>` if no matcher fits. |
+| `severity` | `"CRITICAL" \| "HIGH" \| "MEDIUM" \| "HIGH" \| "MEDIUM" \| "NIT"` | See README severity table. |
+| `ruleSlug` | `string` | Matcher slug or `other-<topic>` if no matcher fits. |
 | `title` | `string` | One-sentence summary. |
 | `description` | `string` | Full explanation. |
 | `lineNumbers` | `number[]` | 1-indexed lines. |
@@ -116,7 +116,7 @@ The on-disk path mirrors the source path under `<rootPath>` plus a
 |---|---|---|
 | `verdict` | `"true-positive" \| "false-positive" \| "fixed" \| "uncertain"` | Re-checked verdict. |
 | `reasoning` | `string` | Why this verdict. Includes git-history evidence if `fixed`. |
-| `adjustedSeverity` | `Severity?` | Set if revalidation re-rates the finding. |
+| `adjustedSeverity` | `Severity?` | Set if revalidation re-rates the violation. |
 | `revalidatedAt` | `string` (ISO) | Timestamp. |
 | `runId` | `string` | runId of the revalidate run. |
 | `model` | `string` | Model used. |
@@ -136,7 +136,7 @@ deleted.
 | `model` | `string` | Model identifier. |
 | `modelConfig` | `Record<string, unknown>` | Provider-specific settings echoed back. |
 | `agentSessionId` | `string?` | The agent's session/thread id, for reproducing or replaying. |
-| `findingCount` | `number` | Findings produced in this entry. |
+| `violationCount` | `number` | Violations produced in this entry. |
 | `numTurns` | `number?` | Conversation turn count. |
 | `costUsd` | `number?` | Estimated USD cost. |
 | `usage` | `{ inputTokens, outputTokens, cacheReadInputTokens, cacheCreationInputTokens }?` | Token accounting. |
@@ -168,7 +168,7 @@ pending     -- scan finished, awaits AI
    ↓
 processing  -- a run is currently investigating (lockedByRunId set)
    ↓
-analyzed    -- AnalysisEntry appended; findings updated
+analyzed    -- AnalysisEntry appended; violations updated
 ```
 
 `error` is set if the agent crashed mid-investigation. Re-running
@@ -190,7 +190,7 @@ reporting (`deepaudit status`) and for filtering exports by run.
 | `phase` | `"running" \| "done" \| "error"` | Terminal status. |
 | `scannerConfig` | `{ matcherSlugs }?` | Set on scan runs. |
 | `processorConfig` | `{ agentType, model, modelConfig }?` | Set on process / revalidate runs. |
-| `stats` | `object` | Counters: filesScanned, candidatesFound, findingsCount, totalCostUsd, truePositives, falsePositives, … |
+| `stats` | `object` | Counters: filesScanned, candidatesFound, violationsCount, totalCostUsd, truePositives, falsePositives, … |
 
 ## reports/
 
@@ -201,9 +201,9 @@ summary. Re-running `report` overwrites; nothing here is incremental.
 
 The append-only model means a few patterns work well:
 
-- **Find every TP HIGH+ finding across a project**:
+- **Find every TP HIGH+ violation across a project**:
   ```bash
-  jq -r '. as $r | $r.findings[] | select(.revalidation.verdict=="true-positive") | select(.severity=="HIGH" or .severity=="CRITICAL") | [$r.filePath, .severity, .title] | @tsv' data/<id>/files/**/*.json
+  jq -r '. as $r | $r.violations[] | select(.revalidation.verdict=="true-positive") | select(.severity=="HIGH" or .severity=="CRITICAL") | [$r.filePath, .severity, .title] | @tsv' data/<id>/files/**/*.json
   ```
 - **Total spend on a project**:
   ```bash

@@ -79,11 +79,11 @@ const stub = {
     return {
       results: params.batch.map((rec) => ({
         filePath: rec.filePath,
-        findings: rec.candidates.length
+        violations: rec.candidates.length
           ? [{
               severity: "HIGH",
-              vulnSlug: rec.candidates[0].vulnSlug,
-              title: \`stub finding for \${rec.filePath}\`,
+              ruleSlug: rec.candidates[0].ruleSlug,
+              title: \`stub violation for \${rec.filePath}\`,
               description: "stub investigation result",
               lineNumbers: rec.candidates[0].lineNumbers ?? [1],
               recommendation: "stub: fix it",
@@ -106,7 +106,7 @@ const stub = {
     yield { type: "started", message: "stub: revalidating" };
     return {
       verdicts: params.batch.flatMap((rec) =>
-        rec.findings.map((f) => ({
+        rec.violations.map((f) => ({
           filePath: rec.filePath,
           title: f.title,
           verdict: "true-positive",
@@ -344,17 +344,17 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
           `sandbox process leaked tarballs in os.tmpdir(): ${leakedProc.join(", ")}`,
         ).toEqual([]);
 
-        // Findings should be on disk, populated by the stub agent
+        // Violations should be on disk, populated by the stub agent
         // running INSIDE the sandbox and merged back via the result
         // tarball download.
         const filesDir = path.join(workspaceDir, "data/fixture/files");
         const recs = readAllRecords(filesDir);
-        const withFindings = recs.filter((r) => r.findings.length > 0);
-        expect(withFindings.length, "process should have produced findings").toBeGreaterThan(0);
-        expect(withFindings[0].findings[0].title).toMatch(/^stub finding for /);
-        expect(withFindings[0].analysisHistory.some((h) => h.agentType === "stub")).toBe(true);
+        const withViolations = recs.filter((r) => r.violations.length > 0);
+        expect(withViolations.length, "process should have produced violations").toBeGreaterThan(0);
+        expect(withViolations[0].violations[0].title).toMatch(/^stub violation for /);
+        expect(withViolations[0].analysisHistory.some((h) => h.agentType === "stub")).toBe(true);
 
-        // 5. sandbox revalidate over the same findings.
+        // 5. sandbox revalidate over the same violations.
         const tarsBeforeReval = listDeepauditTarballs();
         const reval = runBundle(
           [
@@ -384,7 +384,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
         ).toEqual([]);
 
         const after = readAllRecords(filesDir);
-        const verdicts = after.flatMap((r) => r.findings.filter((f) => f.revalidation));
+        const verdicts = after.flatMap((r) => r.violations.filter((f) => f.revalidation));
         expect(verdicts.length, "revalidate should have produced verdicts").toBeGreaterThan(0);
         expect(verdicts[0].revalidation?.verdict).toBe("true-positive");
 
@@ -403,7 +403,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
         const reportJson = JSON.parse(
           fs.readFileSync(path.join(reportsDir, "report.json"), "utf-8"),
         );
-        expect(reportJson.summary.totalFindings).toBeGreaterThan(0);
+        expect(reportJson.summary.totalViolations).toBeGreaterThan(0);
 
         const exportPath = path.join(workspaceDir, "exported.json");
         const exportJson = runBundleCapture(
@@ -445,7 +445,7 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
 
 interface PersistedRecord {
   filePath: string;
-  findings: Array<{
+  violations: Array<{
     title: string;
     severity: string;
     revalidation?: { verdict: string; reasoning: string };

@@ -6,8 +6,8 @@ import type { AgentPlugin, InvestigateParams, RevalidateParams } from "../agents
  * any AI provider.
  *
  * Customise per-batch behaviour by passing `investigateImpl` /
- * `revalidateImpl` callbacks; the defaults emit one HIGH finding per
- * candidate-bearing file and a `true-positive` verdict per finding.
+ * `revalidateImpl` callbacks; the defaults emit one HIGH violation per
+ * candidate-bearing file and a `true-positive` verdict per violation.
  */
 interface StubAgentOptions {
   type?: string;
@@ -42,12 +42,12 @@ export class StubAgent implements AgentPlugin {
     return {
       results: params.batch.map((rec) => ({
         filePath: rec.filePath,
-        findings: rec.candidates.length
+        violations: rec.candidates.length
           ? [
               {
                 severity: "HIGH" as const,
-                vulnSlug: rec.candidates[0].vulnSlug,
-                title: `stub finding for ${rec.filePath}`,
+                ruleSlug: rec.candidates[0].ruleSlug,
+                title: `stub violation for ${rec.filePath}`,
                 description: "stub investigation result",
                 lineNumbers: rec.candidates[0].lineNumbers ?? [1],
                 recommendation: "stub: fix it",
@@ -77,7 +77,7 @@ export class StubAgent implements AgentPlugin {
     }
     return {
       verdicts: params.batch.flatMap((rec) =>
-        rec.findings.map((f) => ({
+        rec.violations.map((f) => ({
           filePath: rec.filePath,
           title: f.title,
           verdict: "true-positive" as const,

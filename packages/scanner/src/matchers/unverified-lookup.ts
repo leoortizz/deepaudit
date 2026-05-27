@@ -75,7 +75,7 @@ return Response.json(r);`,
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 4);
         matches.push({
-          vulnSlug: "unverified-lookup",
+          ruleSlug: "unverified-lookup",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "DB lookup by ID without ownership check in next 15 lines",

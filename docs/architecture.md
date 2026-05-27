@@ -6,7 +6,7 @@
        scan          process        revalidate          enrich           export
         │              │                │                │                  │    
         ▼              ▼                ▼                ▼                  ▼
-  candidates  →   findings    TP/FP/Fixed verdict  →  +committers  →  JSON / md-dir
+  candidates  →   violations    TP/FP/Fixed verdict  →  +committers  →  JSON / md-dir
                                                       +ownership
 ```
 
@@ -30,14 +30,14 @@ data/<projectId>/
 
 `data/` is gitignored by default. Each `FileRecord` is the source of truth
 for everything deepaudit knows about a single source file: candidate
-matches, AI findings, analysis history, git committer info, ownership.
+matches, AI violations, analysis history, git committer info, ownership.
 Full schemas for every file under `data/` are documented in
 [data-layout.md](data-layout.md).
 
 The merge model is additive: every stage adds to the FileRecord. A
 re-scan merges new candidates into the existing set; a re-process appends
-to `analysisHistory` and merges new findings; revalidation tags existing
-findings with verdicts. Nothing is overwritten or deleted.
+to `analysisHistory` and merges new violations; revalidation tags existing
+violations with verdicts. Nothing is overwritten or deleted.
 
 ## Stage details
 
@@ -58,11 +58,11 @@ built-ins by reusing the same slug.
 
 - **What it does:** Pick batches of pending files, send each batch to the
   configured AI agent backend with the system prompt + INFO.md, parse the
-  agent's JSON response into `Finding`s, write them back to each FileRecord.
+  agent's JSON response into `Violation`s, write them back to each FileRecord.
 - **Cost:** $$. The expensive stage.
 - **Inputs:** FileRecords with `status: "pending"`, `INFO.md`, the prompt
   template (`packages/processor/src/index.ts:DEFAULT_PROMPT_TEMPLATE`).
-- **Outputs:** FileRecord `findings[]` populated, `status: "analyzed"`,
+- **Outputs:** FileRecord `violations[]` populated, `status: "analyzed"`,
   `analysisHistory[]` appended.
 
 Two agent backends are supported, both routed through Vercel AI Gateway
@@ -75,7 +75,7 @@ by default:
 
 Same prompt, same JSON output schema. You can mix backends within a
 project — re-process a file with a different agent and the second run's
-findings get merged with the first.
+violations get merged with the first.
 
 Concurrency: `--concurrency 5 --batch-size 5` means 5 batches in flight,
 5 files per batch = 25 files in the air at peak. The processor claims
@@ -84,23 +84,23 @@ parallel without stepping on each other.
 
 ### revalidate
 
-- **What it does:** Re-check existing findings for false positives. The
+- **What it does:** Re-check existing violations for false positives. The
   agent re-reads the code, consults git history (was this fixed?), and
   emits a verdict: `true-positive`, `false-positive`, `fixed`, or
   `uncertain`.
 - **Cost:** $$. Comparable to `process`. Worth running on HIGH+.
-- **Inputs:** Findings with no `revalidation` field, or with `--force`.
-- **Outputs:** `revalidation: { verdict, reasoning, … }` on each finding.
+- **Inputs:** Violations with no `revalidation` field, or with `--force`.
+- **Outputs:** `revalidation: { verdict, reasoning, … }` on each violation.
 
 Empirically reduces FP rate by 50%+ on most repos.
 
 ### enrich
 
 - **What it does:** Attach git committer info and (with a plugin)
-  ownership data to FileRecords with findings.
+  ownership data to FileRecords with violations.
 - **Cost:** Free if no ownership plugin; otherwise one HTTP round-trip
   per file to the ownership provider.
-- **Inputs:** FileRecords with findings, the project's git history.
+- **Inputs:** FileRecords with violations, the project's git history.
 - **Outputs:** `gitInfo: { recentCommitters, ownership }` on each record.
 
 ### export / report / metrics
@@ -108,7 +108,7 @@ Empirically reduces FP rate by 50%+ on most repos.
 Read-only stages. Don't modify FileRecords; just shape the data for human
 or downstream consumption.
 
-- **export** — flat list of findings as JSON or directory of markdown.
+- **export** — flat list of violations as JSON or directory of markdown.
 - **report** — per-project markdown summary + JSON.
 - **metrics** — cross-project counts and TP rates.
 
@@ -142,12 +142,12 @@ See [docs/plugins.md](plugins.md) for the full plugin authoring guide.
 ## Design decisions
 
 1. **One file = one FileRecord.** The unit of work is a source file, not
-   a finding. Scanner, processor, and revalidator all operate on files,
+   a violation. Scanner, processor, and revalidator all operate on files,
    so atomic per-file locking and idempotent merges fall out naturally.
 
 2. **Append-only analysis history.** Re-running the processor doesn't
-   overwrite past findings. It appends a new entry to `analysisHistory`
-   and merges new findings (deduped by slug + title) into `findings`. You
+   overwrite past violations. It appends a new entry to `analysisHistory`
+   and merges new violations (deduped by slug + title) into `violations`. You
    can re-run with a different agent, prompt, or model and get a strict
    improvement instead of a destructive replacement.
 

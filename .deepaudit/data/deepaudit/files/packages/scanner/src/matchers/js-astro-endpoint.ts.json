@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         12
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         14
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         13
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -38,7 +38,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.486Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "029e9076b30848ceb6d63300d2b3c118677e4a6a40cc3d8fa2db7c2ef8574f0c",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-df24f2705e085bee",
@@ -50,7 +50,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-307a-7390-99a3-9d5ad05b5428",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0688055,
@@ -76,7 +76,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8dbb-7630-af10-8fa4a4cb0268",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.06273675,

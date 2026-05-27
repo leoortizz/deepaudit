@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         15
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         16
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         19
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         20
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         35
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         17
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         18
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         21
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         22
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "HTTP entry point: default export handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         23
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "HTTP entry point: default export handler (weak candidate)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -94,7 +94,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.485Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5469a445c66fb8772c9e02cf989e817c89a5c2f12b4870e47fa428edd4c942ed",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-5b833cf1c8aa279e",
@@ -106,7 +106,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-311c-7640-879e-2d8e3b62d7ea",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0941865,
@@ -132,7 +132,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7863-93e9-93441614ba27",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0592852,

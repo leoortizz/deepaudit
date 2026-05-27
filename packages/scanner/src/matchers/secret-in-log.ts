@@ -59,7 +59,7 @@ export const secretInLogMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 2);
         matches.push({
-          vulnSlug: "secret-in-log",
+          ruleSlug: "secret-in-log",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: isLog

@@ -64,7 +64,7 @@ export const errorMessageLeakMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 2);
           const end = Math.min(lines.length, i + 3);
           matches.push({
-            vulnSlug: "error-message-leak",
+            ruleSlug: "error-message-leak",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: `${label} — may leak internal details to client`,

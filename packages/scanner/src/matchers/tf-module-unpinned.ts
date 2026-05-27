@@ -88,7 +88,7 @@ export const tfModuleUnpinnedMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "tf-module-unpinned",
+      ruleSlug: "tf-module-unpinned",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(", "),

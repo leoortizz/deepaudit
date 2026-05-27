@@ -73,7 +73,7 @@ export const mcpToolHandlerMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 1);
           const end = Math.min(lines.length, i + 5);
           matches.push({
-            vulnSlug: "mcp-tool-handler",
+            ruleSlug: "mcp-tool-handler",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: label,

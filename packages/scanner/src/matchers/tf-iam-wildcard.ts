@@ -70,7 +70,7 @@ export const tfIamWildcardMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "tf-iam-wildcard",
+      ruleSlug: "tf-iam-wildcard",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 4).join(", "),

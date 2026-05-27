@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         20
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         23
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "ssrf",
+      "ruleSlug": "ssrf",
       "lineNumbers": [
         16,
         17,
@@ -37,7 +37,7 @@
       "matchedPattern": "new URL from request data"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         10
       ],
@@ -45,7 +45,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         12
       ],
@@ -53,7 +53,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         13
       ],
@@ -61,7 +61,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         14
       ],
@@ -69,7 +69,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         16
       ],
@@ -77,7 +77,7 @@
       "matchedPattern": "new URL() from request input without hostname validation"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         17
       ],
@@ -85,7 +85,7 @@
       "matchedPattern": "new URL() from request input without hostname validation"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         18
       ],
@@ -93,7 +93,7 @@
       "matchedPattern": "new URL() from request input without hostname validation"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         31
       ],
@@ -101,7 +101,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         34
       ],
@@ -112,7 +112,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.547Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5469beb37d8b32324909c984ff39b9250afd1ca24e286cd8aa6a68f9e1e8cc25",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -125,7 +125,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "41de6492-d93b-43db-9e1d-4a2babea4197",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.52210075,
       "usage": {
@@ -150,7 +150,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b5a-79c1-8782-d679e7129e7b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.05059860000000001,

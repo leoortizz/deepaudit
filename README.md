@@ -44,7 +44,7 @@ Then scan from inside `.deepaudit/`:
 pnpm deepaudit scan
 pnpm deepaudit process    
 pnpm deepaudit revalidate # optional, cuts FP rate
-pnpm deepaudit export --format md-dir --out ./findings
+pnpm deepaudit export --format md-dir --out ./violations
 ```
 
 If you feel like the `deepaudit` should look at more parts of the code, give it [the writing matchers](docs/writing-matchers.md) doc to find more valuable starting points in your code base.
@@ -120,13 +120,13 @@ Running on a sandbox (see above) does limit the potential exposure substantially
 | Command         | What it does                                             |
 |-----------------|----------------------------------------------------------|
 | `scan`          | Find candidate sites with regex matchers (fast, no AI)   |
-| `process`       | AI investigation; emits findings + recommendation        |
+| `process`       | AI investigation; emits violations + recommendation        |
 | `process --diff`| PR-mode: scan + investigate only files changed in a diff |
 | `triage`        | Lightweight P0/P1/P2 classification (cheaper model)      |
-| `revalidate`    | Re-check existing findings; checks git history for fixes |
+| `revalidate`    | Re-check existing violations; checks git history for fixes |
 | `enrich`        | Add git committer info + (with a plugin) ownership data  |
 | `report`        | Markdown + JSON summary for one project                  |
-| `export`        | Per-finding JSON or directory of markdown files          |
+| `export`        | Per-violation JSON or directory of markdown files          |
 | `metrics`       | Cross-project counts: severities, vulns by type, TPs     |
 | `status`        | Snapshot of the project mirror                           |
 | `sandbox <cmd>` | Run any of the above on Vercel Sandbox microVMs          |

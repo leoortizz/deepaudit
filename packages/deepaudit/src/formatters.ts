@@ -8,11 +8,7 @@ export function severityColor(severity: Severity): string {
       return "\x1b[33m"; // yellow
     case "MEDIUM":
       return "\x1b[36m"; // cyan
-    case "HIGH_BUG":
-      return "\x1b[35m"; // magenta
-    case "BUG":
-      return "\x1b[35m"; // magenta
-    case "LOW":
+    case "NIT":
       return "\x1b[90m"; // bright black
   }
 }

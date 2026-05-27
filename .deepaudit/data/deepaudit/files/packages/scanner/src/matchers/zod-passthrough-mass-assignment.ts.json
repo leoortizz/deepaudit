@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         20
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         5
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         11
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         14
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         21
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         24
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         25
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         26
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         27
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         28
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         57
       ],
@@ -91,7 +91,7 @@
       "matchedPattern": ".passthrough() in file with DB insert/update — mass-assignment risk"
     },
     {
-      "vulnSlug": "zod-passthrough-mass-assignment",
+      "ruleSlug": "zod-passthrough-mass-assignment",
       "lineNumbers": [
         58
       ],
@@ -102,7 +102,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.825Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "9694777c908c5699318b0df79732e381bb871c2ab3a3da5c7d76a37e22af521e",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -115,7 +115,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "af31fb8c-ff26-4376-88c2-1a55eebeecfc",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 3,
       "costUsd": 0.17779525,
       "usage": {
@@ -140,7 +140,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7863-93e9-93441614ba27",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0592852,

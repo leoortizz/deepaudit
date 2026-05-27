@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         16
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         10,
         11,
@@ -30,7 +30,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         10,
         11,
@@ -41,7 +41,7 @@
       "matchedPattern": "Security disable flag checked as truthy"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         11,
         14,
@@ -52,7 +52,7 @@
       "matchedPattern": "Verification disable flag checked as truthy"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         17,
         18
@@ -61,7 +61,7 @@
       "matchedPattern": "Auth enable flag — falsy when unset"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         19,
         20
@@ -70,7 +70,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         10
       ],
@@ -78,7 +78,7 @@
       "matchedPattern": "process.env.DISABLE_AUTH"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         11
       ],
@@ -86,7 +86,7 @@
       "matchedPattern": "process.env.SKIP_AUTH_CHECK"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         12
       ],
@@ -94,7 +94,7 @@
       "matchedPattern": "process.env.BYPASS_AUTH"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         13
       ],
@@ -102,7 +102,7 @@
       "matchedPattern": "process.env.NO_AUTH"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         14
       ],
@@ -110,7 +110,7 @@
       "matchedPattern": "process.env.DISABLE_VERIFY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         15
       ],
@@ -118,7 +118,7 @@
       "matchedPattern": "process.env.SKIP_VALIDATE"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         16
       ],
@@ -126,7 +126,7 @@
       "matchedPattern": "process.env.BYPASS_CHECK"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         17
       ],
@@ -134,7 +134,7 @@
       "matchedPattern": "process.env.ENABLE_AUTH"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         18
       ],
@@ -142,7 +142,7 @@
       "matchedPattern": "process.env.REQUIRE_AUTH"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         19
       ],
@@ -150,7 +150,7 @@
       "matchedPattern": "process.env.MY_SECRET"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         20
       ],
@@ -161,7 +161,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.682Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "d50fc09351f1ae619c6d68cf07e4792b8fdfecaca66b3757cc7fa2e4d54c0cc7",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -174,7 +174,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "d8f6357f-7fc5-4642-9ffb-b41b8741689c",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.39885175000000006,
       "usage": {

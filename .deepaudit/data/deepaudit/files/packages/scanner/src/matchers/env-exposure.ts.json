@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         6
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         25
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         32
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         15
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         15
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         16
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         16
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         17
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         17
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         18
       ],
@@ -91,7 +91,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         18
       ],
@@ -99,7 +99,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         19
       ],
@@ -107,7 +107,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         19
       ],
@@ -115,7 +115,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         20
       ],
@@ -123,7 +123,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         21
       ],
@@ -131,7 +131,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         22
       ],
@@ -139,7 +139,7 @@
       "matchedPattern": "Secret env var accessed in 'use client' component"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         35
       ],
@@ -147,7 +147,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-exposure",
+      "ruleSlug": "env-exposure",
       "lineNumbers": [
         42
       ],
@@ -155,7 +155,7 @@
       "matchedPattern": "NEXT_PUBLIC_ variable with secret-like name"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         15,
         16,
@@ -168,7 +168,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         15
       ],
@@ -176,7 +176,7 @@
       "matchedPattern": "process.env.NEXT_PUBLIC_API_SECRET"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         16
       ],
@@ -184,7 +184,7 @@
       "matchedPattern": "process.env.NEXT_PUBLIC_AUTH_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         17
       ],
@@ -192,7 +192,7 @@
       "matchedPattern": "process.env.NEXT_PUBLIC_USER_PASSWORD"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         18
       ],
@@ -200,7 +200,7 @@
       "matchedPattern": "process.env.NEXT_PUBLIC_OAUTH_CREDENTIAL"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         19
       ],
@@ -208,7 +208,7 @@
       "matchedPattern": "process.env.NEXT_PUBLIC_STRIPE_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         20
       ],
@@ -216,7 +216,7 @@
       "matchedPattern": "process.env.API_SECRET"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         21
       ],
@@ -224,7 +224,7 @@
       "matchedPattern": "process.env.PRIVATE_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         22
       ],
@@ -235,7 +235,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.683Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "439534d9927489741101d4b1af2f27e833b85a70fb33f3ee16d5164bb0714f2e",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -248,7 +248,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "138fcf13-e4b7-4a3b-ac41-8724b22e1dfb",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.43548600000000004,
       "usage": {

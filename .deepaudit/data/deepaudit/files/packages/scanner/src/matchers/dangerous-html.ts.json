@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         6,
         11,
@@ -19,7 +19,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         6
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         11
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         22
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         29
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         36
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         38
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         40
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from fetched data (MEDIUM RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         42
       ],
@@ -91,15 +91,15 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         44
       ],
-      "snippet": "        } else if (isSafeScript || isStaticString) {\n          label = \"dangerouslySetInnerHTML with static/safe content (weak candidate)\";\n        } else {\n          label = \"dangerouslySetInnerHTML (classify source)\";\n        }\n\n        matches.push({\n          vulnSlug: \"dangerous-html\",",
+      "snippet": "        } else if (isSafeScript || isStaticString) {\n          label = \"dangerouslySetInnerHTML with static/safe content (weak candidate)\";\n        } else {\n          label = \"dangerouslySetInnerHTML (classify source)\";\n        }\n\n        matches.push({\n          ruleSlug: \"dangerous-html\",",
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         6,
         11,
@@ -117,7 +117,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         16,
         17
@@ -126,7 +126,7 @@
       "matchedPattern": "innerHTML assignment"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         14
       ],
@@ -134,7 +134,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         15
       ],
@@ -142,7 +142,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         16
       ],
@@ -150,7 +150,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         17
       ],
@@ -158,7 +158,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         28
       ],
@@ -166,7 +166,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         35
       ],
@@ -174,7 +174,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         42
       ],
@@ -182,7 +182,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         44
       ],
@@ -190,7 +190,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from URL/request params (HIGH RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         46
       ],
@@ -198,7 +198,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from fetched data (MEDIUM RISK)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         48
       ],
@@ -206,18 +206,18 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         50
       ],
-      "snippet": "        } else if (isSafeScript || isStaticString) {\n          label = \"dangerouslySetInnerHTML with static/safe content (weak candidate)\";\n        } else {\n          label = \"dangerouslySetInnerHTML (classify source)\";\n        }\n\n        matches.push({\n          vulnSlug: \"dangerous-html\",",
+      "snippet": "        } else if (isSafeScript || isStaticString) {\n          label = \"dangerouslySetInnerHTML with static/safe content (weak candidate)\";\n        } else {\n          label = \"dangerouslySetInnerHTML (classify source)\";\n        }\n\n        matches.push({\n          ruleSlug: \"dangerous-html\",",
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     }
   ],
   "lastScannedAt": "2026-05-06T21:46:56.518Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "63da57412b6ab7fb200043f51fb9868b655fe405a1796325839fd7b3d3b52219",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -230,7 +230,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "138fcf13-e4b7-4a3b-ac41-8724b22e1dfb",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.43548600000000004,
       "usage": {

@@ -5,7 +5,7 @@ A deepaudit plugin can fill any of five slots:
 | Slot | Purpose |
 |---|---|
 | `matchers` | Additional regex matchers, registered alongside the built-ins |
-| `notifiers` | Where findings get reported (Slack, GitHub Issues, webhooks…) |
+| `notifiers` | Where violations get reported (Slack, GitHub Issues, webhooks…) |
 | `ownership` | Map files to owning teams/people (e.g. an internal directory) |
 | `people` | Look up a person by email/name (managers, on-call, contact info) |
 | `executor` | Run a deepaudit command on remote infrastructure |
@@ -109,7 +109,7 @@ shape as a published plugin, just defined in the user's config file.
 ## Slot 2: ownership
 
 `ownership` maps a file to the team or person that owns it. `deepaudit
-enrich` attaches this data to findings. Useful for routing notifications
+enrich` attaches this data to violations. Useful for routing notifications
 and prioritizing review.
 
 The contract:
@@ -171,18 +171,18 @@ the same way.
 
 ## Slot 4: notifiers
 
-`notifiers` are where findings get reported. Slack, GitHub Issues,
+`notifiers` are where violations get reported. Slack, GitHub Issues,
 webhooks, an internal incident system; whatever fits.
 
 ```ts
 interface NotifierPlugin {
   name: string;
-  notify(params: NotifyParams): Promise<FindingNotification>;
+  notify(params: NotifyParams): Promise<ViolationNotification>;
 }
 ```
 
-`NotifyParams` carries the finding, the FileRecord, and the projectId.
-`FindingNotification` carries an `externalId` and `externalUrl` for
+`NotifyParams` carries the violation, the FileRecord, and the projectId.
+`ViolationNotification` carries an `externalId` and `externalUrl` for
 correlation back to the source.
 
 deepaudit doesn't ship a notifier in core. The original Slack notifier was

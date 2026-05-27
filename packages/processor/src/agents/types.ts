@@ -1,4 +1,4 @@
-import type { FileRecord, Finding, RefusalReport, RevalidationVerdict } from "@deepaudit/core";
+import type { FileRecord, RefusalReport, RevalidationVerdict, Violation } from "@deepaudit/core";
 
 export interface AgentProgress {
   type: "started" | "tool_use" | "thinking" | "complete" | "error";
@@ -32,7 +32,7 @@ export interface InvestigateParams {
 
 export interface InvestigateResult {
   filePath: string;
-  findings: Finding[];
+  violations: Violation[];
 }
 
 export interface BatchMeta {
@@ -67,7 +67,7 @@ export interface RevalidateParams {
   projectRoot: string;
   projectInfo: string;
   config: Record<string, unknown>;
-  /** When true, re-check findings that already have a revalidation verdict */
+  /** When true, re-check violations that already have a revalidation verdict */
   force?: boolean;
   /** See InvestigateParams.signal — same semantics for revalidation. */
   signal?: AbortSignal;
@@ -80,10 +80,10 @@ export interface RevalidateVerdict {
   title: string;
   verdict: RevalidationVerdict;
   reasoning: string;
-  adjustedSeverity?: "CRITICAL" | "HIGH" | "MEDIUM" | "HIGH_BUG" | "BUG";
+  adjustedSeverity?: "CRITICAL" | "HIGH" | "MEDIUM" | "HIGH" | "MEDIUM";
   /**
    * Required when `verdict === "duplicate"`. `title` of the primary
-   * finding in the same file — the canonical one that should keep its
+   * violation in the same file — the canonical one that should keep its
    * real verdict. The processor rejects DUPEs that don't reference a
    * non-DUPE primary in the same file.
    */

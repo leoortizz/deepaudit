@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         18
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "exec with string"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         17
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         19
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         20
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         83
       ],
@@ -54,7 +54,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.732Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "9842fb017e5c8543fd23347aa72e2e49f015f0f517a668aeea9c21cb6f8c46bc",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-65dc94bca8cbf80e",
@@ -66,7 +66,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3045-7302-8227-b4ee5e620897",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0613255,
@@ -92,7 +92,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bc9-7e61-aaad-fadc27e0addc",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05861325,

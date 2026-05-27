@@ -80,7 +80,7 @@ export const frameworkInternalHeaderMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "framework-internal-header",
+      ruleSlug: "framework-internal-header",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 4).join(", "),

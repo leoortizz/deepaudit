@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         18
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         35
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "next/headers cookies().set() — verify cookie options"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         39
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "res.cookie() — verify httpOnly+secure+sameSite"
     },
     {
-      "vulnSlug": "secret-in-log",
+      "ruleSlug": "secret-in-log",
       "lineNumbers": [
         44
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "Secret variable in log statement"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         22
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "next/headers cookies().set() — verify cookie options"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         24
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "next/headers cookies().set() — verify cookie options"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         26
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "res.cookie() — verify httpOnly+secure+sameSite"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         28
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "res.cookie() — verify httpOnly+secure+sameSite"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         30
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "Auth library construction — review cookie config"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         32
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "Auth library construction — review cookie config"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         33
       ],
@@ -91,7 +91,7 @@
       "matchedPattern": "Cookie options block"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         37
       ],
@@ -99,7 +99,7 @@
       "matchedPattern": "Cookie options block"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         40
       ],
@@ -107,7 +107,7 @@
       "matchedPattern": "iron-session config"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         42
       ],
@@ -115,7 +115,7 @@
       "matchedPattern": "iron-session config"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         44
       ],
@@ -123,7 +123,7 @@
       "matchedPattern": "Raw Set-Cookie header — verify flags"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         61
       ],
@@ -131,7 +131,7 @@
       "matchedPattern": "next/headers cookies().set() — verify cookie options"
     },
     {
-      "vulnSlug": "session-cookie-config",
+      "ruleSlug": "session-cookie-config",
       "lineNumbers": [
         65
       ],
@@ -142,7 +142,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.823Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "ce32d76047bd5f0ec824870a4be787e2e1eec984a58780a663a208285be78d06",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -155,7 +155,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "66229215-48c4-47cc-9a9f-0265b9cf65ab",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.5060955,
       "usage": {
@@ -180,7 +180,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bbe-7b71-bfea-e098d61e3433",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0442164,

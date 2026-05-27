@@ -16,7 +16,7 @@ The standard flow is `scan` → `process` over the entire repo:
 | Step      | What it looks at        | What it produces                       |
 |-----------|-------------------------|----------------------------------------|
 | `scan`    | The full source tree    | Regex candidates per file              |
-| `process` | All pending candidates  | AI findings on every flagged file      |
+| `process` | All pending candidates  | AI violations on every flagged file      |
 
 Direct mode collapses both steps into one invocation, scoped to a file
 list:
@@ -25,7 +25,7 @@ list:
 |-------------------|---------------------------------|------------------------------------------------------------|
 | Resolve files     | `--diff` / `--files` / stdin    | A POSIX-relative file list under `rootPath`                |
 | Scoped scan       | Only the listed files           | Candidates as **signals** for the prompt (best-effort)     |
-| Always-process    | The same listed files           | AI findings — even on files no matcher hit                 |
+| Always-process    | The same listed files           | AI violations — even on files no matcher hit                 |
 
 The scoped scan still runs because regex hits are useful prompt anchors
 for the agent. Files with no hits still get a record and still get
@@ -48,7 +48,7 @@ Other knobs:
 
 ```text
 --no-ignore            Bypass the default ignore filter (test files, dist/, node_modules/, …)
---comment-out <path>   Write a PR-comment-shaped markdown summary to <path> (only when findings exist)
+--comment-out <path>   Write a PR-comment-shaped markdown summary to <path> (only when violations exist)
 --project-id <id>      Override the project id (auto-derived from rootPath basename otherwise)
 --root <path>          Override the project root (defaults to cwd or deepaudit.config.ts)
 ```
@@ -76,27 +76,27 @@ somewhere to land.
 
 | Code | Meaning                                          |
 |------|--------------------------------------------------|
-| `0`  | No findings produced in this run                 |
-| `1`  | At least one finding was produced                |
+| `0`  | No violations produced in this run                 |
+| `1`  | At least one violation was produced                |
 | `≠1` | Runtime error (bad input, missing credentials, …)|
 
 This makes direct mode a drop-in CI gate: the job fails when the agent
-finds something. **Net-new findings only** count toward the exit code —
-re-running on a file with existing findings doesn't fail the build
-unless something new is surfaced. Pre-existing findings (from a prior
+finds something. **Net-new violations only** count toward the exit code —
+re-running on a file with existing violations doesn't fail the build
+unless something new is surfaced. Pre-existing violations (from a prior
 full scan, or earlier PR review runs) on touched files are intentionally
 excluded so the gate matches the change-scoped review model.
 
 ## PR comments
 
 `--comment-out <path>` writes a markdown body summarizing the **net-new
-findings** from this run — same scope as the exit-code gate. Findings
+violations** from this run — same scope as the exit-code gate. Violations
 already on touched files (from earlier full scans or prior PR reviews)
 aren't re-surfaced. Descriptions and recommendations are truncated
-(600 / 400 chars) so a multi-finding PR doesn't blow past GitHub's
+(600 / 400 chars) so a multi-violation PR doesn't blow past GitHub's
 65 KiB comment limit; the full text stays in `data/<id>/files/`.
 
-The file is only written when there are findings, so a green run leaves
+The file is only written when there are violations, so a green run leaves
 nothing on disk and your "post comment" step can short-circuit on
 `if: hashFiles('comment.md') != ''`.
 
@@ -194,7 +194,7 @@ jobs:
   resolution, which can fail on Linux under some package managers.
 - **`pnpm deepaudit`** — swap for `npx -y deepaudit`, `npm exec deepaudit`,
   or `yarn deepaudit` to match your package manager.
-- **`comment.md` is uploaded only when findings exist** —
+- **`comment.md` is uploaded only when violations exist** —
   `--comment-out` writes nothing on a green run, so the upload step's
   `hashFiles` check skips and the `comment` job downloads no
   artifact. That keeps the post-comment job a no-op when there's
@@ -240,5 +240,5 @@ git diff --name-only origin/main \
   by noise tier, parallelizes better, and benefits from the
   whole-repo signal in matcher gating. Direct mode is for incremental
   review.
-- For revalidating existing findings: use `revalidate` with its own
+- For revalidating existing violations: use `revalidate` with its own
   filters.

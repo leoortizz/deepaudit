@@ -45,7 +45,7 @@ export const dockerfileFromMutableTagMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "dockerfile-from-mutable-tag",
+      ruleSlug: "dockerfile-from-mutable-tag",
       lineNumbers: hitLines,
       snippet: snippets[0],
       matchedPattern: "FROM without @sha256 digest",

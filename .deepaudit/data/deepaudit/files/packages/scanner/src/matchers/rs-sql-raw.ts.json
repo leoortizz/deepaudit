@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,15 +11,15 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         13
       ],
-      "snippet": "  // accepts positive cases): the compile-time-checked macro form\n  // `sqlx::query!(\"SELECT * FROM users WHERE id = $1\", id)` is parameterized\n  // at compile time and is NOT a finding. Only the runtime\n  // `sqlx::query(&format!(...))` form below is unsafe.\n  examples: [\n    `sqlx::query(&format!(\"SELECT * FROM users WHERE id = {}\", id)).fetch_one(&pool).await?`,",
+      "snippet": "  // accepts positive cases): the compile-time-checked macro form\n  // `sqlx::query!(\"SELECT * FROM users WHERE id = $1\", id)` is parameterized\n  // at compile time and is NOT a violation. Only the runtime\n  // `sqlx::query(&format!(...))` form below is unsafe.\n  examples: [\n    `sqlx::query(&format!(\"SELECT * FROM users WHERE id = {}\", id)).fetch_one(&pool).await?`,",
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         17
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         18
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         20
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         21
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         72
       ],
@@ -62,7 +62,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.732Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "e7517ce3e0f358b47c98fdf1a750487fa50f328e0513a502339f35777d2bf348",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-5ae71a3d1b833445",
@@ -74,7 +74,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-2ffb-7402-b151-ca739f5e7e5f",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.079966,
@@ -100,7 +100,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8ab9-7382-ad35-7c37809e4626",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05982975,

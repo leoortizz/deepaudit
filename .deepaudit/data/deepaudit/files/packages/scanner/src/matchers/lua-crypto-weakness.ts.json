@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         17
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "Timing-unsafe HMAC comparison (use timingSafeEqual)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         14,
         17
@@ -28,7 +28,7 @@
       "matchedPattern": "MD5 function call"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         27
       ],
@@ -39,7 +39,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.484Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "4b1fec5fcf810c72816149943faffb58325c9c1c3575a7b835f87baa459d75b6",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -52,7 +52,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "d517afb6-ca17-4bda-83aa-911304bf5d54",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.248668,
       "usage": {
@@ -77,7 +77,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b8b-7982-9789-c528bf7d360a",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05994175,

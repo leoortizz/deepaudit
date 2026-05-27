@@ -22,10 +22,10 @@ export async function triageCommand(opts: {
   assertAgentCredential("claude-agent-sdk");
 
   console.log(
-    `${BOLD}Triaging${RESET} ${severity} findings for project ${BOLD}${projectId}${RESET}`,
+    `${BOLD}Triaging${RESET} ${severity} violations for project ${BOLD}${projectId}${RESET}`,
   );
   console.log(`  Model: ${model} (lightweight — no code reading)`);
-  if (opts.force) console.log(`  ${YELLOW}Force re-triaging already-triaged findings${RESET}`);
+  if (opts.force) console.log(`  ${YELLOW}Force re-triaging already-triaged violations${RESET}`);
   console.log();
 
   const result = await triage({

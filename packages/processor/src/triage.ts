@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import type { FileRecord, Finding, Severity, TriagePriority } from "@deepaudit/core";
+import type { FileRecord, Severity, TriagePriority, Violation } from "@deepaudit/core";
 import {
   completeRun,
   createRunMeta,
@@ -60,20 +60,20 @@ export async function triage(params: {
     message: `Loaded ${records.length} records in ${((Date.now() - startLoad) / 1000).toFixed(1)}s`,
   });
 
-  emit({ type: "batch_started", message: `Filtering ${severity} findings...` });
-  const toTriage: { record: FileRecord; finding: Finding }[] = [];
-  let totalFindings = 0;
+  emit({ type: "batch_started", message: `Filtering ${severity} violations...` });
+  const toTriage: { record: FileRecord; violation: Violation }[] = [];
+  let totalViolations = 0;
   let alreadyTriaged = 0;
 
   for (const record of records) {
-    for (const finding of record.findings) {
-      if (finding.severity !== severity) continue;
-      totalFindings++;
-      if (!force && finding.triage) {
+    for (const violation of record.violations) {
+      if (violation.severity !== severity) continue;
+      totalViolations++;
+      if (!force && violation.triage) {
         alreadyTriaged++;
         continue;
       }
-      toTriage.push({ record, finding });
+      toTriage.push({ record, violation });
     }
   }
 
@@ -83,11 +83,11 @@ export async function triage(params: {
 
   emit({
     type: "batch_complete",
-    message: `${totalFindings} ${severity} findings total, ${alreadyTriaged} already triaged, ${toTriage.length} to process`,
+    message: `${totalViolations} ${severity} violations total, ${alreadyTriaged} already triaged, ${toTriage.length} to process`,
   });
 
   if (toTriage.length === 0) {
-    emit({ type: "all_complete", message: "No findings to triage" });
+    emit({ type: "all_complete", message: "No violations to triage" });
     return { triaged: 0, p0: 0, p1: 0, p2: 0, skip: 0 };
   }
 
@@ -117,28 +117,28 @@ export async function triage(params: {
     batchesInFlight++;
     emit({
       type: "batch_started",
-      message: `Triaging batch ${batchIdx + 1}/${batches.length} (${batch.length} findings, ${batchesInFlight} in flight)`,
+      message: `Triaging batch ${batchIdx + 1}/${batches.length} (${batch.length} violations, ${batchesInFlight} in flight)`,
     });
 
-    const findingsList = batch
+    const violationsList = batch
       .map((item, idx) => {
-        return `### ${idx + 1}. ${item.finding.title}
+        return `### ${idx + 1}. ${item.violation.title}
 - **File:** \`${item.record.filePath}\`
-- **Severity:** ${item.finding.severity}
-- **Slug:** ${item.finding.vulnSlug}
-- **Lines:** ${item.finding.lineNumbers.join(", ")}
-- **Confidence:** ${item.finding.confidence}
-- **Description:** ${item.finding.description}`;
+- **Severity:** ${item.violation.severity}
+- **Slug:** ${item.violation.ruleSlug}
+- **Lines:** ${item.violation.lineNumbers.join(", ")}
+- **Confidence:** ${item.violation.confidence}
+- **Description:** ${item.violation.description}`;
       })
       .join("\n\n");
 
-    const prompt = `You are a security triage expert. Given a list of vulnerability findings, classify each by priority for remediation.
+    const prompt = `You are a security triage expert. Given a list of vulnerability violations, classify each by priority for remediation.
 
 ${projectInfo ? `## Project Context (summary only)\n\n${projectInfo.slice(0, 2000)}\n` : ""}
 
-## Findings to Triage
+## Violations to Triage
 
-${findingsList}
+${violationsList}
 
 ## Classification Criteria
 
@@ -201,10 +201,10 @@ ${findingsList}
       } catch {}
 
       for (const verdict of verdicts) {
-        const item = batch.find((b) => b.finding.title === verdict.title);
+        const item = batch.find((b) => b.violation.title === verdict.title);
         if (!item) continue;
 
-        item.finding.triage = {
+        item.violation.triage = {
           priority: verdict.priority,
           exploitability: verdict.exploitability,
           impact: verdict.impact,
@@ -258,12 +258,12 @@ ${findingsList}
   }
 
   completeRun(projectId, meta.runId, "done", {
-    findingsRevalidated: totalTriaged,
+    violationsRevalidated: totalTriaged,
   });
 
   emit({
     type: "all_complete",
-    message: `Triage complete: ${totalTriaged} findings — P0:${p0} P1:${p1} P2:${p2} skip:${skip}`,
+    message: `Triage complete: ${totalTriaged} violations — P0:${p0} P1:${p1} P2:${p2} skip:${skip}`,
   });
 
   return { triaged: totalTriaged, p0, p1, p2, skip };

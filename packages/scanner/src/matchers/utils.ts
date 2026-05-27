@@ -27,7 +27,7 @@ export function regexMatcher(
 
     if (hitLines.length > 0) {
       matches.push({
-        vulnSlug: slug,
+        ruleSlug: slug,
         lineNumbers: hitLines,
         snippet: snippets[0], // first occurrence context
         matchedPattern: label,

@@ -74,7 +74,7 @@ span.addEvent("payment.received", payment);`,
           const start = Math.max(0, i - 2);
           const end = Math.min(lines.length, i + 3);
           matches.push({
-            vulnSlug: "sensitive-data-in-traces",
+            ruleSlug: "sensitive-data-in-traces",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: `${label} in file with sensitive data — check what's being traced`,

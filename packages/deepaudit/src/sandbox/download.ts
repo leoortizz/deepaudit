@@ -22,7 +22,7 @@ const ALLOWED_EXTENSIONS = new Set([".json", ".md", ".csv", ".txt"]);
 // known shapes. Critically, this rejects a top-level `project.json` (whose
 // `rootPath` field would otherwise be trusted by the next CLI run and steer
 // later sandbox uploads at attacker-chosen host paths). See the
-// "archive-extraction-untrusted" finding in .deepaudit/findings.
+// "archive-extraction-untrusted" violation in .deepaudit/violations.
 //
 // Path segments use `[^/\\\0]+` rather than a stricter character class so
 // real-world repo paths pass through unchanged: Next.js dynamic routes
@@ -246,7 +246,7 @@ export async function extractTarballLocally(tarPath: string, destDir: string): P
 
   // Snapshot existing per-file records BEFORE extracting. The tarball
   // extract is a blind overwrite, so without this any prior on-host
-  // analysisHistory / findings / revalidation / triage entries would
+  // analysisHistory / violations / revalidation / triage entries would
   // disappear when a concurrently-running sandbox uploads its (older)
   // view of the same file. We re-merge after extract.
   const hostSnapshot = snapshotFileRecords(destDir);

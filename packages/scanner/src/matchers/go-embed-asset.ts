@@ -47,7 +47,7 @@ export const goEmbedAssetMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "go-embed-asset",
+      ruleSlug: "go-embed-asset",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(" | "),

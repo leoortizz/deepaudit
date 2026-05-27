@@ -15,16 +15,12 @@ describe("severityColor", () => {
     expect(severityColor("MEDIUM")).toBe("\x1b[36m");
   });
 
-  it("returns magenta for HIGH_BUG", () => {
-    expect(severityColor("HIGH_BUG")).toBe("\x1b[35m");
-  });
-
-  it("returns magenta for BUG", () => {
-    expect(severityColor("BUG")).toBe("\x1b[35m");
+  it("returns bright-black for NIT", () => {
+    expect(severityColor("NIT")).toBe("\x1b[90m");
   });
 
   it("returns a color for every severity level", () => {
-    const severities: Severity[] = ["CRITICAL", "HIGH", "MEDIUM", "HIGH_BUG", "BUG"];
+    const severities: Severity[] = ["CRITICAL", "HIGH", "MEDIUM", "NIT"];
     for (const sev of severities) {
       expect(severityColor(sev)).toBeTruthy();
     }

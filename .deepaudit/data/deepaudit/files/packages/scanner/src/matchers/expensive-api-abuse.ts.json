@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         15
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         28
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         32
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         36
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         44
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         48
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         56
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         59
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         62
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         65
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         68
       ],
@@ -91,7 +91,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         71
       ],
@@ -99,7 +99,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         75
       ],
@@ -107,7 +107,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         79
       ],
@@ -115,7 +115,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         83
       ],
@@ -123,7 +123,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         87
       ],
@@ -131,7 +131,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         40
       ],
@@ -139,7 +139,7 @@
       "matchedPattern": "HTTP entry point: Next.js App Router handler (arrow) (weak candidate)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         29
       ],
@@ -147,7 +147,7 @@
       "matchedPattern": "Expensive API call: AI SDK generateText — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         33
       ],
@@ -155,7 +155,7 @@
       "matchedPattern": "Expensive API call: AI SDK streamText — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         37
       ],
@@ -163,7 +163,7 @@
       "matchedPattern": "Expensive API call: AI SDK generateObject — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         41
       ],
@@ -171,7 +171,7 @@
       "matchedPattern": "Expensive API call: AI SDK streamObject — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         45
       ],
@@ -179,7 +179,7 @@
       "matchedPattern": "Expensive API call: AI SDK embed — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         49
       ],
@@ -187,7 +187,7 @@
       "matchedPattern": "Expensive API call: AI SDK embedMany — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         54
       ],
@@ -195,7 +195,7 @@
       "matchedPattern": "Expensive API call: OpenAI chat completion — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         57
       ],
@@ -203,7 +203,7 @@
       "matchedPattern": "Expensive API call: OpenAI completion — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         60
       ],
@@ -211,7 +211,7 @@
       "matchedPattern": "Expensive API call: OpenAI embedding — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         63
       ],
@@ -219,7 +219,7 @@
       "matchedPattern": "Expensive API call: OpenAI image generation — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         66
       ],
@@ -227,7 +227,7 @@
       "matchedPattern": "Expensive API call: Anthropic messages — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         69
       ],
@@ -235,7 +235,7 @@
       "matchedPattern": "Expensive API call: Anthropic completion — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         72
       ],
@@ -243,7 +243,7 @@
       "matchedPattern": "Expensive API call: Vercel AI Gateway — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         76
       ],
@@ -251,7 +251,7 @@
       "matchedPattern": "Expensive API call: Chat completions API — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         80
       ],
@@ -259,7 +259,7 @@
       "matchedPattern": "Expensive API call: Completions API — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         84
       ],
@@ -267,7 +267,7 @@
       "matchedPattern": "Expensive API call: Embeddings API — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         88
       ],
@@ -275,7 +275,7 @@
       "matchedPattern": "Expensive API call: Image generation API — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         93
       ],
@@ -283,7 +283,7 @@
       "matchedPattern": "Expensive API call: SendGrid email — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         97
       ],
@@ -291,7 +291,7 @@
       "matchedPattern": "Expensive API call: Resend email — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         101
       ],
@@ -299,7 +299,7 @@
       "matchedPattern": "Expensive API call: Twilio SMS — check for abuse protection (auth, rate limit, captcha)"
     },
     {
-      "vulnSlug": "expensive-api-abuse",
+      "ruleSlug": "expensive-api-abuse",
       "lineNumbers": [
         105
       ],
@@ -310,7 +310,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.675Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "c32caf10207273629c454af244005733694bd83278e89d0ac2357afb7039adbf",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -323,7 +323,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "f48e32e1-34fa-4b2e-a329-6658bb21e698",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.25357875,
       "usage": {
@@ -348,7 +348,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e73-7001-b338-b63d694b4240",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0524188,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         14
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         7,
         17
@@ -20,7 +20,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         10,
         11
@@ -37,7 +37,7 @@
       "matchedPattern": "admin check comparison"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         12,
         13,
@@ -48,7 +48,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         14,
         15
@@ -57,7 +57,7 @@
       "matchedPattern": "session null check"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         16,
         17,
@@ -68,7 +68,7 @@
       "matchedPattern": "auth verification call"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         7,
         20,
@@ -79,7 +79,7 @@
       "matchedPattern": "auth middleware"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         22,
         23
@@ -91,7 +91,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.493Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "28b47011bb6ec2b368d79f40c5f871588e6bfbf451de98f2cd79225e3d0d4a6f",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -104,7 +104,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "cd084360-af75-4dd9-a59d-04e0c819a753",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4970532499999999,
       "usage": {
@@ -129,7 +129,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7931-b009-43059171fba6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05549425,

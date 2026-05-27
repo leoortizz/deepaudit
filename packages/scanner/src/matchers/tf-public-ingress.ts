@@ -108,7 +108,7 @@ export const tfPublicIngressMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "tf-public-ingress",
+      ruleSlug: "tf-public-ingress",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(", "),

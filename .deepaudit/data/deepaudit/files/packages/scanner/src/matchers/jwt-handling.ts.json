@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         24
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "JWT verification (verify algorithm pinning)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         28
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "JWT signing (verify key management)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         31
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "JWT encryption (verify algorithm)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         33
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "Session cookie handling"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         37
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "Token refresh logic (verify validation)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         41
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "JWT 'none' algorithm (CRITICAL if not test)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         24
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         14,
         15,
@@ -78,7 +78,7 @@
       "matchedPattern": "JWT verification (verify algorithm pinning)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         17,
         18,
@@ -92,7 +92,7 @@
       "matchedPattern": "JWT signing (verify key management)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         21,
         22,
@@ -102,7 +102,7 @@
       "matchedPattern": "JWT encryption (verify algorithm)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         23,
         24,
@@ -113,7 +113,7 @@
       "matchedPattern": "Session cookie handling"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         26,
         27,
@@ -123,7 +123,7 @@
       "matchedPattern": "Token refresh logic (verify validation)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         28,
         29,
@@ -133,7 +133,7 @@
       "matchedPattern": "JWT 'none' algorithm (CRITICAL if not test)"
     },
     {
-      "vulnSlug": "secret-in-log",
+      "ruleSlug": "secret-in-log",
       "lineNumbers": [
         23
       ],
@@ -141,7 +141,7 @@
       "matchedPattern": "Secret variable in log statement"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         14
       ],
@@ -149,7 +149,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         15
       ],
@@ -157,7 +157,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         16
       ],
@@ -165,7 +165,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         42
       ],
@@ -173,7 +173,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         14,
         15,
@@ -191,7 +191,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.780Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "f659881f602528d98741870ee9d381b4e22ab57edc2b4c349be38c671c0c976e",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -204,7 +204,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "e43a028a-de8a-4dc7-8310-a9d2634f2ad6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.5421327499999999,
       "usage": {
@@ -229,7 +229,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e73-7dd3-b6a8-093f2eb1e172",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.06494775,

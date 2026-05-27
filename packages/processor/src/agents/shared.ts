@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { dataDir, type FileRecord, type Finding, type RefusalReport } from "@deepaudit/core";
+import { dataDir, type FileRecord, type RefusalReport, type Violation } from "@deepaudit/core";
 import type { InvestigateResult, RevalidateVerdict } from "./types.js";
 
 // --- Retry / backoff -------------------------------------------------------
@@ -323,7 +323,7 @@ export function buildInvestigatePrompt(params: {
       const matchDetails = r.candidates
         .map((m) => {
           const lines = m.lineNumbers.join(", ");
-          return `    - [${m.vulnSlug}] L${lines}: ${m.matchedPattern}`;
+          return `    - [${m.ruleSlug}] L${lines}: ${m.matchedPattern}`;
         })
         .join("\n");
       return `- **${r.filePath}**\n${matchDetails}`;
@@ -360,16 +360,16 @@ For each file:
 
 ## Output Format
 
-After your investigation, output a JSON block with your findings for EACH file. Use this exact format:
+After your investigation, output a JSON block with your violations for EACH file. Use this exact format:
 
 \`\`\`json
 [
   {
     "filePath": "relative/path/to/file.ts",
-    "findings": [
+    "violations": [
       {
-        "severity": "CRITICAL|HIGH|MEDIUM|HIGH_BUG|BUG",
-        "vulnSlug": "the-vuln-slug-or-other",
+        "severity": "CRITICAL|HIGH|MEDIUM|HIGH|MEDIUM",
+        "ruleSlug": "the-vuln-slug-or-other",
         "title": "Brief title of the issue",
         "description": "Detailed description of the vulnerability, the attack scenario, and evidence from the code",
         "lineNumbers": [10, 15],
@@ -383,12 +383,12 @@ After your investigation, output a JSON block with your findings for EACH file. 
 
 **Severity levels:**
 - **CRITICAL / HIGH / MEDIUM** — security vulnerabilities (exploitable by an attacker)
-- **HIGH_BUG** — major non-security bugs that could cause data loss, corruption, outages, or seriously broken behavior
-- **BUG** — notable non-security bugs (logic errors, race conditions, resource leaks) that don't rise to HIGH_BUG
+- **HIGH** — major non-security bugs that could cause data loss, corruption, outages, or seriously broken behavior
+- **MEDIUM** — notable non-security bugs (logic errors, race conditions, resource leaks) that don't rise to HIGH
 
-**vulnSlug** can be any of the known categories OR a custom slug for issues not covered by the scanner. Use \`"other"\` as the slug prefix for novel findings (e.g., \`"other-race-condition"\`, \`"other-logic-bug"\`, \`"other-info-disclosure"\`).
+**ruleSlug** can be any of the known categories OR a custom slug for issues not covered by the scanner. Use \`"other"\` as the slug prefix for novel violations (e.g., \`"other-race-condition"\`, \`"other-logic-bug"\`, \`"other-info-disclosure"\`).
 
-If a file has no real vulnerabilities after thorough investigation, include it with an empty findings array.`;
+If a file has no real vulnerabilities after thorough investigation, include it with an empty violations array.`;
 }
 
 /**
@@ -445,24 +445,26 @@ export function parseInvestigateResults(
     parsed = JSON.parse(jsonStr);
   } catch (err) {
     // Fail loud — a malformed JSON response is indistinguishable from
-    // a "found nothing" run if we silently return empty findings, and
+    // a "found nothing" run if we silently return empty violations, and
     // for a security tool that's the worst possible failure mode
     // (truncated model output, rate-limit splice, prompt-injection
-    // override could all suppress real findings). The processor's
+    // override could all suppress real violations). The processor's
     // batch-level catch fires from this throw, marks files status=error,
     // increments errorBatchCount, and the CLI exits non-zero.
     const excerpt = resultText.slice(0, 400).replace(/\s+/g, " ");
     throw new Error(
-      `Agent produced output that wasn't a parseable JSON findings array: ${err instanceof Error ? err.message : err}. ` +
+      `Agent produced output that wasn't a parseable JSON violations array: ${err instanceof Error ? err.message : err}. ` +
         `First 400 chars: ${excerpt}`,
     );
   }
 
   if (!Array.isArray(parsed)) {
-    throw new Error(`Agent produced JSON but not an array of file findings. Got: ${typeof parsed}`);
+    throw new Error(
+      `Agent produced JSON but not an array of file violations. Got: ${typeof parsed}`,
+    );
   }
 
-  const typedParsed = parsed as Array<{ filePath: string; findings: Finding[] }>;
+  const typedParsed = parsed as Array<{ filePath: string; violations: Violation[] }>;
   const results: InvestigateResult[] = [];
   const batchPaths = new Set(batch.map((r) => r.filePath));
 
@@ -470,14 +472,14 @@ export function parseInvestigateResults(
     if (batchPaths.has(entry.filePath)) {
       results.push({
         filePath: entry.filePath,
-        findings: entry.findings || [],
+        violations: entry.violations || [],
       });
       batchPaths.delete(entry.filePath);
     }
   }
 
   for (const filePath of batchPaths) {
-    results.push({ filePath, findings: [] });
+    results.push({ filePath, violations: [] });
   }
 
   return results;
@@ -490,20 +492,20 @@ export function buildRevalidatePrompt(params: {
   projectRoot: string;
   projectInfo: string;
   force: boolean;
-}): { prompt: string; totalFindings: number } {
+}): { prompt: string; totalViolations: number } {
   const { batch, projectRoot, projectInfo, force } = params;
 
   const fileSections: string[] = [];
 
   for (const file of batch) {
-    const findingsToCheck = file.findings.filter((f) => force || !f.revalidation);
-    if (findingsToCheck.length === 0) continue;
+    const violationsToCheck = file.violations.filter((f) => force || !f.revalidation);
+    if (violationsToCheck.length === 0) continue;
 
-    const findingsList = findingsToCheck
+    const violationsList = violationsToCheck
       .map((f) => {
-        return `### Finding: ${f.title}
+        return `### Violation: ${f.title}
 - **Severity:** ${f.severity}
-- **Slug:** ${f.vulnSlug}
+- **Slug:** ${f.ruleSlug}
 - **Lines:** ${f.lineNumbers.join(", ")}
 - **Confidence:** ${f.confidence}
 - **Description:** ${f.description}
@@ -532,19 +534,19 @@ export function buildRevalidatePrompt(params: {
       }
     }
 
-    fileSections.push(`## File: ${file.filePath}\n\n${findingsList}\n${gitContext}`);
+    fileSections.push(`## File: ${file.filePath}\n\n${violationsList}\n${gitContext}`);
   }
 
-  const totalFindings = batch.reduce(
-    (s, f) => s + f.findings.filter((ff) => force || !ff.revalidation).length,
+  const totalViolations = batch.reduce(
+    (s, f) => s + f.violations.filter((ff) => force || !ff.revalidation).length,
     0,
   );
 
-  const prompt = `You are a world-class security researcher performing an adversarial review of vulnerability findings. Your goal is to determine, with high confidence, whether each finding is real and exploitable. You must be thorough — incorrect verdicts here directly impact security decisions.
+  const prompt = `You are a world-class security researcher performing an adversarial review of vulnerability violations. Your goal is to determine, with high confidence, whether each violation is real and exploitable. You must be thorough — incorrect verdicts here directly impact security decisions.
 
 **Take your time.** Read every relevant file. Trace every code path. Do not make assumptions — verify.
 
-**Static analysis only.** Do NOT attempt to reproduce, exploit, or trigger any finding. Do not run the target code, send requests against any endpoint, or execute proof-of-concept scripts. Reach your verdict from the source code alone.
+**Static analysis only.** Do NOT attempt to reproduce, exploit, or trigger any violation. Do not run the target code, send requests against any endpoint, or execute proof-of-concept scripts. Reach your verdict from the source code alone.
 
 ${projectInfo ? `## Project Context\n\n${projectInfo}\n` : ""}
 
@@ -552,14 +554,14 @@ ${fileSections.join("\n---\n\n")}
 
 ## Investigation Process
 
-For EACH finding, perform ALL of these steps before rendering a verdict:
+For EACH violation, perform ALL of these steps before rendering a verdict:
 
 1. **Read the target file fully** — not just the flagged lines, the entire file
 2. **Read all imports that matter** — middleware, auth utilities, validation helpers, the framework's request pipeline
 3. **Trace the data flow end-to-end** — Where does the input enter? What transformations happen? Is there validation or sanitization?
 4. **Think like an attacker** — Construct a concrete attack scenario. If you can't, it's likely a false positive.
 5. **Check for framework-level protections** — Next.js middleware, withSchema auth strategies, CSRF tokens, CORS headers
-6. **Check the current code vs. the finding** — Has the vulnerable code been modified or removed? Check git history.
+6. **Check the current code vs. the violation** — Has the vulnerable code been modified or removed? Check git history.
 7. **Assess confidence honestly** — If you're not sure, say "uncertain". Don't guess.
 
 ## Verdicts
@@ -568,14 +570,14 @@ For EACH finding, perform ALL of these steps before rendering a verdict:
 - **false-positive** — Not exploitable. Name the specific mitigation.
 - **fixed** — Was real but has been patched. Cite the change.
 - **uncertain** — Can't determine. Explain what's ambiguous.
-- **duplicate** — This finding describes the **same underlying vulnerability** at the **same code location** as another finding in the **same file** (e.g., two matchers flagged the same line range from different angles, or the same auth bypass surfaced twice with different phrasing). Set \`duplicateOf\` to the exact \`title\` of the primary finding — the one that should keep the canonical verdict. Same vuln class in a different location is **not** a duplicate.
+- **duplicate** — This violation describes the **same underlying vulnerability** at the **same code location** as another violation in the **same file** (e.g., two matchers flagged the same line range from different angles, or the same auth bypass surfaced twice with different phrasing). Set \`duplicateOf\` to the exact \`title\` of the primary violation — the one that should keep the canonical verdict. Same vuln class in a different location is **not** a duplicate.
 
 If severity should change, set \`adjustedSeverity\`. Omit if correct.
 
 ### Duplicate rules (read carefully)
 
 - \`duplicate\` is only valid within a single file. Cross-file similarity does **not** count.
-- For any equivalence class of duplicates, **exactly one finding stays primary** with a real verdict (true-positive / false-positive / fixed / uncertain). The other(s) are \`duplicate\` with \`duplicateOf\` pointing at the primary's title.
+- For any equivalence class of duplicates, **exactly one violation stays primary** with a real verdict (true-positive / false-positive / fixed / uncertain). The other(s) are \`duplicate\` with \`duplicateOf\` pointing at the primary's title.
 - The primary you reference in \`duplicateOf\` **must itself have a non-duplicate verdict** in your output (or already in the file's prior revalidation). If you mark every member of a group as duplicate, all of them will be rejected.
 - Pick the primary as the most precise / highest-confidence statement of the issue. The duplicates should add context in their \`reasoning\`, not repeat the full analysis.
 
@@ -585,10 +587,10 @@ If severity should change, set \`adjustedSeverity\`. Omit if correct.
 [
   {
     "filePath": "exact/path/to/file.ts",
-    "title": "exact title from the finding",
+    "title": "exact title from the violation",
     "verdict": "true-positive" | "false-positive" | "fixed" | "uncertain" | "duplicate",
-    "adjustedSeverity": "CRITICAL" | "HIGH" | "MEDIUM" | "HIGH_BUG" | "BUG",
-    "duplicateOf": "title of the primary finding (only when verdict is duplicate)",
+    "adjustedSeverity": "CRITICAL" | "HIGH" | "MEDIUM" | "HIGH" | "MEDIUM",
+    "duplicateOf": "title of the primary violation (only when verdict is duplicate)",
     "reasoning": "Detailed explanation (5-10 sentences). Show your work."
   }
 ]
@@ -598,7 +600,7 @@ If severity should change, set \`adjustedSeverity\`. Omit if correct.
 
 **Your reasoning is the most important part.** A verdict without thorough reasoning is worthless.`;
 
-  return { prompt, totalFindings };
+  return { prompt, totalViolations };
 }
 
 export function parseRevalidateVerdicts(resultText: string): RevalidateVerdict[] {
@@ -609,7 +611,7 @@ export function parseRevalidateVerdicts(resultText: string): RevalidateVerdict[]
     parsed = JSON.parse(jsonStr);
   } catch (err) {
     // Same fail-loud rationale as parseInvestigateResults: silently
-    // returning [] for malformed output would mark a batch of findings
+    // returning [] for malformed output would mark a batch of violations
     // as "no verdicts produced" instead of erroring, suppressing
     // intended revalidation results.
     const excerpt = resultText.slice(0, 400).replace(/\s+/g, " ");

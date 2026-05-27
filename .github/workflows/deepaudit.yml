@@ -71,7 +71,7 @@ jobs:
   comment:
     needs: analyze
     # Run only if analyze produced a comment (analyze exits 1 on
-    # findings, so result == 'failure' is the trigger). The
+    # violations, so result == 'failure' is the trigger). The
     # download-artifact step also fails closed if the artifact is
     # missing, so other failure modes (network, timeout) silently
     # skip the post.

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "ssrf",
+      "ruleSlug": "ssrf",
       "lineNumbers": [
         10,
         11
@@ -20,7 +20,7 @@
       "matchedPattern": "fetch with request-derived URL"
     },
     {
-      "vulnSlug": "ssrf",
+      "ruleSlug": "ssrf",
       "lineNumbers": [
         12,
         13
@@ -29,7 +29,7 @@
       "matchedPattern": "axios with request-derived URL"
     },
     {
-      "vulnSlug": "ssrf",
+      "ruleSlug": "ssrf",
       "lineNumbers": [
         14
       ],
@@ -37,7 +37,7 @@
       "matchedPattern": "http.request with interpolated URL"
     },
     {
-      "vulnSlug": "ssrf",
+      "ruleSlug": "ssrf",
       "lineNumbers": [
         15
       ],
@@ -45,7 +45,7 @@
       "matchedPattern": "new URL from request data"
     },
     {
-      "vulnSlug": "ssrf",
+      "ruleSlug": "ssrf",
       "lineNumbers": [
         16
       ],
@@ -53,7 +53,7 @@
       "matchedPattern": "fetch with interpolated URL (non-constant base)"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         15
       ],
@@ -61,7 +61,7 @@
       "matchedPattern": "new URL() from request input without hostname validation"
     },
     {
-      "vulnSlug": "untrusted-redirect-following",
+      "ruleSlug": "untrusted-redirect-following",
       "lineNumbers": [
         10
       ],
@@ -69,7 +69,7 @@
       "matchedPattern": "fetch(req.body.url) — default redirect: follow + caller-style URL"
     },
     {
-      "vulnSlug": "untrusted-redirect-following",
+      "ruleSlug": "untrusted-redirect-following",
       "lineNumbers": [
         13
       ],
@@ -80,7 +80,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.827Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "337d9836c896bf373d03966f3f7b0a23ba97614df539bf0b76d363c4d98c865f",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -93,7 +93,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "2d37451d-f791-456c-9c1e-23d475431c2e",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 7,
       "costUsd": 0.27781525,
       "usage": {
@@ -118,7 +118,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c2a-7f31-aa6f-a3fa7439972c",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.059522399999999996,

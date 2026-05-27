@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         24
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         14
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "mutex without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         15
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "mutex without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         16
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "lock without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         17
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "lock without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         18
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "transaction without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         21
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "transaction without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         22
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "redis call without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         23
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "redis call without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         24
       ],
@@ -91,7 +91,7 @@
       "matchedPattern": "prisma call without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         25
       ],
@@ -99,7 +99,7 @@
       "matchedPattern": "prisma call without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         26
       ],
@@ -107,7 +107,7 @@
       "matchedPattern": "db call without await"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         27
       ],
@@ -115,7 +115,7 @@
       "matchedPattern": "db call without await"
     },
     {
-      "vulnSlug": "cache-key-scope",
+      "ruleSlug": "cache-key-scope",
       "lineNumbers": [
         22
       ],
@@ -123,7 +123,7 @@
       "matchedPattern": "Redis string key — no user/team scoping visible in key construction"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         22
       ],
@@ -131,7 +131,7 @@
       "matchedPattern": "Redis get-then-delete/set without transaction — TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         24
       ],
@@ -139,7 +139,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         26
       ],
@@ -150,7 +150,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.733Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "23ac1376ecea9a51adefe72e1b600781cdf520e7f1b37386d329fd954dee7456",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -163,7 +163,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "8a02acbe-c232-4126-88c3-6190ee5d52b6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.21208,
       "usage": {
@@ -188,7 +188,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bbe-7b71-bfea-e098d61e3433",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0442164,

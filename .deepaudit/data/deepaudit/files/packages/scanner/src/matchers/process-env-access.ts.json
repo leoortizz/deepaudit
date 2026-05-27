@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "secret-in-fallback",
+      "ruleSlug": "secret-in-fallback",
       "lineNumbers": [
         16
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "Secret env var with ?? fallback"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         16
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         15
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "process.env.DATABASE_URL"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         16
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "process.env.API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         17
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "process.env.NODE_ENV"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         18
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "process.env.MY_VAR"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         19
       ],
@@ -70,7 +70,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.682Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "aa8bd74282bf376261c61a95a5e23ff9ec288a8333ac8a2c1183cc48c8f8519b",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -83,7 +83,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "a1a0a212-d983-455f-8747-41ef247c9554",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 7,
       "costUsd": 0.2501935,
       "usage": {
@@ -108,7 +108,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bc9-7e13-a44f-2c7a5a34e197",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0469084,

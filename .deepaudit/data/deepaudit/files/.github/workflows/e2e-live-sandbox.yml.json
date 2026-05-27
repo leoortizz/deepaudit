@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "github-workflow-security",
+      "ruleSlug": "github-workflow-security",
       "lineNumbers": [
         39,
         40,
@@ -16,7 +16,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.811Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "c2af6f479498ec033f6718d72cad9dc6cd572ebd9d7e3744b676ddb9f4abe10e",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214907-30539638cba8a282",
@@ -28,7 +28,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3195-7c11-aa21-12b8534cf7ce",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.3333333333333333,
       "phase": "process",
       "costUsd": 0.15579266666666666,
@@ -54,7 +54,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c3c-7b43-b419-c899fb7eac8f",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1639258,

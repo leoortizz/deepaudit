@@ -26,7 +26,7 @@ const SAMPLES_DIR = path.resolve(import.meta.dirname, "../../../../prompt-sample
  */
 function fullPromptFor(scenario: (typeof PROMPT_SAMPLE_SCENARIOS)[number]): string {
   const batch = scenarioBatch(scenario);
-  const batchSlugs = Array.from(new Set(batch.flatMap((r) => r.candidates.map((c) => c.vulnSlug))));
+  const batchSlugs = Array.from(new Set(batch.flatMap((r) => r.candidates.map((c) => c.ruleSlug))));
   const batchLanguages = languagesForBatch(batch.map((r) => r.filePath));
   const { prompt: assembled } = assemblePrompt({
     detectedTags: scenario.detectedTags,
@@ -45,7 +45,7 @@ function fullPromptFor(scenario: (typeof PROMPT_SAMPLE_SCENARIOS)[number]): stri
 function renderSample(scenario: (typeof PROMPT_SAMPLE_SCENARIOS)[number], prompt: string): string {
   const batch = scenarioBatch(scenario);
   const batchLanguages = languagesForBatch(batch.map((r) => r.filePath));
-  const batchSlugs = Array.from(new Set(batch.flatMap((r) => r.candidates.map((c) => c.vulnSlug))));
+  const batchSlugs = Array.from(new Set(batch.flatMap((r) => r.candidates.map((c) => c.ruleSlug))));
   return [
     `<!--`,
     `  Scenario: ${scenario.name}`,

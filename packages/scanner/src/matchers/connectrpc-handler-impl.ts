@@ -60,7 +60,7 @@ export const connectrpcHandlerImplMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "connectrpc-handler-impl",
+      ruleSlug: "connectrpc-handler-impl",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: "ConnectRPC handler method body",

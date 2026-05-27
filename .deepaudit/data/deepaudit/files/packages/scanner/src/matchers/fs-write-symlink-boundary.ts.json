@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         44
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         59
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "path.join with request-derived input"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         60
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "path.resolve with request-derived input"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         44,
         51,
@@ -37,7 +37,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "fs-write-symlink-boundary",
+      "ruleSlug": "fs-write-symlink-boundary",
       "lineNumbers": [
         57,
         58
@@ -46,7 +46,7 @@
       "matchedPattern": "fs write to concatenated path"
     },
     {
-      "vulnSlug": "fs-write-symlink-boundary",
+      "ruleSlug": "fs-write-symlink-boundary",
       "lineNumbers": [
         59
       ],
@@ -54,7 +54,7 @@
       "matchedPattern": "fs write to path.join with req.* component"
     },
     {
-      "vulnSlug": "fs-write-symlink-boundary",
+      "ruleSlug": "fs-write-symlink-boundary",
       "lineNumbers": [
         60
       ],
@@ -65,7 +65,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.840Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "40242eafb2116c7d644b456e6b7c9d3cb0de62b6463654a1ddc7b1b7525b0110",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -78,7 +78,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "f48e32e1-34fa-4b2e-a329-6658bb21e698",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.25357875,
       "usage": {
@@ -103,7 +103,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b8b-7982-9789-c528bf7d360a",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05994175,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         15
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "X-Powered-By header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         17,
         18,
@@ -30,7 +30,7 @@
       "matchedPattern": "Debug/internal header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         18
       ],
@@ -38,7 +38,7 @@
       "matchedPattern": "Nginx debug header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         10,
         11,
@@ -48,7 +48,7 @@
       "matchedPattern": "X-Powered-By header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         12,
         13
@@ -57,7 +57,7 @@
       "matchedPattern": "Server header set"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         14,
         15,
@@ -74,7 +74,7 @@
       "matchedPattern": "Debug/internal header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         17,
         18,
@@ -84,7 +84,7 @@
       "matchedPattern": "Nginx debug header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         19
       ],
@@ -92,7 +92,7 @@
       "matchedPattern": "Lua debug response header"
     },
     {
-      "vulnSlug": "response-header-leak",
+      "ruleSlug": "response-header-leak",
       "lineNumbers": [
         20,
         21
@@ -104,7 +104,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.636Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "84251b0faf0e8915f13b955f4ab61d523a658de3ba375258d46d8c03c98d8081",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -117,7 +117,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "cd084360-af75-4dd9-a59d-04e0c819a753",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4970532499999999,
       "usage": {
@@ -142,7 +142,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7931-b009-43059171fba6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05549425,

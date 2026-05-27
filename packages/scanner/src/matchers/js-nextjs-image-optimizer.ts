@@ -71,7 +71,7 @@ export const frameworkImageOptimizerMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0 && isByPath) {
       const match: CandidateMatch = {
-        vulnSlug: "framework-image-optimizer",
+        ruleSlug: "framework-image-optimizer",
         lineNumbers: [1],
         snippet: lines.slice(0, 5).join("\n"),
         matchedPattern: "image optimizer file (path)",
@@ -80,7 +80,7 @@ export const frameworkImageOptimizerMatcher: MatcherPlugin = {
     }
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "framework-image-optimizer",
+      ruleSlug: "framework-image-optimizer",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(", "),

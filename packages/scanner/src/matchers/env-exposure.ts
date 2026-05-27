@@ -36,7 +36,7 @@ export const envExposureMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 2);
         matches.push({
-          vulnSlug: "env-exposure",
+          ruleSlug: "env-exposure",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "NEXT_PUBLIC_ variable with secret-like name",
@@ -51,7 +51,7 @@ export const envExposureMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 2);
         matches.push({
-          vulnSlug: "env-exposure",
+          ruleSlug: "env-exposure",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Secret env var accessed in 'use client' component",
@@ -67,7 +67,7 @@ export const envExposureMatcher: MatcherPlugin = {
         ) {
           if (/(SECRET|KEY|TOKEN|PASSWORD|CREDENTIAL|PRIVATE)/i.test(line)) {
             matches.push({
-              vulnSlug: "env-exposure",
+              ruleSlug: "env-exposure",
               lineNumbers: [i + 1],
               snippet: line,
               matchedPattern: "Secret value in committed .env file",

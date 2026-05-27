@@ -59,7 +59,7 @@ export const allServerActionsMatcher: MatcherPlugin = {
       const name = nameMatch?.[1] ?? "anonymous";
 
       matches.push({
-        vulnSlug: "all-server-actions",
+        ruleSlug: "all-server-actions",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, end).join("\n"),
         matchedPattern: `Server Action export: ${name} — public POST endpoint (weak candidate)`,

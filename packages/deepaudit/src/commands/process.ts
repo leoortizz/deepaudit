@@ -179,7 +179,7 @@ async function processStandardMode(opts: Parameters<typeof processCommand>[0]) {
 
   console.log(`${GREEN}Processing complete.${RESET} Run: ${BOLD}${result.runId}${RESET}`);
   console.log(`  Analyses: ${result.analysisCount}`);
-  console.log(`  Findings: ${result.findingCount}`);
+  console.log(`  Violations: ${result.violationCount}`);
   if (result.errorBatchCount > 0) {
     console.log(`  ${RED}Errored batches: ${result.errorBatchCount}${RESET}`);
   }
@@ -230,7 +230,7 @@ async function processStandardMode(opts: Parameters<typeof processCommand>[0]) {
  *      diff includes files outside any matcher's pattern set.
  *   4. Run `process()` over those exact paths.
  *   5. Optionally render a PR-comment markdown.
- *   6. Exit 1 if any new finding was produced. CI gates on this.
+ *   6. Exit 1 if any new violation was produced. CI gates on this.
  */
 async function processDirectMode(opts: Parameters<typeof processCommand>[0]) {
   const sources = [
@@ -327,7 +327,7 @@ async function processDirectMode(opts: Parameters<typeof processCommand>[0]) {
 
   console.log(`${GREEN}Processing complete.${RESET} Run: ${BOLD}${result.runId}${RESET}`);
   console.log(`  Analyses: ${result.analysisCount}`);
-  console.log(`  Findings: ${result.findingCount}`);
+  console.log(`  Violations: ${result.violationCount}`);
   if (result.errorBatchCount > 0) {
     console.log(`  ${RED}Errored batches: ${result.errorBatchCount}${RESET}`);
   }
@@ -346,7 +346,7 @@ async function processDirectMode(opts: Parameters<typeof processCommand>[0]) {
 
   // Hard-fail when any batch threw — that means the agent itself
   // failed to run (missing binary, auth error, etc.) on at least one
-  // batch. A "clean run with 0 findings" is a green CI signal; we
+  // batch. A "clean run with 0 violations" is a green CI signal; we
   // can't let a silent agent crash mascarade as that.
   if (result.errorBatchCount > 0) {
     console.log();
@@ -358,7 +358,7 @@ async function processDirectMode(opts: Parameters<typeof processCommand>[0]) {
 
   // Optionally write a PR-comment-shaped markdown for the workflow to
   // pass to github-script.
-  if (opts.commentOut && result.findingCount > 0) {
+  if (opts.commentOut && result.violationCount > 0) {
     const md = renderPrComment({
       projectId,
       runId: result.runId,
@@ -372,11 +372,11 @@ async function processDirectMode(opts: Parameters<typeof processCommand>[0]) {
     }
   }
 
-  if (result.findingCount > 0) {
+  if (result.violationCount > 0) {
     console.log();
-    console.log(`${RED}${result.findingCount} new finding(s) — exiting 1${RESET}`);
+    console.log(`${RED}${result.violationCount} new violation(s) — exiting 1${RESET}`);
     process.exit(1);
   }
   console.log();
-  console.log(`${GREEN}No findings.${RESET}`);
+  console.log(`${GREEN}No violations.${RESET}`);
 }

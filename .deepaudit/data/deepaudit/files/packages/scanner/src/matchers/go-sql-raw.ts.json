@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         12,
         15
@@ -12,7 +12,7 @@
       "matchedPattern": "string concat SELECT"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         14
       ],
@@ -20,7 +20,7 @@
       "matchedPattern": "string concat DELETE"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         12
       ],
@@ -36,7 +36,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         13
       ],
@@ -44,7 +44,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         15
       ],
@@ -52,7 +52,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         85
       ],
@@ -60,7 +60,7 @@
       "matchedPattern": "Read-then-modify without transaction — potential TOCTOU race"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         12
       ],
@@ -71,7 +71,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.859Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "0dc4c3a0cc47a58e41d51f0d489c0a205b4cb0be5ac77de088dc27e676e58a4c",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-65dc94bca8cbf80e",
@@ -83,7 +83,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-3045-7302-8227-b4ee5e620897",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0613255,
@@ -109,7 +109,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c2a-79d2-bed1-7fab0db59914",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.073648,

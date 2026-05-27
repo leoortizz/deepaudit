@@ -156,10 +156,8 @@ interface EnrichProgress {
 const SEVERITY_ORDER: Record<Severity, number> = {
   CRITICAL: 0,
   HIGH: 1,
-  HIGH_BUG: 2,
-  MEDIUM: 3,
-  BUG: 4,
-  LOW: 5,
+  MEDIUM: 2,
+  NIT: 3,
 };
 
 export async function enrich(params: {
@@ -167,7 +165,7 @@ export async function enrich(params: {
   filter?: string;
   force?: boolean;
   concurrency?: number;
-  /** Only enrich files that have at least one finding at this severity or above */
+  /** Only enrich files that have at least one violation at this severity or above */
   minSeverity?: Severity;
   onProgress?: (progress: EnrichProgress) => void;
 }): Promise<{ enriched: number }> {
@@ -184,14 +182,14 @@ export async function enrich(params: {
   const ownershipProvider = getRegistry().ownership;
   const repo = ownershipProvider ? getRepoFromGitRemote(project.rootPath) : null;
 
-  // Only enrich files with findings (optionally gated by severity)
+  // Only enrich files with violations (optionally gated by severity)
   const toEnrich = records.filter((r) => {
-    if (r.findings.length === 0) return false;
+    if (r.violations.length === 0) return false;
     if (filter && !r.filePath.startsWith(filter)) return false;
     if (!force && r.gitInfo) return false;
     if (minSeverity) {
       const minIdx = SEVERITY_ORDER[minSeverity];
-      const hasQualifying = r.findings.some((f) => SEVERITY_ORDER[f.severity] <= minIdx);
+      const hasQualifying = r.violations.some((f) => SEVERITY_ORDER[f.severity] <= minIdx);
       if (!hasQualifying) return false;
     }
     return true;

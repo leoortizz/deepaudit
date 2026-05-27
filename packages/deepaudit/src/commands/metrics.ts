@@ -7,9 +7,7 @@ const SEVERITY_ORDER: Record<string, number> = {
   CRITICAL: 0,
   HIGH: 1,
   MEDIUM: 2,
-  HIGH_BUG: 3,
-  BUG: 4,
-  LOW: 5,
+  NIT: 3,
 };
 
 interface TokenStats {
@@ -32,7 +30,7 @@ interface ProjectMetrics {
   totalFiles: number;
   analyzed: number;
   pending: number;
-  findings: number;
+  violations: number;
   bySeverity: Record<string, number>;
   byVulnType: Record<string, number>;
   byVulnTypeTP: Record<string, number>;
@@ -74,7 +72,7 @@ function getMetrics(projectId: string, minSeverity?: string): ProjectMetrics {
     totalFiles: records.length,
     analyzed: records.filter((r) => r.status === "analyzed").length,
     pending: records.filter((r) => r.status === "pending" || r.status === "error").length,
-    findings: 0,
+    violations: 0,
     bySeverity: {},
     byVulnType: {},
     byVulnTypeTP: {},
@@ -87,12 +85,12 @@ function getMetrics(projectId: string, minSeverity?: string): ProjectMetrics {
   };
 
   for (const record of records) {
-    // Findings — severity / vulntype / triage / revalidation rollups
-    for (const f of record.findings) {
+    // Violations — severity / vulntype / triage / revalidation rollups
+    for (const f of record.violations) {
       if (SEVERITY_ORDER[f.severity] > minOrder) continue;
-      m.findings++;
+      m.violations++;
       m.bySeverity[f.severity] = (m.bySeverity[f.severity] || 0) + 1;
-      const slug = f.vulnSlug || "unknown";
+      const slug = f.ruleSlug || "unknown";
       m.byVulnType[slug] = (m.byVulnType[slug] || 0) + 1;
 
       if (f.triage?.priority) {
@@ -112,7 +110,7 @@ function getMetrics(projectId: string, minSeverity?: string): ProjectMetrics {
 
     // Analysis history — cost / tokens / agent breakdown. These don't depend
     // on `--min-severity`: cost and capacity are about the work done, not
-    // about which findings the user wants to look at right now.
+    // about which violations the user wants to look at right now.
     for (const a of record.analysisHistory) {
       m.analysisCount++;
       m.cost += a.costUsd ?? 0;
@@ -240,7 +238,7 @@ function dimZero(n: number, color?: string): string {
 
 export function metricsCommand(opts: { projectId?: string; minSeverity?: string }) {
   const projectIds = opts.projectId ? [opts.projectId] : discoverProjects();
-  const minSev = opts.minSeverity ?? "LOW";
+  const minSev = opts.minSeverity ?? "NIT";
 
   const allMetrics: ProjectMetrics[] = [];
   for (const id of projectIds) {
@@ -253,9 +251,9 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
 
   console.log(`\n${BOLD}Vulnerability Metrics${RESET} (min severity: ${minSev})\n`);
 
-  // --- Section 1: Per-project findings by severity + revalidation status ---
+  // --- Section 1: Per-project violations by severity + revalidation status ---
   // Columns: every severity bucket so a glance answers "where do these
-  // findings sit?", plus TP/FP from revalidation. Pending/Uncertain were
+  // violations sit?", plus TP/FP from revalidation. Pending/Uncertain were
   // dropped from this row — they live in the cost/triage tables below.
   const sevW = [22, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5];
   const sevH = [
@@ -266,8 +264,8 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
     "HIGH",
     "MED",
     "HBUG",
-    "BUG",
-    "LOW",
+    "MEDIUM",
+    "NIT",
     "TP",
     "FP",
   ];
@@ -306,9 +304,9 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
           dimZero(sev.CRITICAL || 0, RED),
           dimZero(sev.HIGH || 0, YELLOW),
           dimZero(sev.MEDIUM || 0, CYAN),
-          dimZero(sev.HIGH_BUG || 0),
-          dimZero(sev.BUG || 0),
-          dimZero(sev.LOW || 0),
+          dimZero(sev.HIGH || 0),
+          dimZero(sev.MEDIUM || 0),
+          dimZero(sev.NIT || 0),
           dimZero(r.tp, GREEN),
           dimZero(r.fp, RED),
         ],
@@ -375,9 +373,9 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
           `${BOLD}${RED}${t.bySeverity.CRITICAL || 0}${RESET}`,
           `${BOLD}${YELLOW}${t.bySeverity.HIGH || 0}${RESET}`,
           `${BOLD}${CYAN}${t.bySeverity.MEDIUM || 0}${RESET}`,
-          `${BOLD}${t.bySeverity.HIGH_BUG || 0}${RESET}`,
-          `${BOLD}${t.bySeverity.BUG || 0}${RESET}`,
-          `${BOLD}${t.bySeverity.LOW || 0}${RESET}`,
+          `${BOLD}${t.bySeverity.HIGH || 0}${RESET}`,
+          `${BOLD}${t.bySeverity.MEDIUM || 0}${RESET}`,
+          `${BOLD}${t.bySeverity.NIT || 0}${RESET}`,
           `${BOLD}${GREEN}${t.tp}${RESET}`,
           `${BOLD}${RED}${t.fp}${RESET}`,
         ],
@@ -390,7 +388,7 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
 
   // --- Section 2: Cost & Tokens ---
   // Costs come from analysisHistory across every record, regardless of
-  // --min-severity. A run that produced no findings still incurred cost.
+  // --min-severity. A run that produced no violations still incurred cost.
   if (totals.analysisCount > 0) {
     console.log(`\n${BOLD}Cost & Tokens${RESET}\n`);
 
@@ -466,7 +464,7 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
     console.log(footerRow(agW));
   }
 
-  // --- Section 4: Triage Breakdown (only if any finding was triaged) ---
+  // --- Section 4: Triage Breakdown (only if any violation was triaged) ---
   const triageTotal = Object.values(totals.byTriage).reduce((a, b) => a + b, 0);
   if (triageTotal > 0) {
     console.log(`\n${BOLD}Triage Breakdown${RESET}\n`);
@@ -556,7 +554,8 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
   // --- Footer ---
   const footerBits: string[] = [];
   footerBits.push(`Files: ${totals.analyzed} analyzed, ${totals.pending} pending`);
-  if (totals.revPending > 0) footerBits.push(`${totals.revPending} findings pending revalidation`);
+  if (totals.revPending > 0)
+    footerBits.push(`${totals.revPending} violations pending revalidation`);
   if (totals.revUnc > 0) footerBits.push(`${totals.revUnc} uncertain`);
   if (totals.fixed > 0) footerBits.push(`${totals.fixed} fixed`);
   console.log();

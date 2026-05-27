@@ -40,7 +40,7 @@ export const pageWithoutAuthFetchMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 4);
         matches.push({
-          vulnSlug: "page-without-auth-fetch",
+          ruleSlug: "page-without-auth-fetch",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: hasAccessCheck

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         31
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "Tool factory — agent-callable function"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         34
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Tool executes shell commands — RCE via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         41
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "Tool writes to filesystem"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         43
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "Tool makes HTTP requests — SSRF via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         46
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "Sandbox code execution tool"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         47
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "Sandbox code execution tool"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         49
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "LangChain tool definition"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         25
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "child_process exec"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         26
       ],
@@ -83,7 +83,7 @@
       "matchedPattern": "eval"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         25
       ],
@@ -91,7 +91,7 @@
       "matchedPattern": "child_process import"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12,
         22
@@ -100,7 +100,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         22
       ],
@@ -108,7 +108,7 @@
       "matchedPattern": "AI SDK tool definition — agent-callable function"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         23
       ],
@@ -116,7 +116,7 @@
       "matchedPattern": "Tool factory — agent-callable function"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         24
       ],
@@ -124,7 +124,7 @@
       "matchedPattern": "Tool factory — agent-callable function"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         42
       ],
@@ -132,7 +132,7 @@
       "matchedPattern": "Tool factory — agent-callable function"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         25
       ],
@@ -140,7 +140,7 @@
       "matchedPattern": "Tool executes shell commands — RCE via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         45
       ],
@@ -148,7 +148,7 @@
       "matchedPattern": "Tool executes shell commands — RCE via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         26
       ],
@@ -156,7 +156,7 @@
       "matchedPattern": "Tool evaluates code — RCE via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         27
       ],
@@ -164,7 +164,7 @@
       "matchedPattern": "Tool writes to filesystem"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         52
       ],
@@ -172,7 +172,7 @@
       "matchedPattern": "Tool writes to filesystem"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         28
       ],
@@ -180,7 +180,7 @@
       "matchedPattern": "Tool makes HTTP requests — SSRF via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         54
       ],
@@ -188,7 +188,7 @@
       "matchedPattern": "Tool makes HTTP requests — SSRF via prompt injection"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         29
       ],
@@ -196,7 +196,7 @@
       "matchedPattern": "Sandbox code execution tool"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         57
       ],
@@ -204,7 +204,7 @@
       "matchedPattern": "Sandbox code execution tool"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         58
       ],
@@ -212,7 +212,7 @@
       "matchedPattern": "Sandbox code execution tool"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         30
       ],
@@ -220,7 +220,7 @@
       "matchedPattern": "LangChain tool definition"
     },
     {
-      "vulnSlug": "agent-tool-definition",
+      "ruleSlug": "agent-tool-definition",
       "lineNumbers": [
         60
       ],
@@ -228,7 +228,7 @@
       "matchedPattern": "LangChain tool definition"
     },
     {
-      "vulnSlug": "untrusted-redirect-following",
+      "ruleSlug": "untrusted-redirect-following",
       "lineNumbers": [
         28
       ],
@@ -239,7 +239,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.828Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "a4514f0722db3c69f7a43136b9b47ddebb73d40f7694754510c0d059c3cc68ac",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -252,7 +252,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "e43a028a-de8a-4dc7-8310-a9d2634f2ad6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.5421327499999999,
       "usage": {
@@ -277,7 +277,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8e73-7001-b338-b63d694b4240",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0524188,

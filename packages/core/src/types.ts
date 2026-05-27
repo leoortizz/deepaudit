@@ -63,12 +63,12 @@ export interface RunMeta {
     filesScanned?: number;
     candidatesFound?: number;
     filesProcessed?: number;
-    findingsCount?: number;
+    violationsCount?: number;
     totalCostUsd?: number;
     totalInputTokens?: number;
     totalOutputTokens?: number;
     totalDurationMs?: number;
-    findingsRevalidated?: number;
+    violationsRevalidated?: number;
     truePositives?: number;
     falsePositives?: number;
     fixed?: number;
@@ -80,7 +80,7 @@ export interface RunMeta {
 // --- Scanner match (part of FileRecord) ---
 
 export interface CandidateMatch {
-  vulnSlug: string;
+  ruleSlug: string;
   lineNumbers: number[];
   snippet: string;
   matchedPattern: string;
@@ -105,12 +105,12 @@ export interface AnalysisEntry {
   model: string;
   modelConfig: Record<string, unknown>;
   agentSessionId?: string;
-  findingCount: number;
+  violationCount: number;
   numTurns?: number;
   /**
    * Which run-type produced this entry. `process` = an investigation run
-   * appended findings to the file; `revalidate` = a revalidation run
-   * applied verdicts to existing findings (no new findings expected).
+   * appended violations to the file; `revalidate` = a revalidation run
+   * applied verdicts to existing violations (no new violations expected).
    *
    * Optional for backward compat: entries written before this field
    * existed are implicitly `process`. Aggregators that want to bucket
@@ -157,9 +157,9 @@ export interface AnalysisEntry {
   reinvestigateMarker?: number;
 }
 
-// --- Finding (produced by processor agent) ---
+// --- Violation (produced by processor agent) ---
 
-export type Severity = "CRITICAL" | "HIGH" | "MEDIUM" | "HIGH_BUG" | "BUG" | "LOW";
+export type Severity = "CRITICAL" | "HIGH" | "MEDIUM" | "NIT";
 export type Confidence = "high" | "medium" | "low";
 
 export type RevalidationVerdict =
@@ -171,7 +171,7 @@ export type RevalidationVerdict =
   // the team has consciously chosen to accept. See the schema comment in
   // `schemas.ts` and the "Accepted risks" section of the project README.
   | "accepted-risk"
-  // The agent flagged this finding as a duplicate of another finding in
+  // The agent flagged this violation as a duplicate of another violation in
   // the same file. The canonical one keeps its real verdict; duplicates
   // point at it via `duplicateOf` (the primary's `title`). The processor
   // enforces that the primary itself is not a duplicate so each
@@ -184,7 +184,7 @@ export interface Revalidation {
   adjustedSeverity?: Severity;
   /**
    * Set iff `verdict === "duplicate"`. Holds the `title` of the primary
-   * finding in the same file. The primary's verdict is the canonical
+   * violation in the same file. The primary's verdict is the canonical
    * one for the underlying issue.
    */
   duplicateOf?: string;
@@ -204,9 +204,9 @@ export interface Triage {
   model: string;
 }
 
-export interface Finding {
+export interface Violation {
   severity: Severity;
-  vulnSlug: string;
+  ruleSlug: string;
   title: string;
   description: string;
   lineNumbers: number[];
@@ -215,12 +215,12 @@ export interface Finding {
   triage?: Triage;
   revalidation?: Revalidation;
   /**
-   * The run that first surfaced this finding (the one that appended it
-   * to `FileRecord.findings`). Set once at append time and never updated
+   * The run that first surfaced this violation (the one that appended it
+   * to `FileRecord.violations`). Set once at append time and never updated
    * — re-runs that re-report the same signature get deduped, so this
    * stays bound to the original discovery.
    *
-   * Optional for backward compatibility with findings written before
+   * Optional for backward compatibility with violations written before
    * this field existed.
    */
   producedByRunId?: string;
@@ -284,8 +284,8 @@ export interface FileRecord {
   lastScannedRunId: string;
   fileHash: string;
 
-  // Analysis results — latest findings + history
-  findings: Finding[];
+  // Analysis results — latest violations + history
+  violations: Violation[];
   analysisHistory: AnalysisEntry[];
 
   // Git enrichment
@@ -306,7 +306,7 @@ export interface FileRecord {
    * the lock is older than `STALE_LOCK_MS` AND the locking run's
    * RunMeta is `done` / `error` / missing. Without this, two
    * overlapping `process()` runs could both pick up the same record
-   * and clobber each other's findings on write.
+   * and clobber each other's violations on write.
    *
    * Optional for backward compatibility with records written before
    * this field existed. Missing values are treated as "very old" so

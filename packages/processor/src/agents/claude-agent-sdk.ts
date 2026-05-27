@@ -383,7 +383,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
 
     // Hard-fail when the SDK never produced a result. Without this throw
     // the empty resultText falls through to `parseInvestigateResults` →
-    // `[{filePath, findings: []}, …]`, which the processor accepts as a
+    // `[{filePath, violations: []}, …]`, which the processor accepts as a
     // clean "ran fine, found nothing" run. That silently masks fatal
     // errors like "claude binary not found" in CI.
     if (!resultText) {
@@ -431,7 +431,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
       else signal.addEventListener("abort", () => abortController.abort(), { once: true });
     }
 
-    const { prompt, totalFindings } = buildRevalidatePrompt({
+    const { prompt, totalViolations } = buildRevalidatePrompt({
       batch,
       projectRoot,
       projectInfo,
@@ -440,7 +440,7 @@ export class ClaudeAgentSdkPlugin implements AgentPlugin {
 
     yield {
       type: "started",
-      message: `Revalidating ${totalFindings} finding(s) across ${batch.length} file(s)`,
+      message: `Revalidating ${totalViolations} violation(s) across ${batch.length} file(s)`,
     };
 
     const startTime = Date.now();

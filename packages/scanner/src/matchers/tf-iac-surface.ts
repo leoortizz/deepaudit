@@ -110,7 +110,7 @@ export const tfIacSurfaceMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "tf-iac-surface",
+      ruleSlug: "tf-iac-surface",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 4).join(", "),

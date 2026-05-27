@@ -42,7 +42,7 @@ export const allRouteHandlersMatcher: MatcherPlugin = {
       const start = Math.max(0, i - 1);
       const end = Math.min(lines.length, i + 4);
       matches.push({
-        vulnSlug: "all-route-handlers",
+        ruleSlug: "all-route-handlers",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, end).join("\n"),
         matchedPattern: `${method} route handler — HTTP entry point (weak candidate)`,
@@ -55,7 +55,7 @@ export const allRouteHandlersMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 4);
         matches.push({
-          vulnSlug: "all-route-handlers",
+          ruleSlug: "all-route-handlers",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Default export route handler — HTTP entry point (weak candidate)",

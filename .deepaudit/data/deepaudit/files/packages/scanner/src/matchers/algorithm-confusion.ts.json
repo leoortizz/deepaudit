@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         12,
         19
@@ -20,7 +20,7 @@
       "matchedPattern": "JWT verification (verify algorithm pinning)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         12
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         19
       ],
@@ -36,7 +36,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "jwt-handling",
+      "ruleSlug": "jwt-handling",
       "lineNumbers": [
         10,
         11,
@@ -50,7 +50,7 @@
       "matchedPattern": "JWT verification (verify algorithm pinning)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         10
       ],
@@ -58,7 +58,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         11
       ],
@@ -66,7 +66,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         12
       ],
@@ -74,7 +74,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         13
       ],
@@ -82,7 +82,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         14
       ],
@@ -90,7 +90,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         15
       ],
@@ -98,7 +98,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         20
       ],
@@ -106,7 +106,7 @@
       "matchedPattern": "JWT verification WITHOUT algorithm pinning — algorithm confusion risk"
     },
     {
-      "vulnSlug": "algorithm-confusion",
+      "ruleSlug": "algorithm-confusion",
       "lineNumbers": [
         27
       ],
@@ -114,7 +114,7 @@
       "matchedPattern": "JWT verification with algorithm pin (verify correct algorithm)"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         10,
         14
@@ -126,7 +126,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.787Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "df7fc38392b163a74f19915e24199c18b4839d17566cc498aaf7cde93b865d15",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -139,7 +139,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "ff7f6164-5dbf-4b41-a0ba-89648fbae13a",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.81450425,
       "usage": {
@@ -164,7 +164,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bbe-7872-8058-bc2832193f0f",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0533665,

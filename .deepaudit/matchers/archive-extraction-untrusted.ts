@@ -88,7 +88,7 @@ export const archiveExtractionUntrusted: MatcherPlugin = {
 
       if (hitLines.length > 0) {
         matches.push({
-          vulnSlug: "archive-extraction-untrusted",
+          ruleSlug: "archive-extraction-untrusted",
           lineNumbers: hitLines,
           snippet: firstSnippet,
           matchedPattern: label,

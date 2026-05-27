@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { AnalysisEntry, FileRecord, Finding } from "@deepaudit/core";
+import type { AnalysisEntry, FileRecord, Violation } from "@deepaudit/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   mergeAfterExtract,
@@ -17,14 +17,14 @@ function entry(runId: string, agentType: string, investigatedAt: string): Analys
     agentType,
     model: agentType === "codex" ? "gpt-5.5" : "claude-opus-4-7",
     modelConfig: {},
-    findingCount: 0,
+    violationCount: 0,
   };
 }
 
-function finding(vulnSlug: string, title: string, extras: Partial<Finding> = {}): Finding {
+function violation(ruleSlug: string, title: string, extras: Partial<Violation> = {}): Violation {
   return {
     severity: "HIGH",
-    vulnSlug,
+    ruleSlug,
     title,
     description: "d",
     lineNumbers: [1],
@@ -42,7 +42,7 @@ function record(overrides: Partial<FileRecord> = {}): FileRecord {
     lastScannedAt: "2026-05-06T15:00:00.000Z",
     lastScannedRunId: "scan1",
     fileHash: "h",
-    findings: [],
+    violations: [],
     analysisHistory: [],
     status: "pending",
     ...overrides,
@@ -70,30 +70,30 @@ describe("mergeFileRecord", () => {
     const sameEntry = entry("run-x", "codex", "2026-05-06T15:59:48.000Z");
     const host = record({ analysisHistory: [sameEntry] });
     const incoming = record({
-      analysisHistory: [{ ...sameEntry, findingCount: 5 }],
+      analysisHistory: [{ ...sameEntry, violationCount: 5 }],
     });
 
     const merged = mergeFileRecord(host, incoming);
 
     expect(merged.analysisHistory).toHaveLength(1);
-    expect(merged.analysisHistory[0].findingCount).toBe(5); // incoming wins
+    expect(merged.analysisHistory[0].violationCount).toBe(5); // incoming wins
   });
 
-  it("unions findings by vulnSlug+title signature", () => {
+  it("unions violations by ruleSlug+title signature", () => {
     const host = record({
-      findings: [finding("xss", "XSS via innerHTML")],
+      violations: [violation("xss", "XSS via innerHTML")],
     });
     const incoming = record({
-      findings: [finding("ssrf", "SSRF in webhook handler")],
+      violations: [violation("ssrf", "SSRF in webhook handler")],
     });
 
     const merged = mergeFileRecord(host, incoming);
 
-    expect(merged.findings.map((f) => f.vulnSlug).sort()).toEqual(["ssrf", "xss"]);
+    expect(merged.violations.map((f) => f.ruleSlug).sort()).toEqual(["ssrf", "xss"]);
   });
 
-  it("preserves revalidation/triage from either side when finding signatures match", () => {
-    const hostFinding = finding("xss", "XSS", {
+  it("preserves revalidation/triage from either side when violation signatures match", () => {
+    const hostViolation = violation("xss", "XSS", {
       revalidation: {
         verdict: "true-positive",
         reasoning: "confirmed",
@@ -102,7 +102,7 @@ describe("mergeFileRecord", () => {
         model: "gpt-5.5",
       },
     });
-    const incomingFinding = finding("xss", "xss", {
+    const incomingViolation = violation("xss", "xss", {
       triage: {
         priority: "P0",
         exploitability: "trivial",
@@ -114,13 +114,13 @@ describe("mergeFileRecord", () => {
     });
 
     const merged = mergeFileRecord(
-      record({ findings: [hostFinding] }),
-      record({ findings: [incomingFinding] }),
+      record({ violations: [hostViolation] }),
+      record({ violations: [incomingViolation] }),
     );
 
-    expect(merged.findings).toHaveLength(1);
-    expect(merged.findings[0].revalidation?.verdict).toBe("true-positive");
-    expect(merged.findings[0].triage?.priority).toBe("P0");
+    expect(merged.violations).toHaveLength(1);
+    expect(merged.violations[0].revalidation?.verdict).toBe("true-positive");
+    expect(merged.violations[0].triage?.priority).toBe("P0");
   });
 
   it("preserves gitInfo when incoming lacks it", () => {

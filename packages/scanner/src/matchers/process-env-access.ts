@@ -35,7 +35,7 @@ export const processEnvAccessMatcher: MatcherPlugin = {
       const end = Math.min(lines.length, i + 2);
 
       matches.push({
-        vulnSlug: "process-env-access",
+        ruleSlug: "process-env-access",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, end).join("\n"),
         matchedPattern: `process.env.${varName}`,

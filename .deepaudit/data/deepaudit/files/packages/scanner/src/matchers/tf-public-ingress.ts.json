@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         15
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "framework-image-optimizer",
+      "ruleSlug": "framework-image-optimizer",
       "lineNumbers": [
         6,
         16,
@@ -25,7 +25,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.476Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "8ed9e1cb0edcb429d8349ff9ef4be272036f071ada5d55b960aabf2c89d7a9d9",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -38,7 +38,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "138fcf13-e4b7-4a3b-ac41-8724b22e1dfb",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.43548600000000004,
       "usage": {

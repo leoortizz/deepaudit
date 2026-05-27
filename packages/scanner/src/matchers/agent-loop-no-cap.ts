@@ -58,7 +58,7 @@ export const agentLoopNoCapMatcher: MatcherPlugin = {
       const start = Math.max(0, i - 1);
       const end = Math.min(lines.length, i + 6);
       matches.push({
-        vulnSlug: "agent-loop-no-cap",
+        ruleSlug: "agent-loop-no-cap",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, end).join("\n"),
         matchedPattern: "agent/LLM call without maxSteps/maxTurns/stopWhen/signal",

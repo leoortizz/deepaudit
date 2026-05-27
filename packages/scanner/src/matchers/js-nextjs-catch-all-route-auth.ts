@@ -59,7 +59,7 @@ export const catchAllRouteAuthMatcher: MatcherPlugin = {
             ? `Payload/GraphQL endpoint${hasAuth ? " (has auth)" : " — NO auth"}`
             : "Route handler";
         matches.push({
-          vulnSlug: "catch-all-route-auth",
+          ruleSlug: "catch-all-route-auth",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: label,

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { findingSchema, revalidationSchema } from "../schemas.js";
+import { revalidationSchema, violationSchema } from "../schemas.js";
 
 describe("severity levels", () => {
-  const baseFinding = {
-    vulnSlug: "other-data-loss",
+  const baseViolation = {
+    ruleSlug: "other-data-loss",
     title: "Data loss on concurrent writes",
     description: "Race condition causes data loss",
     lineNumbers: [42],
@@ -12,31 +12,23 @@ describe("severity levels", () => {
   };
 
   it("accepts CRITICAL severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "CRITICAL" })).not.toThrow();
+    expect(() => violationSchema.parse({ ...baseViolation, severity: "CRITICAL" })).not.toThrow();
   });
 
   it("accepts HIGH severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "HIGH" })).not.toThrow();
+    expect(() => violationSchema.parse({ ...baseViolation, severity: "HIGH" })).not.toThrow();
   });
 
   it("accepts MEDIUM severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "MEDIUM" })).not.toThrow();
+    expect(() => violationSchema.parse({ ...baseViolation, severity: "MEDIUM" })).not.toThrow();
   });
 
-  it("accepts HIGH_BUG severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "HIGH_BUG" })).not.toThrow();
-  });
-
-  it("accepts BUG severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "BUG" })).not.toThrow();
-  });
-
-  it("accepts LOW severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "LOW" })).not.toThrow();
+  it("accepts NIT severity", () => {
+    expect(() => violationSchema.parse({ ...baseViolation, severity: "NIT" })).not.toThrow();
   });
 
   it("rejects empty severity", () => {
-    expect(() => findingSchema.parse({ ...baseFinding, severity: "" })).toThrow();
+    expect(() => violationSchema.parse({ ...baseViolation, severity: "" })).toThrow();
   });
 });
 
@@ -49,15 +41,15 @@ describe("revalidation adjustedSeverity", () => {
     model: "claude-opus-4-6",
   };
 
-  it("accepts adjustedSeverity HIGH_BUG", () => {
+  it("accepts adjustedSeverity HIGH", () => {
     expect(() =>
-      revalidationSchema.parse({ ...baseRevalidation, adjustedSeverity: "HIGH_BUG" }),
+      revalidationSchema.parse({ ...baseRevalidation, adjustedSeverity: "HIGH" }),
     ).not.toThrow();
   });
 
-  it("accepts adjustedSeverity BUG", () => {
+  it("accepts adjustedSeverity MEDIUM", () => {
     expect(() =>
-      revalidationSchema.parse({ ...baseRevalidation, adjustedSeverity: "BUG" }),
+      revalidationSchema.parse({ ...baseRevalidation, adjustedSeverity: "MEDIUM" }),
     ).not.toThrow();
   });
 
@@ -65,18 +57,18 @@ describe("revalidation adjustedSeverity", () => {
     expect(() => revalidationSchema.parse(baseRevalidation)).not.toThrow();
   });
 
-  it("accepts adjustedSeverity LOW", () => {
+  it("accepts adjustedSeverity NIT", () => {
     expect(() =>
-      revalidationSchema.parse({ ...baseRevalidation, adjustedSeverity: "LOW" }),
+      revalidationSchema.parse({ ...baseRevalidation, adjustedSeverity: "NIT" }),
     ).not.toThrow();
   });
 });
 
-describe("finding with triage and revalidation", () => {
-  it("accepts a BUG finding with full triage and revalidation", () => {
-    const finding = {
-      severity: "BUG",
-      vulnSlug: "other-race-condition",
+describe("violation with triage and revalidation", () => {
+  it("accepts a MEDIUM violation with full triage and revalidation", () => {
+    const violation = {
+      severity: "MEDIUM",
+      ruleSlug: "other-race-condition",
       title: "Race condition in cache invalidation",
       description: "Concurrent requests can see stale data",
       lineNumbers: [100, 105],
@@ -98,13 +90,13 @@ describe("finding with triage and revalidation", () => {
         model: "claude-opus-4-6",
       },
     };
-    expect(() => findingSchema.parse(finding)).not.toThrow();
+    expect(() => violationSchema.parse(violation)).not.toThrow();
   });
 
-  it("accepts a HIGH_BUG finding with adjusted severity from revalidation", () => {
-    const finding = {
-      severity: "HIGH_BUG",
-      vulnSlug: "other-data-corruption",
+  it("accepts a HIGH violation with adjusted severity from revalidation", () => {
+    const violation = {
+      severity: "HIGH",
+      ruleSlug: "other-data-corruption",
       title: "Silent data corruption on large payloads",
       description: "Buffer overflow truncates data without error",
       lineNumbers: [200],
@@ -113,12 +105,12 @@ describe("finding with triage and revalidation", () => {
       revalidation: {
         verdict: "true-positive",
         reasoning: "Confirmed: payloads over 1MB are silently truncated",
-        adjustedSeverity: "HIGH_BUG",
+        adjustedSeverity: "HIGH",
         revalidatedAt: "2026-04-01T14:00:00Z",
         runId: "run3",
         model: "claude-opus-4-6",
       },
     };
-    expect(() => findingSchema.parse(finding)).not.toThrow();
+    expect(() => violationSchema.parse(violation)).not.toThrow();
   });
 });

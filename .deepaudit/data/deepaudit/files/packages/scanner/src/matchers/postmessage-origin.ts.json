@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         11
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "innerHTML assignment"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         11
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "postmessage-origin",
+      "ruleSlug": "postmessage-origin",
       "lineNumbers": [
         10
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "postMessage handler with origin check (verify strictness)"
     },
     {
-      "vulnSlug": "postmessage-origin",
+      "ruleSlug": "postmessage-origin",
       "lineNumbers": [
         13
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "postMessage handler with origin check (verify strictness)"
     },
     {
-      "vulnSlug": "postmessage-origin",
+      "ruleSlug": "postmessage-origin",
       "lineNumbers": [
         14
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "postMessage handler with origin check (verify strictness)"
     },
     {
-      "vulnSlug": "postmessage-origin",
+      "ruleSlug": "postmessage-origin",
       "lineNumbers": [
         17
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "postMessage handler with origin check (verify strictness)"
     },
     {
-      "vulnSlug": "postmessage-origin",
+      "ruleSlug": "postmessage-origin",
       "lineNumbers": [
         18
       ],
@@ -70,7 +70,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.616Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "be0870d1a3374d0d895d4f5ea925fbd58db43babb5837224d954f86bd23bda4a",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -83,7 +83,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "2d2b9aec-6d9c-4fcc-8a55-45e23407d214",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.2008875,
       "usage": {
@@ -108,7 +108,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c2a-79d2-bed1-7fab0db59914",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.073648,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         25,
         64,
@@ -19,10 +19,10 @@
   "lastScannedAt": "2026-05-06T21:46:56.499Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "b699bb4b2bb9a025b81042511a13b251f2913b402b82f67439c69bd55ddfd1bf",
-  "findings": [
+  "violations": [
     {
-      "severity": "HIGH_BUG",
-      "vulnSlug": "other-result-integrity",
+      "severity": "HIGH",
+      "ruleSlug": "other-result-integrity",
       "title": "Sandbox download failures are swallowed and reported as successful runs",
       "description": "Both detached collection and attached orchestration catch downloadResults failures, log them, and then continue to stop the sandbox and return success. In collect(), a failed result download still returns success: true and deleteRunState is called afterward, losing the run state. In orchestrate(), the final download failure is also only logged while the earlier command result is returned. Because sandbox output is the adversarial boundary, a bad tarball, malformed output, or transient download failure can make the host report a successful sandbox run while missing or discarding the actual analysis results.",
       "lineNumbers": [
@@ -41,7 +41,7 @@
       "producedByRunId": "20260506215246-221dec17f8912bb2",
       "revalidation": {
         "verdict": "fixed",
-        "reasoning": "The current detached `collect` path no longer swallows `downloadResults` failures as successful sandbox results. If `downloadResults` throws, the catch block logs `Download failed`, returns `success: false`, sets `filesProcessed: 0`, and includes the error message. After all detached results complete, run state is deleted only when `results.every((r) => r.success)` is true; otherwise the state is kept for retry. The attached `orchestrate` path also treats a final download failure as a run failure by setting `result.success = false` and populating `result.error` when the command itself had succeeded. That means a bad tarball, rejected archive, or transient download failure is surfaced in the returned `SandboxResult` instead of being reported as a clean run. Periodic streaming sync errors are still logged and tolerated, but the final download is the integrity point for attached runs and it now changes the result status. The finding is fixed in the current implementation.",
+        "reasoning": "The current detached `collect` path no longer swallows `downloadResults` failures as successful sandbox results. If `downloadResults` throws, the catch block logs `Download failed`, returns `success: false`, sets `filesProcessed: 0`, and includes the error message. After all detached results complete, run state is deleted only when `results.every((r) => r.success)` is true; otherwise the state is kept for retry. The attached `orchestrate` path also treats a final download failure as a run failure by setting `result.success = false` and populating `result.error` when the command itself had succeeded. That means a bad tarball, rejected archive, or transient download failure is surfaced in the returned `SandboxResult` instead of being reported as a clean run. Periodic streaming sync errors are still logged and tolerated, but the final download is the integrity point for attached runs and it now changes the result status. The violation is fixed in the current implementation.",
         "revalidatedAt": "2026-05-06T22:53:59.627Z",
         "runId": "20260506225212-1b58634a7e10da93",
         "model": "gpt-5.5"
@@ -60,7 +60,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "6792a251-e501-4444-a136-19268a42d661",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.69105375,
       "usage": {
@@ -85,7 +85,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8ae8-7331-9009-7c4ec75200f6",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.5,
       "phase": "process",
       "costUsd": 0.3974505,
@@ -112,7 +112,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff72-8994-7cb0-87ce-5db24fe83e1b",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.2,
       "phase": "revalidate",
       "costUsd": 0.1468248,
@@ -138,7 +138,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff7d-f3ac-7ee3-8aef-ff8bb719021a",
-      "findingCount": 1,
+      "violationCount": 1,
       "numTurns": 0.3333333333333333,
       "phase": "revalidate",
       "costUsd": 0.19728400000000001,

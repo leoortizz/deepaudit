@@ -61,7 +61,7 @@ function pendingRecord(projectId: string, filePath: string): FileRecord {
     projectId,
     candidates: [
       {
-        vulnSlug: "auth-bypass",
+        ruleSlug: "auth-bypass",
         lineNumbers: [1],
         snippet: "// stub",
         matchedPattern: "test pattern",
@@ -70,7 +70,7 @@ function pendingRecord(projectId: string, filePath: string): FileRecord {
     lastScannedAt: new Date().toISOString(),
     lastScannedRunId: "scan-fixture",
     fileHash: "fixture-hash",
-    findings: [],
+    violations: [],
     analysisHistory: [],
     status: "pending",
   };
@@ -89,7 +89,7 @@ describe("processor with stub agent", () => {
     setLoadedConfig(defineConfig({ projects: [] }));
   });
 
-  it("process() runs the agent, persists findings + AnalysisEntry, marks files analyzed", async () => {
+  it("process() runs the agent, persists violations + AnalysisEntry, marks files analyzed", async () => {
     const fx = setupProject({ files: ["app.ts"] });
     fx.writeRecord(pendingRecord(fx.projectId, "app.ts"));
 
@@ -107,19 +107,19 @@ describe("processor with stub agent", () => {
       concurrency: 1,
     });
 
-    expect(result.findingCount).toBe(1);
+    expect(result.violationCount).toBe(1);
     expect(result.analysisCount).toBe(1);
     expect(stub.calls.investigateCalls).toHaveLength(1);
     expect(stub.calls.investigateCalls[0].batch).toHaveLength(1);
 
     const rec = fx.readRecord("app.ts");
     expect(rec.status).toBe("analyzed");
-    expect(rec.findings).toHaveLength(1);
-    expect(rec.findings[0].severity).toBe("HIGH");
-    expect(rec.findings[0].title).toBe("stub finding for app.ts");
+    expect(rec.violations).toHaveLength(1);
+    expect(rec.violations[0].severity).toBe("HIGH");
+    expect(rec.violations[0].title).toBe("stub violation for app.ts");
     expect(rec.analysisHistory).toHaveLength(1);
     expect(rec.analysisHistory[0].agentType).toBe("stub");
-    expect(rec.analysisHistory[0].findingCount).toBe(1);
+    expect(rec.analysisHistory[0].violationCount).toBe(1);
     expect(rec.lockedByRunId).toBeFalsy();
   });
 
@@ -162,7 +162,7 @@ describe("processor with stub agent", () => {
         agentType: "stub",
         model: "stub",
         modelConfig: {},
-        findingCount: 0,
+        violationCount: 0,
         usage: {
           inputTokens: 1,
           outputTokens: 1,
@@ -465,7 +465,7 @@ describe("processor with stub agent", () => {
     const stub = new StubAgent({
       async *investigateImpl(params) {
         return {
-          results: params.batch.map((r) => ({ filePath: r.filePath, findings: [] })),
+          results: params.batch.map((r) => ({ filePath: r.filePath, violations: [] })),
           meta: {
             durationMs: 1,
             refusal: { refused: true, reason: "stub refusal" },
@@ -493,19 +493,19 @@ describe("processor with stub agent", () => {
     });
 
     const rec = fx.readRecord("app.ts");
-    expect(rec.findings).toHaveLength(0);
+    expect(rec.violations).toHaveLength(0);
     expect(rec.analysisHistory[0].refusal?.refused).toBe(true);
     expect(rec.analysisHistory[0].refusal?.reason).toBe("stub refusal");
   });
 
-  it("revalidate() attaches verdicts to existing findings", async () => {
+  it("revalidate() attaches verdicts to existing violations", async () => {
     const fx = setupProject({ files: ["app.ts"] });
     const rec = pendingRecord(fx.projectId, "app.ts");
     rec.status = "analyzed";
-    rec.findings = [
+    rec.violations = [
       {
         severity: "HIGH",
-        vulnSlug: "auth-bypass",
+        ruleSlug: "auth-bypass",
         title: "missing auth on /admin",
         description: "no withAuthentication wrapper",
         lineNumbers: [10],
@@ -521,7 +521,7 @@ describe("processor with stub agent", () => {
         agentType: "stub",
         model: "stub",
         modelConfig: {},
-        findingCount: 1,
+        violationCount: 1,
       },
     ];
     fx.writeRecord(rec);
@@ -542,9 +542,9 @@ describe("processor with stub agent", () => {
 
     expect(stub.calls.revalidateCalls).toHaveLength(1);
     const after = fx.readRecord("app.ts");
-    expect(after.findings).toHaveLength(1);
-    expect(after.findings[0].revalidation?.verdict).toBe("true-positive");
-    expect(after.findings[0].revalidation?.reasoning).toBe("stub: confirmed");
+    expect(after.violations).toHaveLength(1);
+    expect(after.violations[0].revalidation?.verdict).toBe("true-positive");
+    expect(after.violations[0].revalidation?.reasoning).toBe("stub: confirmed");
   });
 
   it("process() divides batch-level cost / tokens evenly across files in the batch", async () => {
@@ -562,7 +562,7 @@ describe("processor with stub agent", () => {
     const stub = new StubAgent({
       async *investigateImpl(params) {
         return {
-          results: params.batch.map((r) => ({ filePath: r.filePath, findings: [] })),
+          results: params.batch.map((r) => ({ filePath: r.filePath, violations: [] })),
           meta: {
             durationMs: 4000,
             durationApiMs: 2000,
@@ -617,10 +617,10 @@ describe("processor with stub agent", () => {
     for (const f of ["x.ts", "y.ts"]) {
       const r = pendingRecord(fx.projectId, f);
       r.status = "analyzed";
-      r.findings = [
+      r.violations = [
         {
           severity: "HIGH",
-          vulnSlug: "auth-bypass",
+          ruleSlug: "auth-bypass",
           title: `bug in ${f}`,
           description: "x",
           lineNumbers: [1],
@@ -636,7 +636,7 @@ describe("processor with stub agent", () => {
           agentType: "stub",
           model: "stub",
           modelConfig: {},
-          findingCount: 1,
+          violationCount: 1,
           phase: "process",
         },
       ];
@@ -647,7 +647,7 @@ describe("processor with stub agent", () => {
       async *revalidateImpl(params) {
         return {
           verdicts: params.batch.flatMap((rec) =>
-            rec.findings.map((f) => ({
+            rec.violations.map((f) => ({
               filePath: rec.filePath,
               title: f.title,
               verdict: "true-positive" as const,
@@ -691,7 +691,7 @@ describe("processor with stub agent", () => {
       expect(reval).toBeDefined();
       expect(reval?.costUsd).toBe(0.25);
       expect(reval?.usage?.inputTokens).toBe(1000);
-      expect(reval?.findingCount).toBe(1);
+      expect(reval?.violationCount).toBe(1);
       expect(reval?.agentType).toBe("stub");
     }
   });
@@ -711,7 +711,7 @@ describe("processor with stub agent", () => {
         agentType: "stub",
         model: "stub",
         modelConfig: {},
-        findingCount: 0,
+        violationCount: 0,
         phase: "revalidate",
         usage: {
           inputTokens: 1,
@@ -899,10 +899,10 @@ describe("processor with stub agent", () => {
     for (const f of ["one/a.ts", "two/b.ts"]) {
       const r = pendingRecord(fx.projectId, f);
       r.status = "analyzed";
-      r.findings = [
+      r.violations = [
         {
           severity: "HIGH",
-          vulnSlug: "auth-bypass",
+          ruleSlug: "auth-bypass",
           title: `bug in ${f}`,
           description: "x",
           lineNumbers: [1],
@@ -918,7 +918,7 @@ describe("processor with stub agent", () => {
           agentType: "stub",
           model: "stub",
           modelConfig: {},
-          findingCount: 1,
+          violationCount: 1,
           phase: "process",
         },
       ];
@@ -949,14 +949,14 @@ describe("processor with stub agent", () => {
     expect(result.quotaExhausted?.source).toBe("openai-quota");
   });
 
-  it("revalidate() skips findings that already have a verdict unless --force", async () => {
+  it("revalidate() skips violations that already have a verdict unless --force", async () => {
     const fx = setupProject({ files: ["app.ts"] });
     const rec = pendingRecord(fx.projectId, "app.ts");
     rec.status = "analyzed";
-    rec.findings = [
+    rec.violations = [
       {
         severity: "HIGH",
-        vulnSlug: "auth-bypass",
+        ruleSlug: "auth-bypass",
         title: "already revalidated",
         description: "x",
         lineNumbers: [1],
@@ -1004,12 +1004,12 @@ describe("revalidate() duplicate verdict", () => {
     setLoadedConfig(defineConfig({ projects: [] }));
   });
 
-  function fileWithFindings(fx: Fixture, relPath: string, titles: string[]): FileRecord {
+  function fileWithViolations(fx: Fixture, relPath: string, titles: string[]): FileRecord {
     const rec = pendingRecord(fx.projectId, relPath);
     rec.status = "analyzed";
-    rec.findings = titles.map((title) => ({
+    rec.violations = titles.map((title) => ({
       severity: "HIGH" as const,
-      vulnSlug: "auth-bypass",
+      ruleSlug: "auth-bypass",
       title,
       description: `desc for ${title}`,
       lineNumbers: [1],
@@ -1024,7 +1024,7 @@ describe("revalidate() duplicate verdict", () => {
         agentType: "stub",
         model: "stub",
         modelConfig: {},
-        findingCount: titles.length,
+        violationCount: titles.length,
       },
     ];
     fx.writeRecord(rec);
@@ -1033,7 +1033,7 @@ describe("revalidate() duplicate verdict", () => {
 
   it("applies DUPE when the referenced primary gets a non-duplicate verdict in the same batch", async () => {
     const fx = setupProject({ files: ["app.ts"] });
-    fileWithFindings(fx, "app.ts", ["primary issue", "dupe of primary"]);
+    fileWithViolations(fx, "app.ts", ["primary issue", "dupe of primary"]);
 
     const stub = new StubAgent({
       async *revalidateImpl() {
@@ -1071,8 +1071,8 @@ describe("revalidate() duplicate verdict", () => {
     });
 
     const rec = fx.readRecord("app.ts");
-    const primary = rec.findings.find((f) => f.title === "primary issue");
-    const dupe = rec.findings.find((f) => f.title === "dupe of primary");
+    const primary = rec.violations.find((f) => f.title === "primary issue");
+    const dupe = rec.violations.find((f) => f.title === "dupe of primary");
     expect(primary?.revalidation?.verdict).toBe("true-positive");
     expect(dupe?.revalidation?.verdict).toBe("duplicate");
     expect(dupe?.revalidation?.duplicateOf).toBe("primary issue");
@@ -1083,9 +1083,9 @@ describe("revalidate() duplicate verdict", () => {
 
   it("applies DUPE when the primary already has a verdict from a prior run", async () => {
     const fx = setupProject({ files: ["app.ts"] });
-    const rec = fileWithFindings(fx, "app.ts", ["primary issue", "new dupe"]);
+    const rec = fileWithViolations(fx, "app.ts", ["primary issue", "new dupe"]);
     // Mark the primary as already revalidated; only the new dupe should be sent
-    rec.findings[0].revalidation = {
+    rec.violations[0].revalidation = {
       verdict: "true-positive",
       reasoning: "prior run",
       revalidatedAt: new Date().toISOString(),
@@ -1124,7 +1124,7 @@ describe("revalidate() duplicate verdict", () => {
     });
 
     const after = fx.readRecord("app.ts");
-    const dupe = after.findings.find((f) => f.title === "new dupe");
+    const dupe = after.violations.find((f) => f.title === "new dupe");
     expect(dupe?.revalidation?.verdict).toBe("duplicate");
     expect(dupe?.revalidation?.duplicateOf).toBe("primary issue");
     expect(result.duplicates).toBe(1);
@@ -1133,7 +1133,7 @@ describe("revalidate() duplicate verdict", () => {
 
   it("rejects DUPE that references a non-existent primary", async () => {
     const fx = setupProject({ files: ["app.ts"] });
-    fileWithFindings(fx, "app.ts", ["the only one"]);
+    fileWithViolations(fx, "app.ts", ["the only one"]);
 
     const stub = new StubAgent({
       async *revalidateImpl() {
@@ -1165,14 +1165,14 @@ describe("revalidate() duplicate verdict", () => {
     });
 
     const after = fx.readRecord("app.ts");
-    expect(after.findings[0].revalidation).toBeUndefined();
+    expect(after.violations[0].revalidation).toBeUndefined();
     expect(result.duplicates).toBe(0);
     expect(result.duplicatesRejected).toBe(1);
   });
 
   it("rejects an all-DUPE group (no valid primary)", async () => {
     const fx = setupProject({ files: ["app.ts"] });
-    fileWithFindings(fx, "app.ts", ["a", "b"]);
+    fileWithViolations(fx, "app.ts", ["a", "b"]);
 
     const stub = new StubAgent({
       async *revalidateImpl() {
@@ -1211,14 +1211,14 @@ describe("revalidate() duplicate verdict", () => {
     });
 
     const after = fx.readRecord("app.ts");
-    expect(after.findings.every((f) => !f.revalidation)).toBe(true);
+    expect(after.violations.every((f) => !f.revalidation)).toBe(true);
     expect(result.duplicates).toBe(0);
     expect(result.duplicatesRejected).toBe(2);
   });
 
   it("rejects DUPE with missing duplicateOf and self-referential DUPE", async () => {
     const fx = setupProject({ files: ["app.ts"] });
-    fileWithFindings(fx, "app.ts", ["self", "blank"]);
+    fileWithViolations(fx, "app.ts", ["self", "blank"]);
 
     const stub = new StubAgent({
       async *revalidateImpl() {
@@ -1257,13 +1257,13 @@ describe("revalidate() duplicate verdict", () => {
     });
 
     const after = fx.readRecord("app.ts");
-    expect(after.findings.every((f) => !f.revalidation)).toBe(true);
+    expect(after.violations.every((f) => !f.revalidation)).toBe(true);
     expect(result.duplicatesRejected).toBe(2);
   });
 
   it("accepts multiple DUPEs pointing at the same primary", async () => {
     const fx = setupProject({ files: ["app.ts"] });
-    fileWithFindings(fx, "app.ts", ["primary", "d1", "d2"]);
+    fileWithViolations(fx, "app.ts", ["primary", "d1", "d2"]);
 
     const stub = new StubAgent({
       async *revalidateImpl() {
@@ -1308,11 +1308,11 @@ describe("revalidate() duplicate verdict", () => {
     });
 
     const after = fx.readRecord("app.ts");
-    expect(after.findings.find((f) => f.title === "primary")?.revalidation?.verdict).toBe(
+    expect(after.violations.find((f) => f.title === "primary")?.revalidation?.verdict).toBe(
       "false-positive",
     );
-    expect(after.findings.find((f) => f.title === "d1")?.revalidation?.verdict).toBe("duplicate");
-    expect(after.findings.find((f) => f.title === "d2")?.revalidation?.verdict).toBe("duplicate");
+    expect(after.violations.find((f) => f.title === "d1")?.revalidation?.verdict).toBe("duplicate");
+    expect(after.violations.find((f) => f.title === "d2")?.revalidation?.verdict).toBe("duplicate");
     expect(result.duplicates).toBe(2);
     expect(result.duplicatesRejected).toBe(0);
     expect(result.falsePositives).toBe(1);

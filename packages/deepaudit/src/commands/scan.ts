@@ -240,7 +240,7 @@ export async function scanCommand(opts: { projectId?: string; root?: string; mat
   }
 
   // Top files by candidate count — gives the user a fast sense of where
-  // findings will concentrate before they even run process.
+  // violations will concentrate before they even run process.
   try {
     const activeSlugSet = new Set(result.activeMatchers);
     const recordsByPath = new Map(loadAllFileRecords(projectId).map((r) => [r.filePath, r]));
@@ -251,7 +251,7 @@ export async function scanCommand(opts: { projectId?: string; root?: string; mat
       for (const [filePath, count] of topFiles) {
         const record = recordsByPath.get(filePath);
         const candidateSlugs =
-          record?.candidates.map((c) => c.vulnSlug).filter((slug) => activeSlugSet.has(slug)) ?? [];
+          record?.candidates.map((c) => c.ruleSlug).filter((slug) => activeSlugSet.has(slug)) ?? [];
         const slugs = Array.from(new Set(candidateSlugs)).slice(0, 4);
         const slugList =
           slugs.join(", ") + (slugs.length < new Set(candidateSlugs).size ? ", …" : "");

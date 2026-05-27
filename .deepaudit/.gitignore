@@ -11,7 +11,7 @@ data/*/runs/
 data/*/reports/
 data/*/project.json
 
-# `deepaudit export --out ./findings` lands here.
-findings/
+# `deepaudit export --out ./violations` lands here.
+violations/
 
 .vercel

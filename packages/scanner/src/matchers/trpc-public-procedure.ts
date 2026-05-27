@@ -58,7 +58,7 @@ export const trpcPublicProcedureMatcher: MatcherPlugin = {
       else label += " — verify intent";
 
       matches.push({
-        vulnSlug: "trpc-public-procedure",
+        ruleSlug: "trpc-public-procedure",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, Math.min(lines.length, i + 4)).join("\n"),
         matchedPattern: label,

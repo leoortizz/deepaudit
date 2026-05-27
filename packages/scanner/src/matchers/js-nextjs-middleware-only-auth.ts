@@ -63,7 +63,7 @@ export const nextjsMiddlewareOnlyAuthMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 3);
         matches.push({
-          vulnSlug: "nextjs-middleware-only-auth",
+          ruleSlug: "nextjs-middleware-only-auth",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: isProtectedGroup

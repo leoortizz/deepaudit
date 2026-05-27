@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const candidateMatchSchema = z.object({
-  vulnSlug: z.string(),
+  ruleSlug: z.string(),
   lineNumbers: z.array(z.number()),
   snippet: z.string(),
   matchedPattern: z.string(),
@@ -9,13 +9,13 @@ export const candidateMatchSchema = z.object({
 
 export const revalidationSchema = z.object({
   // "accepted-risk" is a manual marker (the agent never produces it): the
-  // finding is a real true-positive, but the team has consciously chosen to
+  // violation is a real true-positive, but the team has consciously chosen to
   // live with it — see the "accepted risks" section in the project README.
   // Treated like "false-positive" for PR-comment / report-default filtering.
   //
-  // "duplicate" means the finding describes the same underlying issue as
-  // another finding in the same file. `duplicateOf` points at the primary
-  // (canonical) finding by `title`. The primary keeps its real verdict;
+  // "duplicate" means the violation describes the same underlying issue as
+  // another violation in the same file. `duplicateOf` points at the primary
+  // (canonical) violation by `title`. The primary keeps its real verdict;
   // the processor rejects any DUPE whose `duplicateOf` is missing or
   // points at another DUPE so each group has exactly one non-DUPE.
   verdict: z.enum([
@@ -27,16 +27,16 @@ export const revalidationSchema = z.object({
     "duplicate",
   ]),
   reasoning: z.string(),
-  adjustedSeverity: z.enum(["CRITICAL", "HIGH", "MEDIUM", "HIGH_BUG", "BUG", "LOW"]).optional(),
+  adjustedSeverity: z.enum(["CRITICAL", "HIGH", "MEDIUM", "NIT"]).optional(),
   duplicateOf: z.string().optional(),
   revalidatedAt: z.string(),
   runId: z.string(),
   model: z.string(),
 });
 
-export const findingSchema = z.object({
-  severity: z.enum(["CRITICAL", "HIGH", "MEDIUM", "HIGH_BUG", "BUG", "LOW"]),
-  vulnSlug: z.string(),
+export const violationSchema = z.object({
+  severity: z.enum(["CRITICAL", "HIGH", "MEDIUM", "NIT"]),
+  ruleSlug: z.string(),
   title: z.string(),
   description: z.string(),
   lineNumbers: z.array(z.number()),
@@ -79,7 +79,7 @@ export const analysisEntrySchema = z.object({
   model: z.string(),
   modelConfig: z.record(z.unknown()),
   agentSessionId: z.string().optional(),
-  findingCount: z.number(),
+  violationCount: z.number(),
   numTurns: z.number().optional(),
   /**
    * "process" (default) = investigation run; "revalidate" = revalidation
@@ -118,7 +118,7 @@ export const fileRecordSchema = z.object({
   lastScannedAt: z.string(),
   lastScannedRunId: z.string(),
   fileHash: z.string(),
-  findings: z.array(findingSchema),
+  violations: z.array(violationSchema),
   analysisHistory: z.array(analysisEntrySchema),
   gitInfo: z
     .object({
@@ -211,12 +211,12 @@ export const runMetaSchema = z.object({
     filesScanned: z.number().optional(),
     candidatesFound: z.number().optional(),
     filesProcessed: z.number().optional(),
-    findingsCount: z.number().optional(),
+    violationsCount: z.number().optional(),
     totalCostUsd: z.number().optional(),
     totalInputTokens: z.number().optional(),
     totalOutputTokens: z.number().optional(),
     totalDurationMs: z.number().optional(),
-    findingsRevalidated: z.number().optional(),
+    violationsRevalidated: z.number().optional(),
     truePositives: z.number().optional(),
     falsePositives: z.number().optional(),
     fixed: z.number().optional(),

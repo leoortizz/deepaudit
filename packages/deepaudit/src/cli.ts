@@ -156,7 +156,7 @@ program
   .option("--skip-slugs <csv>", "Skip files whose candidate slugs are all in this set")
   .option(
     "--diff <ref>",
-    "Direct mode: investigate files changed between <ref> and HEAD (e.g. origin/main, HEAD~1..HEAD). Auto-creates the project if needed. Exits 1 if any finding is produced.",
+    "Direct mode: investigate files changed between <ref> and HEAD (e.g. origin/main, HEAD~1..HEAD). Auto-creates the project if needed. Exits 1 if any violation is produced.",
   )
   .option("--diff-staged", "Direct mode: investigate files in the git index (vs HEAD)")
   .option("--diff-working", "Direct mode: investigate uncommitted + untracked files")
@@ -168,7 +168,7 @@ program
   .option("--no-ignore", "In direct mode, skip the default ignore filter (test files, dist, etc.)")
   .option(
     "--comment-out <path>",
-    "Write a PR-comment-shaped markdown summary to <path> (only when findings exist)",
+    "Write a PR-comment-shaped markdown summary to <path> (only when violations exist)",
   )
   .action(processCommand);
 
@@ -184,7 +184,7 @@ program
 
 program
   .command("revalidate")
-  .description("Re-check existing findings for false positives")
+  .description("Re-check existing violations for false positives")
   .option(
     "--project-id <id>",
     "Project identifier (default: the only project in deepaudit.config.ts; required if there are multiple)",
@@ -201,17 +201,17 @@ program
   .option("--max-turns <n>", "Max conversation turns per batch (default: 150)", parseInt)
   .option(
     "--min-severity <sev>",
-    "Only revalidate findings at this severity or above (CRITICAL, HIGH, MEDIUM, HIGH_BUG, BUG)",
+    "Only revalidate violations at this severity or above (CRITICAL, HIGH, MEDIUM, HIGH, MEDIUM)",
   )
-  .option("--force", "Re-check already-validated findings")
+  .option("--force", "Re-check already-validated violations")
   .option("--limit <n>", "Max files to revalidate", parseInt)
   .option("--concurrency <n>", "Parallel batches (default: cores - 1)", parseInt)
   .option("--batch-size <n>", "Files per revalidation batch (default: 5)", parseInt)
   .option("--filter <prefix>", "Only revalidate files matching path prefix")
   .option("--root <path>", "Override rootPath from project.json (for sandbox execution)")
   .option("--manifest <path>", "JSON file with array of file paths to revalidate")
-  .option("--only-slugs <csv>", "Only revalidate findings with one of these vulnSlugs")
-  .option("--skip-slugs <csv>", "Skip findings with any of these vulnSlugs")
+  .option("--only-slugs <csv>", "Only revalidate violations with one of these ruleSlugs")
+  .option("--skip-slugs <csv>", "Skip violations with any of these ruleSlugs")
   .action(revalidateCommand);
 
 program
@@ -224,7 +224,7 @@ program
   .option("--filter <prefix>", "Only enrich files matching path prefix")
   .option(
     "--min-severity <sev>",
-    "Only enrich files with a finding at this severity or above (CRITICAL, HIGH, MEDIUM, HIGH_BUG, BUG, LOW)",
+    "Only enrich files with a violation at this severity or above (CRITICAL, HIGH, MEDIUM, HIGH, MEDIUM, NIT)",
   )
   .option("--force", "Re-enrich already-enriched files")
   .option("--concurrency <n>", "Parallel ownership oracle requests (default: cores - 1)", parseInt)
@@ -232,15 +232,15 @@ program
 
 program
   .command("triage")
-  .description("Classify findings by priority (P0/P1/P2/skip) — lightweight, no code reading")
+  .description("Classify violations by priority (P0/P1/P2/skip) — lightweight, no code reading")
   .option(
     "--project-id <id>",
     "Project identifier (default: the only project in deepaudit.config.ts; required if there are multiple)",
   )
   .option("--severity <sev>", "Severity to triage (default: MEDIUM)", "MEDIUM")
   .option("--model <model>", "Model to use (default: claude-sonnet-4-6 — cheaper)")
-  .option("--force", "Re-triage already-triaged findings")
-  .option("--limit <n>", "Max findings to triage", parseInt)
+  .option("--force", "Re-triage already-triaged violations")
+  .option("--limit <n>", "Max violations to triage", parseInt)
   .option("--concurrency <n>", "Parallel triage batches (default: cores - 1)", parseInt)
   .action(triageCommand);
 
@@ -255,41 +255,41 @@ program
 
 program
   .command("export")
-  .description("Export findings as JSON or as a directory of per-finding markdown files")
+  .description("Export violations as JSON or as a directory of per-violation markdown files")
   .option("--format <kind>", "Output format: json (default) or md-dir", "json")
   .option("--project-id <csv>", "Comma-separated project IDs (omit for all)")
   .option(
     "--min-severity <sev>",
-    "Only export findings at this severity or above (CRITICAL, HIGH, MEDIUM, HIGH_BUG, BUG, LOW)",
+    "Only export violations at this severity or above (CRITICAL, HIGH, MEDIUM, HIGH, MEDIUM, NIT)",
   )
   .option(
     "--only-severity <sev>",
-    "Only export findings at this exact severity (CRITICAL, HIGH, MEDIUM, HIGH_BUG, BUG, LOW)",
+    "Only export violations at this exact severity (CRITICAL, HIGH, MEDIUM, HIGH, MEDIUM, NIT)",
   )
-  .option("--discovered-today", "Only findings whose most recent analysis was today (local time)")
+  .option("--discovered-today", "Only violations whose most recent analysis was today (local time)")
   .option(
     "--since <iso>",
-    "Only findings whose most recent analysis was on/after this ISO timestamp",
+    "Only violations whose most recent analysis was on/after this ISO timestamp",
   )
-  .option("--only-true-positive", "Only findings revalidated as true-positive")
+  .option("--only-true-positive", "Only violations revalidated as true-positive")
   .option(
     "--include-resolved",
-    "Include findings revalidated as fixed / false-positive / accepted-risk (hidden by default)",
+    "Include violations revalidated as fixed / false-positive / accepted-risk (hidden by default)",
   )
   .option(
     "--exclude-false-positive",
     "Deprecated — false-positive is now hidden by default; this flag is a no-op",
   )
-  .option("--only-slugs <csv>", "Only export findings with these vulnSlugs")
-  .option("--skip-slugs <csv>", "Drop findings with these vulnSlugs")
-  .option("--require-owner", "Drop findings that have no ownership data (no assignee, no teams)")
+  .option("--only-slugs <csv>", "Only export violations with these ruleSlugs")
+  .option("--skip-slugs <csv>", "Drop violations with these ruleSlugs")
+  .option("--require-owner", "Drop violations that have no ownership data (no assignee, no teams)")
   .option(
     "--only-agent <type>",
-    "Only export findings produced by this agent backend (e.g. codex, claude)",
+    "Only export violations produced by this agent backend (e.g. codex, claude)",
   )
   .option(
     "--only-marker <n>",
-    "Only export findings produced under this --reinvestigate wave marker",
+    "Only export violations produced under this --reinvestigate wave marker",
   )
   .option(
     "--out <path>",
@@ -299,9 +299,9 @@ program
 
 program
   .command("metrics")
-  .description("Report findings metrics across all projects (or one project)")
+  .description("Report violations metrics across all projects (or one project)")
   .option("--project-id <id>", "Project identifier (omit for all projects)")
-  .option("--min-severity <sev>", "Minimum severity to include (default: LOW)")
+  .option("--min-severity <sev>", "Minimum severity to include (default: NIT)")
   .action(metricsCommand);
 
 const sandboxCmd = program

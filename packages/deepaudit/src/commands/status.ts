@@ -26,12 +26,12 @@ export async function statusCommand(opts: { projectId?: string }) {
     statusCounts[r.status]++;
   }
 
-  const allFindings = records.flatMap((r) => r.findings);
-  const critical = allFindings.filter((f) => f.severity === "CRITICAL").length;
-  const high = allFindings.filter((f) => f.severity === "HIGH").length;
-  const medium = allFindings.filter((f) => f.severity === "MEDIUM").length;
-  const highBug = allFindings.filter((f) => f.severity === "HIGH_BUG").length;
-  const bug = allFindings.filter((f) => f.severity === "BUG").length;
+  const allViolations = records.flatMap((r) => r.violations);
+  const critical = allViolations.filter((f) => f.severity === "CRITICAL").length;
+  const high = allViolations.filter((f) => f.severity === "HIGH").length;
+  const medium = allViolations.filter((f) => f.severity === "MEDIUM").length;
+  const highBug = allViolations.filter((f) => f.severity === "HIGH").length;
+  const bug = allViolations.filter((f) => f.severity === "MEDIUM").length;
 
   console.log(`${BOLD}Project: ${projectId}${RESET}`);
   console.log(`  Root: ${project.rootPath}`);
@@ -49,14 +49,14 @@ export async function statusCommand(opts: { projectId?: string }) {
   }
   console.log();
 
-  if (allFindings.length > 0) {
-    console.log(`  ${BOLD}Findings${RESET}`);
+  if (allViolations.length > 0) {
+    console.log(`  ${BOLD}Violations${RESET}`);
     console.log(
       `    ${RED}CRITICAL: ${critical}${RESET}  |  ${YELLOW}HIGH: ${high}${RESET}  |  ${CYAN}MEDIUM: ${medium}${RESET}  |  \x1b[35mHIGH_BUG: ${highBug}${RESET}  |  \x1b[35mBUG: ${bug}${RESET}`,
     );
 
     // Revalidation progress
-    const validated = allFindings.filter((f) => f.revalidation);
+    const validated = allViolations.filter((f) => f.revalidation);
     if (validated.length > 0) {
       const tp = validated.filter((f) => f.revalidation?.verdict === "true-positive").length;
       const fp = validated.filter((f) => f.revalidation?.verdict === "false-positive").length;
@@ -65,19 +65,19 @@ export async function statusCommand(opts: { projectId?: string }) {
       const dup = validated.filter((f) => f.revalidation?.verdict === "duplicate").length;
       const dupSuffix = dup > 0 ? `  ${DIM}Dupe: ${dup}${RESET}` : "";
       console.log(
-        `    Revalidated: ${validated.length}/${allFindings.length}  ${GREEN}TP: ${tp}${RESET}  ${RED}FP: ${fp}${RESET}  ${CYAN}Fixed: ${fixed}${RESET}  ${YELLOW}Uncertain: ${unc}${RESET}${dupSuffix}`,
+        `    Revalidated: ${validated.length}/${allViolations.length}  ${GREEN}TP: ${tp}${RESET}  ${RED}FP: ${fp}${RESET}  ${CYAN}Fixed: ${fixed}${RESET}  ${YELLOW}Uncertain: ${unc}${RESET}${dupSuffix}`,
       );
     }
 
     // Triage progress
-    const triaged = allFindings.filter((f) => f.triage);
+    const triaged = allViolations.filter((f) => f.triage);
     if (triaged.length > 0) {
       const p0 = triaged.filter((f) => f.triage?.priority === "P0").length;
       const p1t = triaged.filter((f) => f.triage?.priority === "P1").length;
       const p2t = triaged.filter((f) => f.triage?.priority === "P2").length;
       const skipped = triaged.filter((f) => f.triage?.priority === "skip").length;
       console.log(
-        `    Triaged: ${triaged.length}/${allFindings.length}  ${RED}P0: ${p0}${RESET}  ${YELLOW}P1: ${p1t}${RESET}  ${CYAN}P2: ${p2t}${RESET}  ${DIM}skip: ${skipped}${RESET}`,
+        `    Triaged: ${triaged.length}/${allViolations.length}  ${RED}P0: ${p0}${RESET}  ${YELLOW}P1: ${p1t}${RESET}  ${CYAN}P2: ${p2t}${RESET}  ${DIM}skip: ${skipped}${RESET}`,
       );
     }
     console.log();
@@ -92,7 +92,7 @@ export async function statusCommand(opts: { projectId?: string }) {
       const statParts: string[] = [];
       if (run.stats.filesScanned) statParts.push(`scanned: ${run.stats.filesScanned}`);
       if (run.stats.filesProcessed) statParts.push(`processed: ${run.stats.filesProcessed}`);
-      if (run.stats.findingsCount) statParts.push(`findings: ${run.stats.findingsCount}`);
+      if (run.stats.violationsCount) statParts.push(`violations: ${run.stats.violationsCount}`);
       if (run.stats.totalCostUsd) statParts.push(`$${run.stats.totalCostUsd.toFixed(2)}`);
       if (run.stats.totalInputTokens || run.stats.totalOutputTokens) {
         const total = (run.stats.totalInputTokens ?? 0) + (run.stats.totalOutputTokens ?? 0);

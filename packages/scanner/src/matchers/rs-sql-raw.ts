@@ -11,7 +11,7 @@ export const rsSqlRawMatcher: MatcherPlugin = {
   // SAFE counterpart (NOT in `examples` since the discovery test only
   // accepts positive cases): the compile-time-checked macro form
   // `sqlx::query!("SELECT * FROM users WHERE id = $1", id)` is parameterized
-  // at compile time and is NOT a finding. Only the runtime
+  // at compile time and is NOT a violation. Only the runtime
   // `sqlx::query(&format!(...))` form below is unsafe.
   examples: [
     `sqlx::query(&format!("SELECT * FROM users WHERE id = {}", id)).fetch_one(&pool).await?`,

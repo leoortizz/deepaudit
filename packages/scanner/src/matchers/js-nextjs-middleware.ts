@@ -48,7 +48,7 @@ export const nextjsMiddlewareMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 6);
         matches.push({
-          vulnSlug: "nextjs-middleware",
+          ruleSlug: "nextjs-middleware",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Next.js middleware — security-critical request interceptor",
@@ -62,7 +62,7 @@ export const nextjsMiddlewareMatcher: MatcherPlugin = {
         const start = Math.max(0, i);
         const end = Math.min(lines.length, i + 10);
         matches.push({
-          vulnSlug: "nextjs-middleware",
+          ruleSlug: "nextjs-middleware",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Middleware route matcher config — controls scope of protection",

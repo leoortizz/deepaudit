@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         19
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "new Function()"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "framework-edge-sandbox",
+      "ruleSlug": "framework-edge-sandbox",
       "lineNumbers": [
         19
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "\\bnew\\s+Function\\s*\\("
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         10
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "child_process exec"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         12
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "execSync"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         13
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "spawn"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         14
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "spawnSync"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         15
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "eval"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         16,
         32
@@ -76,7 +76,7 @@
       "matchedPattern": "new Function()"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         17
       ],
@@ -84,7 +84,7 @@
       "matchedPattern": "child_process import"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         18
       ],
@@ -92,7 +92,7 @@
       "matchedPattern": "child_process import"
     },
     {
-      "vulnSlug": "rce",
+      "ruleSlug": "rce",
       "lineNumbers": [
         19,
         20
@@ -104,7 +104,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.480Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "78f530d72d35d5dc597eef2a0efbcdee04a39f404c1a299d54333e677aedcee9",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -117,7 +117,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "6e1bc416-d19e-4cf0-9899-296107ff9cc4",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4026835,
       "usage": {
@@ -142,7 +142,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b5a-79c1-8782-d679e7129e7b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.05059860000000001,

@@ -566,7 +566,7 @@ export async function orchestrate(
     // its last iteration and the worker exiting. The sandbox is the trust
     // boundary, so a failed download means the host didn't actually receive
     // the run's output — flip the result to failure rather than masquerading
-    // as a clean run with empty findings.
+    // as a clean run with empty violations.
     if (inst.status !== "error") {
       try {
         await downloadResults(inst.sandbox, inst.index, config.projectId, onLog);

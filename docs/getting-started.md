@@ -7,7 +7,7 @@ work the same way.
 
 deepaudit lives in a `.deepaudit/` directory at the root of your codebase
 — checked into the same git repo, so config, project context, and
-custom matchers travel with the code. Generated scan output (findings,
+custom matchers travel with the code. Generated scan output (violations,
 runs, reports) stays gitignored.
 
 From the root of the codebase you want to scan:
@@ -24,7 +24,7 @@ derived from your repo dir's basename), `data/<id>/INFO.md` (template
 with section placeholders), `data/<id>/SETUP.md` (per-project agent
 prompt), workspace-level `AGENTS.md`, `.env.local`, `.gitignore`. No
 custom matchers in the scaffold — add those later, only when a real
-finding shapes one for you.
+violation shapes one for you.
 
 Open `.env.local` and pick one of:
 
@@ -50,7 +50,7 @@ To scan a *different* codebase from the same `.deepaudit/`, run
 ## Fill in INFO.md
 
 `INFO.md` is what makes deepaudit project-aware. It's injected into the
-AI prompt for every batch — vague content here means vague findings.
+AI prompt for every batch — vague content here means vague violations.
 
 ### Option A: let your coding agent do it (recommended)
 
@@ -150,23 +150,23 @@ pnpm deepaudit triage --severity HIGH
 pnpm deepaudit revalidate --min-severity HIGH
 ```
 
-- **triage**: classifies findings P0/P1/P2 without re-reading the code.
-  ~1¢/finding.
+- **triage**: classifies violations P0/P1/P2 without re-reading the code.
+  ~1¢/violation.
 - **revalidate**: re-reads the code and the git history, then emits a
   TP/FP/Fixed/Uncertain verdict. Comparable cost to `process`. Cuts FP
   rate by 50%+ on most repos.
 
 Both optional, but worth running on the HIGH/CRITICAL set.
 
-## Get the findings out
+## Get the violations out
 
 ```bash
-pnpm deepaudit export --format md-dir --out ./findings
-pnpm deepaudit export --format json   --out findings.json
+pnpm deepaudit export --format md-dir --out ./violations
+pnpm deepaudit export --format json   --out violations.json
 ```
 
-`md-dir` writes one markdown file per finding under
-`./findings/{CRITICAL,HIGH,MEDIUM,…}/`. `json` writes a single array
+`md-dir` writes one markdown file per violation under
+`./violations/{CRITICAL,HIGH,MEDIUM,…}/`. `json` writes a single array
 suitable for piping to a downstream issue tracker.
 
 For a quick aggregate look:

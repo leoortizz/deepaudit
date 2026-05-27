@@ -860,11 +860,11 @@ export class CodexAgentSdkPlugin implements AgentPlugin {
         throw err;
       }
       if (DEBUG) {
-        const matched = parsed.filter((r) => r.findings.length > 0).length;
-        const totalFindings = parsed.reduce((s, r) => s + r.findings.length, 0);
+        const matched = parsed.filter((r) => r.violations.length > 0).length;
+        const totalViolations = parsed.reduce((s, r) => s + r.violations.length, 0);
         yield {
           type: "thinking",
-          message: `[debug] parsed: ${parsed.length} entries, ${matched} with findings, ${totalFindings} total findings`,
+          message: `[debug] parsed: ${parsed.length} entries, ${matched} with violations, ${totalViolations} total violations`,
         };
       }
 
@@ -899,12 +899,12 @@ export class CodexAgentSdkPlugin implements AgentPlugin {
       projectInfo,
       force,
     });
-    const totalFindings = built.totalFindings;
+    const totalViolations = built.totalViolations;
     const prompt = `${codexEnvironmentPreamble(projectRoot)}\n\n${built.prompt}`;
 
     yield {
       type: "started",
-      message: `Revalidating ${totalFindings} finding(s) across ${batch.length} file(s) with Codex SDK (${model})`,
+      message: `Revalidating ${totalViolations} violation(s) across ${batch.length} file(s) with Codex SDK (${model})`,
     };
 
     const invocation = buildCodexInvocation();

@@ -76,7 +76,7 @@ export const secretsPlaintextExposureMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "secrets-plaintext-exposure",
+      ruleSlug: "secrets-plaintext-exposure",
       lineNumbers: hitLines,
       snippet: snippets[0],
       matchedPattern: "plaintext reference inside logger/response/error/span call",

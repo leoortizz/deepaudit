@@ -45,7 +45,7 @@ describe("RegexScannerDriver — Windows path normalization", () => {
         return /eval\s*\(/.test(content)
           ? [
               {
-                vulnSlug: "test-eval",
+                ruleSlug: "test-eval",
                 lineNumbers: [1],
                 snippet: content,
                 matchedPattern: "eval",

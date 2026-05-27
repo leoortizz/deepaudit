@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "xss",
+      "ruleSlug": "xss",
       "lineNumbers": [
         8,
         22,
@@ -17,7 +17,7 @@
       "matchedPattern": "dangerouslySetInnerHTML"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -25,7 +25,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         8
       ],
@@ -33,7 +33,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         22
       ],
@@ -41,7 +41,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         24
       ],
@@ -49,7 +49,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         29
       ],
@@ -57,7 +57,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         41
       ],
@@ -65,7 +65,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         51
       ],
@@ -73,7 +73,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "dangerous-html",
+      "ruleSlug": "dangerous-html",
       "lineNumbers": [
         52
       ],
@@ -81,7 +81,7 @@
       "matchedPattern": "dangerouslySetInnerHTML from props (trace source)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         8
       ],
@@ -89,7 +89,7 @@
       "matchedPattern": "JSON.stringify near HTML injection point (safeJsonStringify in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         22
       ],
@@ -97,7 +97,7 @@
       "matchedPattern": "JSON.stringify near HTML injection point (safeJsonStringify in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         24
       ],
@@ -105,7 +105,7 @@
       "matchedPattern": "dangerouslySetInnerHTML with JSON data (safeJsonStringify in scope)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         40
       ],
@@ -113,7 +113,7 @@
       "matchedPattern": "JSON.stringify near HTML injection point (safeJsonStringify in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         41
       ],
@@ -121,7 +121,7 @@
       "matchedPattern": "JSON.stringify near HTML injection point (safeJsonStringify in scope — verify usage)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         51
       ],
@@ -129,7 +129,7 @@
       "matchedPattern": "dangerouslySetInnerHTML with JSON data (safeJsonStringify in scope)"
     },
     {
-      "vulnSlug": "unsafe-json-in-html",
+      "ruleSlug": "unsafe-json-in-html",
       "lineNumbers": [
         52
       ],
@@ -140,7 +140,7 @@
   "lastScannedAt": "2026-05-02T17:54:41.628Z",
   "lastScannedRunId": "20260502175440-05201b02576fe6c2",
   "fileHash": "b529139adb57db85bbb48d17c039f6b4379555ae19c85e66d998abc3789879e4",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -153,7 +153,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "e43a028a-de8a-4dc7-8310-a9d2634f2ad6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.5421327499999999,
       "usage": {
@@ -178,7 +178,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bbe-7b71-bfea-e098d61e3433",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0442164,

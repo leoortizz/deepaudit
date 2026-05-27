@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         18
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         20
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         22
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         24
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         26
       ],
@@ -51,7 +51,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         28
       ],
@@ -59,7 +59,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         30
       ],
@@ -67,7 +67,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         32
       ],
@@ -75,7 +75,7 @@
       "matchedPattern": "DB lookup by ID without ownership check in next 15 lines"
     },
     {
-      "vulnSlug": "unverified-lookup",
+      "ruleSlug": "unverified-lookup",
       "lineNumbers": [
         34
       ],
@@ -86,7 +86,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.586Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5962c1dd465a29c26b5456d394400671129407c9cb8d14dabf5e04d0f6d8fa2e",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -99,7 +99,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "c0d09f95-7ba2-439a-91c5-142da7edb665",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.22457,
       "usage": {
@@ -124,7 +124,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b5a-79c1-8782-d679e7129e7b",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.05059860000000001,

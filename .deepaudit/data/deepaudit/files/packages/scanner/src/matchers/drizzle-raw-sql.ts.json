@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         9,
         13,
@@ -14,7 +14,7 @@
       "matchedPattern": "sql.raw() — raw SQL (verify parameterized)"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         6,
         14
@@ -23,7 +23,7 @@
       "matchedPattern": "sql tagged template with interpolation"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         22
       ],
@@ -31,7 +31,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         28,
         29
@@ -40,7 +40,7 @@
       "matchedPattern": "template literal SELECT with interpolation"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         30
       ],
@@ -48,7 +48,7 @@
       "matchedPattern": "string concat SELECT"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         9,
         13,
@@ -61,7 +61,7 @@
       "matchedPattern": "sql.raw() — raw SQL (verify parameterized)"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         9,
         13,
@@ -74,7 +74,7 @@
       "matchedPattern": "Kysely sql.raw — bypasses parameterization, must not include user input"
     },
     {
-      "vulnSlug": "js-sql-raw",
+      "ruleSlug": "js-sql-raw",
       "lineNumbers": [
         9,
         13,
@@ -90,7 +90,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.860Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "28ef5d78cfea58d4696a7b4067bd2bc94b1e472fb939a31209be2e3d999e13f9",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -103,7 +103,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "6e1bc416-d19e-4cf0-9899-296107ff9cc4",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4026835,
       "usage": {
@@ -128,7 +128,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c2a-79d2-bed1-7fab0db59914",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.073648,

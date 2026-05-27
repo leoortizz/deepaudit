@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a bug in deepaudit itself (not a finding deepaudit produced about another codebase)
+about: Report a bug in deepaudit itself (not a violation deepaudit produced about another codebase)
 labels: bug
 ---
 
@@ -28,5 +28,5 @@ labels: bug
 
 ## Logs
 
-<!-- Relevant CLI output, redacted as needed. Avoid pasting findings about
+<!-- Relevant CLI output, redacted as needed. Avoid pasting violations about
 private code unless they're directly relevant to the bug. -->

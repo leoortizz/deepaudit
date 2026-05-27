@@ -74,7 +74,7 @@ export const frameworkEdgeSandboxMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0 && isByPath) {
       const match: CandidateMatch = {
-        vulnSlug: "framework-edge-sandbox",
+        ruleSlug: "framework-edge-sandbox",
         lineNumbers: [1],
         snippet: lines.slice(0, 5).join("\n"),
         matchedPattern: "edge sandbox file (path)",
@@ -83,7 +83,7 @@ export const frameworkEdgeSandboxMatcher: MatcherPlugin = {
     }
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "framework-edge-sandbox",
+      ruleSlug: "framework-edge-sandbox",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 3).join(", "),

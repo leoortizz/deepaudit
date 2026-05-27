@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "spread-operator-injection",
+      "ruleSlug": "spread-operator-injection",
       "lineNumbers": [
         11,
         12
@@ -20,7 +20,7 @@
       "matchedPattern": "Spread of req.body"
     },
     {
-      "vulnSlug": "spread-operator-injection",
+      "ruleSlug": "spread-operator-injection",
       "lineNumbers": [
         13,
         14
@@ -29,7 +29,7 @@
       "matchedPattern": "Spread of parsed input"
     },
     {
-      "vulnSlug": "spread-operator-injection",
+      "ruleSlug": "spread-operator-injection",
       "lineNumbers": [
         15
       ],
@@ -37,7 +37,7 @@
       "matchedPattern": "Spread of searchParams"
     },
     {
-      "vulnSlug": "spread-operator-injection",
+      "ruleSlug": "spread-operator-injection",
       "lineNumbers": [
         16,
         17
@@ -46,7 +46,7 @@
       "matchedPattern": "Spread of params/query"
     },
     {
-      "vulnSlug": "spread-operator-injection",
+      "ruleSlug": "spread-operator-injection",
       "lineNumbers": [
         18,
         19
@@ -55,7 +55,7 @@
       "matchedPattern": "Object.assign from user input"
     },
     {
-      "vulnSlug": "object-injection",
+      "ruleSlug": "object-injection",
       "lineNumbers": [
         18,
         19
@@ -67,7 +67,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.620Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "9df0c0ef23bdad49da4268b1b02de565de8f476927471c03efcd731f8567c2fe",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -80,7 +80,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "2d37451d-f791-456c-9c1e-23d475431c2e",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 7,
       "costUsd": 0.27781525,
       "usage": {
@@ -105,7 +105,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bc9-7e13-a44f-2c7a5a34e197",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0469084,

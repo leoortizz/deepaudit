@@ -168,8 +168,8 @@ VERCEL_PROJECT_ID=prj_…      # any project's Settings → General → Project 
 The Sandbox SDK reads these directly from `process.env` at `Sandbox.create()` time. References:
 
 - [Creating an access token](https://vercel.com/docs/rest-api#creating-an-access-token)
-- [Finding your team ID](https://vercel.com/docs/accounts#find-your-team-id)
-- [Finding your project ID](https://vercel.com/docs/project-configuration/general-settings#project-id)
+- [Violation your team ID](https://vercel.com/docs/accounts#find-your-team-id)
+- [Violation your project ID](https://vercel.com/docs/project-configuration/general-settings#project-id)
 
 You can keep both sets of env vars in `.env.local`. The SDK prefers `VERCEL_OIDC_TOKEN` when present and falls back to access-token mode otherwise — handy for using OIDC locally and the access-token path in scheduled CI runs without maintaining two configs.
 
@@ -195,7 +195,7 @@ If the sandbox can't authenticate, the spawn fails with the SDK's error. Re-run 
 | `✘ Stopped: Claude Pro/Max subscription exhausted` | Hit the weekly / 5-hour subscription cap. | Switch to AI Gateway — subscriptions don't have enough headroom for full scans. |
 | `✘ Stopped: ChatGPT subscription exhausted` | Hit the ChatGPT Plus / Pro quota. | Same — switch to the gateway. |
 | Sandbox spawn fails with auth error | OIDC token expired (12 h) or access-token vars wrong. | Re-run `vercel env pull` (OIDC) or double-check `VERCEL_TOKEN` / `VERCEL_TEAM_ID` / `VERCEL_PROJECT_ID`. |
-| Findings missing cost in the log | Pricing entry missing for a non-default Codex model. | See [models.md](models.md#future-models-eg-anthropic-mythos). |
+| Violations missing cost in the log | Pricing entry missing for a non-default Codex model. | See [models.md](models.md#future-models-eg-anthropic-mythos). |
 
 ### After any quota / credit fix
 

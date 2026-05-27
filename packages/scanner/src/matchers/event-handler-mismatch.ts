@@ -89,7 +89,7 @@ export const eventHandlerMismatchMatcher: MatcherPlugin = {
           const start = Math.max(0, i - 1);
           const end = Math.min(lines.length, i + 6);
           matches.push({
-            vulnSlug: "event-handler-mismatch",
+            ruleSlug: "event-handler-mismatch",
             lineNumbers: [i + 1],
             snippet: lines.slice(start, end).join("\n"),
             matchedPattern: `Event "${caseMatch[1]}" calls function matching "${wrong}" — possible copy-paste bug`,

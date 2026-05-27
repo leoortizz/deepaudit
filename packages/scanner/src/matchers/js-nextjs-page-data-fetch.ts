@@ -33,7 +33,7 @@ export const pageDataFetchMatcher: MatcherPlugin = {
         const start = Math.max(0, i - 1);
         const end = Math.min(lines.length, i + 4);
         matches.push({
-          vulnSlug: "page-data-fetch",
+          ruleSlug: "page-data-fetch",
           lineNumbers: [i + 1],
           snippet: lines.slice(start, end).join("\n"),
           matchedPattern: "Page reads URL params and fetches data — verify auth scoping",

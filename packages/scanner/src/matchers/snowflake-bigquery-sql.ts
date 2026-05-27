@@ -64,7 +64,7 @@ export const snowflakeBigquerySqlMatcher: MatcherPlugin = {
       const start = Math.max(0, i - 1);
       const end = Math.min(lines.length, i + 3);
       matches.push({
-        vulnSlug: "snowflake-bigquery-sql",
+        ruleSlug: "snowflake-bigquery-sql",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, end).join("\n"),
         matchedPattern: label,

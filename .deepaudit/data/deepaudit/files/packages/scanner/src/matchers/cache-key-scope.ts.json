@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11,
         35
@@ -12,7 +12,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11,
         52
@@ -21,7 +21,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "cache-key-scope",
+      "ruleSlug": "cache-key-scope",
       "lineNumbers": [
         19
       ],
@@ -29,7 +29,7 @@
       "matchedPattern": "Redis string key — no user/team scoping visible in key construction"
     },
     {
-      "vulnSlug": "cache-key-scope",
+      "ruleSlug": "cache-key-scope",
       "lineNumbers": [
         20
       ],
@@ -37,7 +37,7 @@
       "matchedPattern": "Redis string key — no user/team scoping visible in key construction"
     },
     {
-      "vulnSlug": "cache-key-scope",
+      "ruleSlug": "cache-key-scope",
       "lineNumbers": [
         24
       ],
@@ -45,7 +45,7 @@
       "matchedPattern": "cache string key — no user/team scoping visible in key construction"
     },
     {
-      "vulnSlug": "cache-key-scope",
+      "ruleSlug": "cache-key-scope",
       "lineNumbers": [
         25
       ],
@@ -53,7 +53,7 @@
       "matchedPattern": "cache string key — no user/team scoping visible in key construction"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         14
       ],
@@ -61,7 +61,7 @@
       "matchedPattern": "Redis get-then-delete/set without transaction — TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         16
       ],
@@ -69,7 +69,7 @@
       "matchedPattern": "Redis get-then-delete/set without transaction — TOCTOU race"
     },
     {
-      "vulnSlug": "non-atomic-read-delete",
+      "ruleSlug": "non-atomic-read-delete",
       "lineNumbers": [
         19
       ],
@@ -80,7 +80,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.734Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "45382bb830d9a828a3ad701a233e9acd8e3c45288ab5c9b8743c0d8ff93bd8df",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -93,7 +93,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "cc920989-37b8-404e-ac5e-2186835ffa65",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.2131185,
       "usage": {
@@ -118,7 +118,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7931-b009-43059171fba6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05549425,

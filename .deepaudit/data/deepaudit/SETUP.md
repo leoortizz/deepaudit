@@ -40,7 +40,7 @@ still has placeholder sections.
 3. **(Optional) Add custom matchers** for repo-specific patterns the
    built-in matchers won't catch. Read
    `node_modules/deepaudit/dist/docs/writing-matchers.md` first; the
-   workflow there starts from a confirmed finding and grows the matcher
+   workflow there starts from a confirmed violation and grows the matcher
    from it. Don't add matchers speculatively — wait for a real TP.
 
 ## When you're done

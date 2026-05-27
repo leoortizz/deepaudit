@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         17
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "deprecated createCipher (use createCipheriv)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7,
         18
@@ -20,7 +20,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         24
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "Timing-unsafe digest comparison"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         17
       ],
@@ -36,7 +36,7 @@
       "matchedPattern": "Node crypto.create*"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         10
       ],
@@ -44,7 +44,7 @@
       "matchedPattern": "MD5 hash"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         11
       ],
@@ -52,7 +52,7 @@
       "matchedPattern": "SHA1 hash"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12,
         30
@@ -61,7 +61,7 @@
       "matchedPattern": "deprecated createCipher (use createCipheriv)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7,
         13,
@@ -73,7 +73,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         16
       ],
@@ -81,7 +81,7 @@
       "matchedPattern": "MD5 function call"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         17
       ],
@@ -89,7 +89,7 @@
       "matchedPattern": "Timing-unsafe HMAC comparison (use timingSafeEqual)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         18
       ],
@@ -97,7 +97,7 @@
       "matchedPattern": "Timing-unsafe digest comparison"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         19
       ],
@@ -105,7 +105,7 @@
       "matchedPattern": "Timing-unsafe signature comparison"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         20
       ],
@@ -113,7 +113,7 @@
       "matchedPattern": "Math.random in security context"
     },
     {
-      "vulnSlug": "crypto-usage",
+      "ruleSlug": "crypto-usage",
       "lineNumbers": [
         10,
         11,
@@ -127,7 +127,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.783Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "4f0edf4db82f57a3b4234bfa2565d52fd1ce3f5bf489740ed6391d1547c93028",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -140,7 +140,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "cd084360-af75-4dd9-a59d-04e0c819a753",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4970532499999999,
       "usage": {
@@ -165,7 +165,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8ba1-7460-ad8b-33c65a58b451",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.073563,

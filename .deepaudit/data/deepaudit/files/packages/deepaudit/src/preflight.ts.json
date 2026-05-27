@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         32,
         34,
@@ -17,7 +17,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         32
       ],
@@ -25,7 +25,7 @@
       "matchedPattern": "process.env.AI_GATEWAY_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         34
       ],
@@ -33,7 +33,7 @@
       "matchedPattern": "process.env.ANTHROPIC_AUTH_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         35
       ],
@@ -41,7 +41,7 @@
       "matchedPattern": "process.env.OPENAI_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         36
       ],
@@ -49,7 +49,7 @@
       "matchedPattern": "process.env.ANTHROPIC_BASE_URL"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         37
       ],
@@ -57,7 +57,7 @@
       "matchedPattern": "process.env.OPENAI_BASE_URL"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         51
       ],
@@ -65,7 +65,7 @@
       "matchedPattern": "process.env.ANTHROPIC_AUTH_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         52
       ],
@@ -73,7 +73,7 @@
       "matchedPattern": "process.env.OPENAI_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         80
       ],
@@ -81,7 +81,7 @@
       "matchedPattern": "process.env.VERCEL_OIDC_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         83
       ],
@@ -89,7 +89,7 @@
       "matchedPattern": "process.env.VERCEL_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         84
       ],
@@ -97,7 +97,7 @@
       "matchedPattern": "process.env.VERCEL_TEAM_ID"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         85
       ],
@@ -105,7 +105,7 @@
       "matchedPattern": "process.env.VERCEL_PROJECT_ID"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         60,
         62,
@@ -121,7 +121,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         60
       ],
@@ -129,7 +129,7 @@
       "matchedPattern": "process.env.AI_GATEWAY_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         62
       ],
@@ -137,7 +137,7 @@
       "matchedPattern": "process.env.AI_GATEWAY_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         72
       ],
@@ -145,7 +145,7 @@
       "matchedPattern": "process.env.AI_GATEWAY_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         74
       ],
@@ -153,7 +153,7 @@
       "matchedPattern": "process.env.ANTHROPIC_AUTH_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         75
       ],
@@ -161,7 +161,7 @@
       "matchedPattern": "process.env.OPENAI_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         76
       ],
@@ -169,7 +169,7 @@
       "matchedPattern": "process.env.ANTHROPIC_BASE_URL"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         77
       ],
@@ -177,7 +177,7 @@
       "matchedPattern": "process.env.OPENAI_BASE_URL"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         97
       ],
@@ -185,7 +185,7 @@
       "matchedPattern": "process.env.PATH"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         133
       ],
@@ -193,7 +193,7 @@
       "matchedPattern": "process.env.CODEX_HOME"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         164
       ],
@@ -201,7 +201,7 @@
       "matchedPattern": "process.env.ANTHROPIC_AUTH_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         165
       ],
@@ -209,7 +209,7 @@
       "matchedPattern": "process.env.OPENAI_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         199
       ],
@@ -217,7 +217,7 @@
       "matchedPattern": "process.env.VERCEL_OIDC_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         202
       ],
@@ -225,7 +225,7 @@
       "matchedPattern": "process.env.VERCEL_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         203
       ],
@@ -233,7 +233,7 @@
       "matchedPattern": "process.env.VERCEL_TEAM_ID"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         204
       ],
@@ -244,7 +244,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.679Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "41f53bae9a2131868505df04203b5bd471885dce5500bb4b77d6ab0f9f0d7f9c",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502180937-22fd8a82a4d15018",
@@ -257,7 +257,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "555234d3-a3c0-432c-8d96-e40e3a1091c7",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 5,
       "costUsd": 0.45631025000000003,
       "usage": {
@@ -282,7 +282,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bda-7060-aa31-96333341fed1",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.1458454,

@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         14
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "HTTP entry point: app method handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         15
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "HTTP entry point: app method handler (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         11
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "HTTP entry point: route definition (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         12
       ],
@@ -35,7 +35,7 @@
       "matchedPattern": "HTTP entry point: route definition (weak candidate)"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         13
       ],
@@ -43,7 +43,7 @@
       "matchedPattern": "HTTP entry point: route definition (weak candidate)"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -54,7 +54,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.480Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "9155ad2d80a390306aa44df57611b2ca94d41ab8ad55919683eb2c4410950444",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214906-5ae71a3d1b833445",
@@ -66,7 +66,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-2ffb-7402-b151-ca739f5e7e5f",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.079966,
@@ -92,7 +92,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8dbb-7fb1-8d2a-e3566e1d1ef2",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.063703,

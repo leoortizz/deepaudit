@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         20
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "URL validation regex with greedy wildcard (.+ or .*) — may be bypassable"
     },
     {
-      "vulnSlug": "url-regex-validation",
+      "ruleSlug": "url-regex-validation",
       "lineNumbers": [
         33
       ],
@@ -30,7 +30,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.550Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "1b1dc8a101666577cfeb15400d2fbec4bc82f7c97671d50b4cf4d422c9c4c318",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -43,7 +43,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "37282d6b-6ed8-480e-afa8-0a64dc85a965",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 7,
       "costUsd": 0.55530475,
       "usage": {
@@ -68,7 +68,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8c27-7280-923b-dd092bb40b71",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.044457,

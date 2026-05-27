@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         30
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "redirect URL parameter"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         30
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "Redirect URL from header/param (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         10,
         11,
@@ -38,7 +38,7 @@
       "matchedPattern": "redirect with request-derived URL"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         12
       ],
@@ -46,7 +46,7 @@
       "matchedPattern": "redirect with interpolated URL"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         13,
         14
@@ -55,7 +55,7 @@
       "matchedPattern": "res.redirect with request-derived URL"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         15
       ],
@@ -63,7 +63,7 @@
       "matchedPattern": "Location header from request data"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         16
       ],
@@ -71,7 +71,7 @@
       "matchedPattern": "window.location from user input"
     },
     {
-      "vulnSlug": "open-redirect",
+      "ruleSlug": "open-redirect",
       "lineNumbers": [
         17,
         18,
@@ -82,7 +82,7 @@
       "matchedPattern": "redirect URL parameter"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         10
       ],
@@ -90,7 +90,7 @@
       "matchedPattern": "redirect() with request-derived URL (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         11
       ],
@@ -98,7 +98,7 @@
       "matchedPattern": "redirect() with request-derived URL (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         13
       ],
@@ -106,7 +106,7 @@
       "matchedPattern": "redirect() with request-derived URL (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         14
       ],
@@ -114,7 +114,7 @@
       "matchedPattern": "redirect() with request-derived URL (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         12
       ],
@@ -122,7 +122,7 @@
       "matchedPattern": "redirect() with interpolated URL (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         17
       ],
@@ -130,7 +130,7 @@
       "matchedPattern": "Redirect URL from header/param (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         18
       ],
@@ -138,7 +138,7 @@
       "matchedPattern": "Redirect URL from header/param (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         19
       ],
@@ -146,7 +146,7 @@
       "matchedPattern": "Redirect URL from header/param (NO validNextRedirect — investigate)"
     },
     {
-      "vulnSlug": "unsafe-redirect",
+      "ruleSlug": "unsafe-redirect",
       "lineNumbers": [
         42
       ],
@@ -157,7 +157,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.513Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "ff3ca8188f566bbcc064f56b5d088483982741f1f745b1f8bade8f2fda5efbb2",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -170,7 +170,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "66229215-48c4-47cc-9a9f-0265b9cf65ab",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.5060955,
       "usage": {

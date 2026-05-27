@@ -77,7 +77,7 @@ export const k8sSecretReferenceMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "k8s-secret-reference",
+      ruleSlug: "k8s-secret-reference",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 5).join(", "),

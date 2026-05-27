@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         11
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "template literal SELECT with interpolation"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         6,
         18
@@ -20,7 +20,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         11,
         21,
@@ -34,7 +34,7 @@
       "matchedPattern": "template literal SELECT with interpolation"
     },
     {
-      "vulnSlug": "sql-injection",
+      "ruleSlug": "sql-injection",
       "lineNumbers": [
         22
       ],
@@ -42,7 +42,7 @@
       "matchedPattern": "string concat SELECT"
     },
     {
-      "vulnSlug": "snowflake-bigquery-sql",
+      "ruleSlug": "snowflake-bigquery-sql",
       "lineNumbers": [
         22
       ],
@@ -50,7 +50,7 @@
       "matchedPattern": "Snowflake sqlText with string concatenation"
     },
     {
-      "vulnSlug": "snowflake-bigquery-sql",
+      "ruleSlug": "snowflake-bigquery-sql",
       "lineNumbers": [
         41
       ],
@@ -61,7 +61,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.819Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "338e1087dd6d717059e285082b83d02b13bec2951eee913c359e60d48511c1f2",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -74,7 +74,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "138fcf13-e4b7-4a3b-ac41-8724b22e1dfb",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.43548600000000004,
       "usage": {
@@ -99,7 +99,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bc9-7e61-aaad-fadc27e0addc",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05861325,

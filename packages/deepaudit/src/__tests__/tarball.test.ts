@@ -233,7 +233,7 @@ function validRecord(projectId: string, filePath: string): unknown {
     lastScannedAt: "2026-05-06T00:00:00.000Z",
     lastScannedRunId: "scan1",
     fileHash: "h",
-    findings: [],
+    violations: [],
     analysisHistory: [],
     status: "pending",
   };

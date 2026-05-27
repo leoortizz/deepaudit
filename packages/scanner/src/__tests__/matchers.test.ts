@@ -23,7 +23,7 @@ describe("auth-bypass matcher", () => {
     const content = readFixture("api/admin.ts");
     const matches = authBypassMatcher.match(content, "src/api/admin.ts");
     expect(matches.length).toBeGreaterThan(0);
-    expect(matches.some((m) => m.vulnSlug === "auth-bypass")).toBe(true);
+    expect(matches.some((m) => m.ruleSlug === "auth-bypass")).toBe(true);
   });
 });
 
@@ -32,7 +32,7 @@ describe("missing-auth matcher", () => {
     const content = readFixture("api/users.ts");
     const matches = missingAuthMatcher.match(content, "src/api/users.ts");
     expect(matches.length).toBeGreaterThan(0);
-    expect(matches[0].vulnSlug).toBe("missing-auth");
+    expect(matches[0].ruleSlug).toBe("missing-auth");
     expect(matches[0].matchedPattern).toContain("weak candidate");
   });
 

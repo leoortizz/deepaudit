@@ -239,7 +239,7 @@ Currently configured project: \`${id}\` (target: \`${targetRel}\`).
 pnpm deepaudit scan
 pnpm deepaudit process     --concurrency 5
 pnpm deepaudit revalidate  --concurrency 5                  # cuts FP rate
-pnpm deepaudit export      --format md-dir --out ./findings
+pnpm deepaudit export      --format md-dir --out ./violations
 \`\`\`
 
 \`--project-id\` is auto-resolved while there's only one project in

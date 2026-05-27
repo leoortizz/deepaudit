@@ -59,7 +59,7 @@ export const dockerfileCurlPipeUnverifiedMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "dockerfile-curl-pipe-unverified",
+      ruleSlug: "dockerfile-curl-pipe-unverified",
       lineNumbers: hitLines,
       snippet: snippets[0],
       matchedPattern: "curl|wget | sh/tar with no checksum check",

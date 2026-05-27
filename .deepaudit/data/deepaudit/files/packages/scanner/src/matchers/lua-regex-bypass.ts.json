@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "test-header-bypass",
+      "ruleSlug": "test-header-bypass",
       "lineNumbers": [
         6
       ],
@@ -19,26 +19,26 @@
       "matchedPattern": "x-bypass header — may bypass security in production"
     },
     {
-      "vulnSlug": "test-header-bypass",
+      "ruleSlug": "test-header-bypass",
       "lineNumbers": [
         30
       ],
-      "snippet": "        const end = Math.min(lines.length, i + 3);\n        matches.push({\n          vulnSlug: \"lua-regex-bypass\",\n          lineNumbers: [i + 1],\n          snippet: lines.slice(start, end).join(\"\\n\"),",
+      "snippet": "        const end = Math.min(lines.length, i + 3);\n        matches.push({\n          ruleSlug: \"lua-regex-bypass\",\n          lineNumbers: [i + 1],\n          snippet: lines.slice(start, end).join(\"\\n\"),",
       "matchedPattern": "x-bypass header — may bypass security in production"
     },
     {
-      "vulnSlug": "test-header-bypass",
+      "ruleSlug": "test-header-bypass",
       "lineNumbers": [
         38
       ],
-      "snippet": "        const end = Math.min(lines.length, i + 3);\n        matches.push({\n          vulnSlug: \"lua-regex-bypass\",\n          lineNumbers: [i + 1],\n          snippet: lines.slice(start, end).join(\"\\n\"),",
+      "snippet": "        const end = Math.min(lines.length, i + 3);\n        matches.push({\n          ruleSlug: \"lua-regex-bypass\",\n          lineNumbers: [i + 1],\n          snippet: lines.slice(start, end).join(\"\\n\"),",
       "matchedPattern": "x-bypass header — may bypass security in production"
     }
   ],
   "lastScannedAt": "2026-05-06T21:46:56.746Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "3d493cd1b8164577cf97ae672108aaf1ac400be5dc45bc09a8c434026457f3da",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -51,7 +51,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "6e1bc416-d19e-4cf0-9899-296107ff9cc4",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.4026835,
       "usage": {
@@ -76,7 +76,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8baa-7842-b44c-83cebf446c82",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.04750175,

@@ -170,7 +170,7 @@ h = hashlib.sha256(b"abc")`,
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "crypto-usage",
+      ruleSlug: "crypto-usage",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: Array.from(labels).slice(0, 5).join(", "),

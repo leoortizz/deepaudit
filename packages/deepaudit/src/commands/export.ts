@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { FileRecord, Finding, Severity } from "@deepaudit/core";
+import type { FileRecord, Severity, Violation } from "@deepaudit/core";
 import { dataDir, getDataRoot, loadAllFileRecords } from "@deepaudit/core";
 import { BOLD, DIM, GREEN, RESET, YELLOW } from "../formatters.js";
 import { resolveAgentType } from "../resolve-agent-type.js";
@@ -9,10 +9,8 @@ import { resolveAgentType } from "../resolve-agent-type.js";
 const SEVERITY_ORDER: Record<Severity, number> = {
   CRITICAL: 0,
   HIGH: 1,
-  HIGH_BUG: 2,
-  MEDIUM: 3,
-  BUG: 4,
-  LOW: 5,
+  MEDIUM: 2,
+  NIT: 3,
 };
 
 interface OwnerSummary {
@@ -25,7 +23,7 @@ interface OwnerSummary {
   recentCommitters: { name: string; email: string; date: string }[];
 }
 
-interface ExportedFinding {
+interface ExportedViolation {
   title: string;
   description: string;
   severity: Severity;
@@ -37,7 +35,7 @@ interface ExportedFinding {
     filePath: string;
     lineNumbers: number[];
     severity: Severity;
-    vulnSlug: string;
+    ruleSlug: string;
     confidence: string;
     discoveredAt: string;
     runId: string;
@@ -119,20 +117,20 @@ function makeGithubLink(
 }
 
 function buildDescription(
-  finding: Finding,
+  violation: Violation,
   record: FileRecord,
   projectId: string,
   owners: OwnerSummary,
   githubUrl?: string,
 ): string {
   const head = githubUrl
-    ? `**File:** [\`${record.filePath}\`](${githubUrl}) (lines ${finding.lineNumbers.join(", ")})`
-    : `**File:** \`${record.filePath}\` (lines ${finding.lineNumbers.join(", ")})`;
+    ? `**File:** [\`${record.filePath}\`](${githubUrl}) (lines ${violation.lineNumbers.join(", ")})`
+    : `**File:** \`${record.filePath}\` (lines ${violation.lineNumbers.join(", ")})`;
 
   const parts: string[] = [
     head,
     `**Project:** ${projectId}`,
-    `**Severity:** ${finding.severity}  •  **Confidence:** ${finding.confidence}  •  **Slug:** \`${finding.vulnSlug}\``,
+    `**Severity:** ${violation.severity}  •  **Confidence:** ${violation.confidence}  •  **Slug:** \`${violation.ruleSlug}\``,
   ];
 
   if (owners.assignee || owners.teams.length > 0 || owners.oncall.length > 0) {
@@ -169,23 +167,23 @@ function buildDescription(
 
   parts.push(
     "",
-    "## Finding",
+    "## Violation",
     "",
-    finding.description,
+    violation.description,
     "",
     "## Recommendation",
     "",
-    finding.recommendation,
+    violation.recommendation,
   );
 
-  if (finding.revalidation) {
+  if (violation.revalidation) {
     parts.push(
       "",
       "## Revalidation",
       "",
-      `**Verdict:** ${finding.revalidation.verdict}`,
+      `**Verdict:** ${violation.revalidation.verdict}`,
       "",
-      finding.revalidation.reasoning,
+      violation.revalidation.reasoning,
     );
   }
 
@@ -230,45 +228,47 @@ function listProjectIds(): string[] {
     .filter((p) => fs.existsSync(path.join(dataDirPath, p, "project.json")));
 }
 
-/** Stable, filesystem-safe filename for a finding in md-dir mode. */
-function findingFilename(f: ExportedFinding): string {
+/** Stable, filesystem-safe filename for a violation in md-dir mode. */
+function violationFilename(f: ExportedViolation): string {
   const hash = crypto
     .createHash("sha1")
     .update(
-      `${f.metadata.projectId}\0${f.metadata.filePath}\0${f.metadata.lineNumbers.join(",")}\0${f.metadata.vulnSlug}`,
+      `${f.metadata.projectId}\0${f.metadata.filePath}\0${f.metadata.lineNumbers.join(",")}\0${f.metadata.ruleSlug}`,
     )
     .digest("hex")
     .slice(0, 10);
-  const safeSlug = f.metadata.vulnSlug.replace(/[^a-zA-Z0-9-]/g, "-");
+  const safeSlug = f.metadata.ruleSlug.replace(/[^a-zA-Z0-9-]/g, "-");
   const safeProject = f.metadata.projectId.replace(/[^a-zA-Z0-9-]/g, "-");
   return `${safeProject}-${safeSlug}-${hash}.md`;
 }
 
-function writeJson(findings: ExportedFinding[], out: string | undefined) {
-  const json = JSON.stringify(findings, null, 2);
+function writeJson(violations: ExportedViolation[], out: string | undefined) {
+  const json = JSON.stringify(violations, null, 2);
   if (out) {
     fs.mkdirSync(path.dirname(path.resolve(out)), { recursive: true });
     fs.writeFileSync(out, json + "\n");
-    console.log(`\n${GREEN}Exported ${findings.length} finding(s)${RESET} → ${BOLD}${out}${RESET}`);
+    console.log(
+      `\n${GREEN}Exported ${violations.length} violation(s)${RESET} → ${BOLD}${out}${RESET}`,
+    );
   } else {
     process.stdout.write(json + "\n");
   }
 }
 
-function writeMdDir(findings: ExportedFinding[], out: string) {
+function writeMdDir(violations: ExportedViolation[], out: string) {
   const root = path.resolve(out);
   fs.mkdirSync(root, { recursive: true });
 
   // The set of files this export is authoritative for. Anything else in
   // the severity subdirs is left over from a prior run — most often a
-  // finding that has since been revalidated as fixed/false-positive/
+  // violation that has since been revalidated as fixed/false-positive/
   // accepted-risk and is now filtered out of the export. Without this
   // sweep, those orphans linger forever and make the export directory
-  // misleading (the user thinks they still have unresolved findings on a
+  // misleading (the user thinks they still have unresolved violations on a
   // file we've already patched).
   const wantedFiles = new Set<string>();
-  for (const f of findings) {
-    wantedFiles.add(path.join(root, f.metadata.severity, findingFilename(f)));
+  for (const f of violations) {
+    wantedFiles.add(path.join(root, f.metadata.severity, violationFilename(f)));
   }
 
   // Only sweep severity subdirs we recognize — keeps an accidental
@@ -288,24 +288,24 @@ function writeMdDir(findings: ExportedFinding[], out: string) {
         droppedStale++;
       }
     }
-    // Drop now-empty severity dirs so a 0-finding export leaves a clean
+    // Drop now-empty severity dirs so a 0-violation export leaves a clean
     // root rather than a forest of empty directories.
     try {
       if (fs.readdirSync(dir).length === 0) fs.rmdirSync(dir);
     } catch {}
   }
 
-  for (const f of findings) {
+  for (const f of violations) {
     const dir = path.join(root, f.metadata.severity);
     fs.mkdirSync(dir, { recursive: true });
-    const file = path.join(dir, findingFilename(f));
+    const file = path.join(dir, violationFilename(f));
     const body = `# ${f.title}\n\n${f.description}\n`;
     fs.writeFileSync(file, body);
   }
 
   const staleNote = droppedStale > 0 ? ` (removed ${droppedStale} stale file(s))` : "";
   console.log(
-    `\n${GREEN}Exported ${findings.length} finding(s)${RESET} → ${BOLD}${root}/${RESET}${staleNote}`,
+    `\n${GREEN}Exported ${violations.length} violation(s)${RESET} → ${BOLD}${root}/${RESET}${staleNote}`,
   );
 }
 
@@ -327,11 +327,11 @@ export async function exportCommand(opts: {
   skipSlugs?: string;
   out?: string;
   format?: string;
-  /** Drop findings without any ownership data (no assignee, no teams) */
+  /** Drop violations without any ownership data (no assignee, no teams) */
   requireOwner?: boolean;
-  /** Only include findings produced by this agent backend (e.g. `codex`) */
+  /** Only include violations produced by this agent backend (e.g. `codex`) */
   onlyAgent?: string;
-  /** Only include findings produced under this --reinvestigate wave marker */
+  /** Only include violations produced under this --reinvestigate wave marker */
   onlyMarker?: string;
 }) {
   const projectIds = opts.projectId
@@ -377,7 +377,7 @@ export async function exportCommand(opts: {
   const onlySlugSet = onlySlugs?.length ? new Set(onlySlugs) : undefined;
   const skipSlugSet = skipSlugs?.length ? new Set(skipSlugs) : undefined;
 
-  console.log(`${BOLD}Exporting findings (${format})${RESET}`);
+  console.log(`${BOLD}Exporting violations (${format})${RESET}`);
   console.log(`  Projects: ${projectIds.join(", ") || "(none)"}`);
   if (minSeverity) console.log(`  Min severity: ${minSeverity}`);
   if (onlySeverity) console.log(`  Only severity: ${onlySeverity}`);
@@ -397,7 +397,7 @@ export async function exportCommand(opts: {
   if (onlySlugs) console.log(`  Only slugs: ${onlySlugs.join(", ")}`);
   if (skipSlugs) console.log(`  Skip slugs: ${skipSlugs.join(", ")}`);
   if (opts.requireOwner)
-    console.log(`  ${YELLOW}Filter: only findings with ownership data${RESET}`);
+    console.log(`  ${YELLOW}Filter: only violations with ownership data${RESET}`);
   const onlyMarker = opts.onlyMarker !== undefined ? Number(opts.onlyMarker) : undefined;
   if (onlyMarker !== undefined && !Number.isFinite(onlyMarker)) {
     throw new Error(`--only-marker must be a number, got "${opts.onlyMarker}"`);
@@ -406,7 +406,7 @@ export async function exportCommand(opts: {
   if (opts.onlyAgent) console.log(`  Only agent: ${opts.onlyAgent}`);
   if (onlyMarker !== undefined) console.log(`  Only marker: ${onlyMarker}`);
 
-  const findings: ExportedFinding[] = [];
+  const violations: ExportedViolation[] = [];
   let droppedNoOwner = 0;
   let withAssignee = 0;
   let withTeam = 0;
@@ -430,27 +430,28 @@ export async function exportCommand(opts: {
 
       if (sinceMs !== undefined && !inDay(latest.investigatedAt, sinceMs, untilMs)) continue;
 
-      // Build a map: finding-index → analysisHistory entry that produced it.
-      // Findings are appended in analysisHistory order, so the i-th finding
-      // belongs to whichever entry's findingCount range covers i.
-      const findingSource: Array<(typeof record.analysisHistory)[number] | undefined> = [];
+      // Build a map: violation-index → analysisHistory entry that produced it.
+      // Violations are appended in analysisHistory order, so the i-th violation
+      // belongs to whichever entry's violationCount range covers i.
+      const violationSource: Array<(typeof record.analysisHistory)[number] | undefined> = [];
       let cursor = 0;
       for (const h of record.analysisHistory ?? []) {
-        const fc = h.findingCount ?? 0;
-        for (let k = 0; k < fc; k++) findingSource[cursor++] = h;
+        const fc = h.violationCount ?? 0;
+        for (let k = 0; k < fc; k++) violationSource[cursor++] = h;
       }
 
-      let findingIndex = -1;
-      for (const finding of record.findings ?? []) {
-        findingIndex++;
-        if (minSeverity && SEVERITY_ORDER[finding.severity] > SEVERITY_ORDER[minSeverity]) continue;
-        if (onlySeverity && finding.severity !== onlySeverity) continue;
-        if (onlySlugSet && !onlySlugSet.has(finding.vulnSlug)) continue;
-        if (skipSlugSet?.has(finding.vulnSlug)) continue;
-        if (opts.onlyTruePositive && finding.revalidation?.verdict !== "true-positive") continue;
+      let violationIndex = -1;
+      for (const violation of record.violations ?? []) {
+        violationIndex++;
+        if (minSeverity && SEVERITY_ORDER[violation.severity] > SEVERITY_ORDER[minSeverity])
+          continue;
+        if (onlySeverity && violation.severity !== onlySeverity) continue;
+        if (onlySlugSet && !onlySlugSet.has(violation.ruleSlug)) continue;
+        if (skipSlugSet?.has(violation.ruleSlug)) continue;
+        if (opts.onlyTruePositive && violation.revalidation?.verdict !== "true-positive") continue;
         // Default behavior: hide every "resolved" verdict. fixed = patched,
         // false-positive = not real, accepted-risk = real but consciously
-        // accepted, duplicate = same issue as another finding in the file
+        // accepted, duplicate = same issue as another violation in the file
         // (the primary carries the canonical signal). None of these are
         // work the export consumer should action. Pass --include-resolved
         // to surface them anyway (audit / history use cases). The legacy
@@ -458,19 +459,19 @@ export async function exportCommand(opts: {
         // existing scripts don't break.
         if (
           !opts.includeResolved &&
-          (finding.revalidation?.verdict === "fixed" ||
-            finding.revalidation?.verdict === "false-positive" ||
-            finding.revalidation?.verdict === "accepted-risk" ||
-            finding.revalidation?.verdict === "duplicate")
+          (violation.revalidation?.verdict === "fixed" ||
+            violation.revalidation?.verdict === "false-positive" ||
+            violation.revalidation?.verdict === "accepted-risk" ||
+            violation.revalidation?.verdict === "duplicate")
         ) {
           continue;
         }
 
-        const source = findingSource[findingIndex];
+        const source = violationSource[violationIndex];
         if (onlyAgent && source?.agentType !== onlyAgent) continue;
         if (onlyMarker !== undefined && source?.reinvestigateMarker !== onlyMarker) continue;
 
-        const githubUrl = makeGithubLink(repoUrl, record.filePath, finding.lineNumbers);
+        const githubUrl = makeGithubLink(repoUrl, record.filePath, violation.lineNumbers);
         const owners = summarizeOwners(record);
 
         const hasOwner = !!owners.assignee || owners.teams.length > 0 || owners.oncall.length > 0;
@@ -482,35 +483,38 @@ export async function exportCommand(opts: {
         const labels = [
           "security",
           `project:${projectId}`,
-          `severity:${finding.severity}`,
-          `slug:${finding.vulnSlug}`,
-          `confidence:${finding.confidence}`,
+          `severity:${violation.severity}`,
+          `slug:${violation.ruleSlug}`,
+          `confidence:${violation.confidence}`,
         ];
-        if (finding.revalidation?.verdict)
-          labels.push(`revalidation:${finding.revalidation.verdict}`);
+        if (violation.revalidation?.verdict)
+          labels.push(`revalidation:${violation.revalidation.verdict}`);
         for (const t of owners.teams.slice(0, 3)) labels.push(`owning-team:${t.slug}`);
         if (!hasOwner) labels.push("missing-owner");
 
         if (owners.assignee) withAssignee++;
         if (owners.teams.length > 0) withTeam++;
 
-        findings.push({
-          title: `[${finding.severity}] ${finding.title}`,
-          description: buildDescription(finding, record, projectId, owners, githubUrl),
-          severity: finding.severity,
+        violations.push({
+          title: `[${violation.severity}] ${violation.title}`,
+          description: buildDescription(violation, record, projectId, owners, githubUrl),
+          severity: violation.severity,
           labels,
           assignee: owners.assignee,
           metadata: {
             projectId,
             filePath: record.filePath,
-            lineNumbers: finding.lineNumbers,
-            severity: finding.severity,
-            vulnSlug: finding.vulnSlug,
-            confidence: finding.confidence,
+            lineNumbers: violation.lineNumbers,
+            severity: violation.severity,
+            ruleSlug: violation.ruleSlug,
+            confidence: violation.confidence,
             discoveredAt: latest.investigatedAt,
             runId: latest.runId,
-            revalidation: finding.revalidation
-              ? { verdict: finding.revalidation.verdict, reasoning: finding.revalidation.reasoning }
+            revalidation: violation.revalidation
+              ? {
+                  verdict: violation.revalidation.verdict,
+                  reasoning: violation.revalidation.reasoning,
+                }
               : undefined,
             githubUrl,
             owners,
@@ -519,11 +523,11 @@ export async function exportCommand(opts: {
         emitted++;
       }
     }
-    console.log(`  [${projectId}] ${emitted} finding(s)`);
+    console.log(`  [${projectId}] ${emitted} violation(s)`);
   }
 
   // Sort: severity ascending (CRITICAL first), then project, then file
-  findings.sort((a, b) => {
+  violations.sort((a, b) => {
     const sa = SEVERITY_ORDER[a.metadata.severity];
     const sb = SEVERITY_ORDER[b.metadata.severity];
     if (sa !== sb) return sa - sb;
@@ -533,17 +537,17 @@ export async function exportCommand(opts: {
   });
 
   if (format === "md-dir") {
-    writeMdDir(findings, opts.out!);
+    writeMdDir(violations, opts.out!);
   } else {
-    writeJson(findings, opts.out);
+    writeJson(violations, opts.out);
   }
 
-  if (findings.length > 0) {
-    const pct = (n: number) => `${((n / findings.length) * 100).toFixed(0)}%`;
+  if (violations.length > 0) {
+    const pct = (n: number) => `${((n / violations.length) * 100).toFixed(0)}%`;
     console.log();
     console.log(`${BOLD}Ownership coverage:${RESET}`);
-    console.log(`  with assignee:    ${withAssignee}/${findings.length} (${pct(withAssignee)})`);
-    console.log(`  with owning team: ${withTeam}/${findings.length} (${pct(withTeam)})`);
+    console.log(`  with assignee:    ${withAssignee}/${violations.length} (${pct(withAssignee)})`);
+    console.log(`  with owning team: ${withTeam}/${violations.length} (${pct(withTeam)})`);
     if (droppedNoOwner > 0) {
       console.log(`  ${YELLOW}dropped (--require-owner): ${droppedNoOwner}${RESET}`);
     }

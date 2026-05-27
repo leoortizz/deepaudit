@@ -59,7 +59,7 @@ export const cacheKeyScopeMatcher: MatcherPlugin = {
             const start = Math.max(0, i - 2);
             const end = Math.min(lines.length, i + 3);
             matches.push({
-              vulnSlug: "cache-key-scope",
+              ruleSlug: "cache-key-scope",
               lineNumbers: [i + 1],
               snippet: lines.slice(start, end).join("\n"),
               matchedPattern: `${label} — no user/team scoping visible in key construction`,

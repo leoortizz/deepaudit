@@ -78,7 +78,7 @@ export const tfSecretInDataMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "tf-secret-in-data",
+      ruleSlug: "tf-secret-in-data",
       lineNumbers: hitLines,
       snippet: snippets[0],
       matchedPattern: "kubernetes_secret.data with literal value",

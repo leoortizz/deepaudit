@@ -24,7 +24,7 @@ Currently configured project: `deepaudit` (target: `..`).
 pnpm deepaudit scan
 pnpm deepaudit process     --concurrency 5
 pnpm deepaudit revalidate  --concurrency 5                  # cuts FP rate
-pnpm deepaudit export      --format md-dir --out ./findings
+pnpm deepaudit export      --format md-dir --out ./violations
 ```
 
 `--project-id` is auto-resolved while there's only one project in
@@ -64,7 +64,7 @@ AGENTS.md                Pointer for coding agents
 
 ## Accepted risks
 
-Findings deepaudit flagged on its own source code that the team has reviewed
+Violations deepaudit flagged on its own source code that the team has reviewed
 and consciously chosen to live with. Each is marked
 `revalidation.verdict: "accepted-risk"` in the relevant
 `data/deepaudit/files/*.json` so it's filtered out of PR comments and default

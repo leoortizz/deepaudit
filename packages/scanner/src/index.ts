@@ -93,7 +93,7 @@ function buildMergedRegistry(): MatcherRegistry {
   return registry;
 }
 
-/** Returns the noise tier for a given vulnSlug. Defaults to "normal". */
+/** Returns the noise tier for a given ruleSlug. Defaults to "normal". */
 export function getNoiseTier(slug: string): import("./types.js").NoiseTier {
   const registry = buildMergedRegistry();
   return registry.getBySlug(slug)?.noiseTier ?? "normal";
@@ -315,7 +315,7 @@ export class RegexScannerDriver implements ScannerDriver {
             lastScannedAt: "",
             lastScannedRunId: "",
             fileHash: "",
-            findings: [],
+            violations: [],
             analysisHistory: [],
             status: "pending",
           };
@@ -326,7 +326,7 @@ export class RegexScannerDriver implements ScannerDriver {
         for (const m of matches) {
           const exists = record.candidates.some(
             (c) =>
-              c.vulnSlug === m.vulnSlug &&
+              c.ruleSlug === m.ruleSlug &&
               c.matchedPattern === m.matchedPattern &&
               c.lineNumbers.join(",") === m.lineNumbers.join(","),
           );
@@ -716,7 +716,7 @@ export async function scanFiles(params: {
         lastScannedAt: "",
         lastScannedRunId: "",
         fileHash: "",
-        findings: [],
+        violations: [],
         analysisHistory: [],
         status: "pending" as const,
       } satisfies FileRecord);
@@ -731,7 +731,7 @@ export async function scanFiles(params: {
         for (const m of matches) {
           const exists = record.candidates.some(
             (c) =>
-              c.vulnSlug === m.vulnSlug &&
+              c.ruleSlug === m.ruleSlug &&
               c.matchedPattern === m.matchedPattern &&
               c.lineNumbers.join(",") === m.lineNumbers.join(","),
           );

@@ -33,7 +33,7 @@ npx deepaudit init
 cd .deepaudit && pnpm install
 # Let your agent fill INFO.md, then scan.
 
-# Later, when a true-positive finding suggests a matcher worth keeping,
+# Later, when a true-positive violation suggests a matcher worth keeping,
 # look at this sample's matchers/*.ts for the shape, and read
 # docs/writing-matchers.md for the workflow that grows it.
 ```

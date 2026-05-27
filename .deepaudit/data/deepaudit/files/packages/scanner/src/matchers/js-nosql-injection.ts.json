@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         11
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         21
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "unsafe-deserialization",
+      "ruleSlug": "unsafe-deserialization",
       "lineNumbers": [
         10,
         28,
@@ -30,7 +30,7 @@
       "matchedPattern": "JSON.parse of request input (verify schema validation)"
     },
     {
-      "vulnSlug": "missing-await",
+      "ruleSlug": "missing-await",
       "lineNumbers": [
         26
       ],
@@ -38,7 +38,7 @@
       "matchedPattern": "db call without await"
     },
     {
-      "vulnSlug": "js-nosql-injection",
+      "ruleSlug": "js-nosql-injection",
       "lineNumbers": [
         25,
         27,
@@ -48,7 +48,7 @@
       "matchedPattern": "MongoDB $where with concatenation/function/template — server-side JS execution, injection"
     },
     {
-      "vulnSlug": "js-nosql-injection",
+      "ruleSlug": "js-nosql-injection",
       "lineNumbers": [
         28,
         50
@@ -57,7 +57,7 @@
       "matchedPattern": "find(JSON.parse(req.*)) — operator injection via raw user JSON"
     },
     {
-      "vulnSlug": "js-nosql-injection",
+      "ruleSlug": "js-nosql-injection",
       "lineNumbers": [
         29
       ],
@@ -65,7 +65,7 @@
       "matchedPattern": "MongoDB aggregate() pipeline using $where — server-side JS execution"
     },
     {
-      "vulnSlug": "js-nosql-injection",
+      "ruleSlug": "js-nosql-injection",
       "lineNumbers": [
         13,
         30,
@@ -75,7 +75,7 @@
       "matchedPattern": "new RegExp from req.* — ReDoS and NoSQL query-shape injection"
     },
     {
-      "vulnSlug": "js-nosql-injection",
+      "ruleSlug": "js-nosql-injection",
       "lineNumbers": [
         31,
         32
@@ -87,7 +87,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.872Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "02f4d19dcaf542ff9e6cf01c86ef9cd9090b7ff82ac285d40f36bb3511ce4d20",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260506214907-70fbf7924106c870",
@@ -99,7 +99,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff44-344f-79d3-a7fc-1066aa444326",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.0534315,
@@ -125,7 +125,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7931-b009-43059171fba6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05549425,

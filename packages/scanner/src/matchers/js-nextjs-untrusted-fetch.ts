@@ -62,7 +62,7 @@ export const frameworkUntrustedFetchMatcher: MatcherPlugin = {
 
     if (hitLines.length === 0) return [];
     const match: CandidateMatch = {
-      vulnSlug: "framework-untrusted-fetch",
+      ruleSlug: "framework-untrusted-fetch",
       lineNumbers: hitLines,
       snippet: firstContext ?? "",
       matchedPattern: "fetch in framework code with URL from req/headers/query/body",

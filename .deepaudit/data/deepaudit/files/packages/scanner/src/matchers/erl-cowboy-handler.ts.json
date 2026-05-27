@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -14,7 +14,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.490Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "e549c7613fdf75b1588a5b5d9a8a0a5144bf163abe074fdb045ab8f8b7fff9e1",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [],
   "status": "processing",
   "lockedByRunId": "20260506215246-7f870d2495961b4e",

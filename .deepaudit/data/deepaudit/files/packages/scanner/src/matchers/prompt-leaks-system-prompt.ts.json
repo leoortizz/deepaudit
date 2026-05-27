@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         41
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         22
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         55
       ],
@@ -27,7 +27,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "env-var-as-bool",
+      "ruleSlug": "env-var-as-bool",
       "lineNumbers": [
         33,
         34,
@@ -38,7 +38,7 @@
       "matchedPattern": "Secret env var used as boolean"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         33
       ],
@@ -46,7 +46,7 @@
       "matchedPattern": "process.env.OPENAI_API_KEY"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         34
       ],
@@ -54,7 +54,7 @@
       "matchedPattern": "process.env.GITHUB_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         35
       ],
@@ -62,7 +62,7 @@
       "matchedPattern": "process.env.SLACK_SIGNING_SECRET"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         36
       ],
@@ -70,7 +70,7 @@
       "matchedPattern": "process.env.AUTH_TOKEN"
     },
     {
-      "vulnSlug": "process-env-access",
+      "ruleSlug": "process-env-access",
       "lineNumbers": [
         37
       ],
@@ -78,7 +78,7 @@
       "matchedPattern": "process.env.DB_PASSWORD"
     },
     {
-      "vulnSlug": "prompt-leaks-system-prompt",
+      "ruleSlug": "prompt-leaks-system-prompt",
       "lineNumbers": [
         33
       ],
@@ -86,7 +86,7 @@
       "matchedPattern": "system prompt references process.env.OPENAI_API_KEY"
     },
     {
-      "vulnSlug": "prompt-leaks-system-prompt",
+      "ruleSlug": "prompt-leaks-system-prompt",
       "lineNumbers": [
         35
       ],
@@ -97,7 +97,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.832Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "5175053a27c8b14bb6aec74e23855485e583ac10c6da94f4a30c5ca6264f8fc9",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -110,7 +110,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "d517afb6-ca17-4bda-83aa-911304bf5d54",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.248668,
       "usage": {
@@ -135,7 +135,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b3e-7863-93e9-93441614ba27",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0592852,

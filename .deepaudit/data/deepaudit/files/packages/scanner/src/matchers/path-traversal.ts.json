@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         7
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         10,
         11
@@ -20,7 +20,7 @@
       "matchedPattern": "readFile with request-derived path"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         12
       ],
@@ -28,7 +28,7 @@
       "matchedPattern": "readFile with request-derived interpolation"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         13
       ],
@@ -36,7 +36,7 @@
       "matchedPattern": "writeFile with request-derived path"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         14
       ],
@@ -44,7 +44,7 @@
       "matchedPattern": "writeFile with request-derived interpolation"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         15
       ],
@@ -52,7 +52,7 @@
       "matchedPattern": "path.join with request-derived input"
     },
     {
-      "vulnSlug": "path-traversal",
+      "ruleSlug": "path-traversal",
       "lineNumbers": [
         16
       ],
@@ -63,7 +63,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.482Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "b25489f8084800da89e853bd7e98724b13ee34205c4dbfeceb03609d580d8417",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -76,7 +76,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "2d2b9aec-6d9c-4fcc-8a55-45e23407d214",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.2008875,
       "usage": {
@@ -101,7 +101,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8b8b-7982-9789-c528bf7d360a",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.25,
       "phase": "process",
       "costUsd": 0.05994175,

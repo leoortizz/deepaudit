@@ -57,7 +57,7 @@ export async function GET(req) {
             const start = Math.max(0, i - 1);
             const end = Math.min(lines.length, i + 3);
             matches.push({
-              vulnSlug: "cron-secret-check",
+              ruleSlug: "cron-secret-check",
               lineNumbers: [i + 1],
               snippet: lines.slice(start, end).join("\n"),
               matchedPattern: "Cron route handler without CRON_SECRET validation",
@@ -72,7 +72,7 @@ export async function GET(req) {
             const start = Math.max(0, i - 2);
             const end = Math.min(lines.length, i + 3);
             matches.push({
-              vulnSlug: "cron-secret-check",
+              ruleSlug: "cron-secret-check",
               lineNumbers: [i + 1],
               snippet: lines.slice(start, end).join("\n"),
               matchedPattern: "CRON_SECRET check (verify not bypassable when env var unset)",

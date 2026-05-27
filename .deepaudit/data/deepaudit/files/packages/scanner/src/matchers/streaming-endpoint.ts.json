@@ -3,7 +3,7 @@
   "projectId": "deepaudit",
   "candidates": [
     {
-      "vulnSlug": "auth-bypass",
+      "ruleSlug": "auth-bypass",
       "lineNumbers": [
         5
       ],
@@ -11,7 +11,7 @@
       "matchedPattern": "auth skip/bypass"
     },
     {
-      "vulnSlug": "insecure-crypto",
+      "ruleSlug": "insecure-crypto",
       "lineNumbers": [
         12
       ],
@@ -19,7 +19,7 @@
       "matchedPattern": "weak cipher algorithm"
     },
     {
-      "vulnSlug": "missing-auth",
+      "ruleSlug": "missing-auth",
       "lineNumbers": [
         28
       ],
@@ -30,7 +30,7 @@
   "lastScannedAt": "2026-05-06T21:46:56.477Z",
   "lastScannedRunId": "20260506214655-aa977d40dc0c6524",
   "fileHash": "aa41cace17edf127b294172100cdd99086291104b308e08f9848504ec0c9b2f6",
-  "findings": [],
+  "violations": [],
   "analysisHistory": [
     {
       "runId": "20260502160808-9bbd",
@@ -43,7 +43,7 @@
         "model": "claude-opus-4-7"
       },
       "agentSessionId": "d517afb6-ca17-4bda-83aa-911304bf5d54",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 6,
       "costUsd": 0.248668,
       "usage": {
@@ -68,7 +68,7 @@
         "model": "gpt-5.5"
       },
       "agentSessionId": "019dff47-8bb4-7181-ad37-d57fc7b77fb6",
-      "findingCount": 0,
+      "violationCount": 0,
       "numTurns": 0.2,
       "phase": "process",
       "costUsd": 0.0572824,

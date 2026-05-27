@@ -34,7 +34,7 @@ export const webappRouteNoRateLimit: MatcherPlugin = {
       const start = Math.max(0, i - 1);
       const end = Math.min(lines.length, i + 6);
       matches.push({
-        vulnSlug: "webapp-route-no-rate-limit",
+        ruleSlug: "webapp-route-no-rate-limit",
         lineNumbers: [i + 1],
         snippet: lines.slice(start, end).join("\n"),
         matchedPattern: "exported handler with no rate-limit wrapper in file",
