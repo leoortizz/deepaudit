@@ -216,7 +216,7 @@ jobs:
 - **The AI gateway secret still flows through PR code.** Even with
   the job split, `analyze` has the secret in env while running
   PR-controlled `pnpm install`. The `author_association` gate is
-  what prevents that from being a vulnerability. If you want
+  what prevents that from being a violation. If you want
   defense-in-depth, run `analyze` only after a label is applied
   (e.g. `if: contains(github.event.pull_request.labels.*.name, 'review-ok')`).
 

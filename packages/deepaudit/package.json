@@ -1,7 +1,7 @@
 {
   "name": "deepaudit",
   "version": "2.0.10",
-  "description": "AI-powered vulnerability scanner for any codebase",
+  "description": "AI-powered code auditor for any codebase",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

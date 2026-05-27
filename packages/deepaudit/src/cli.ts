@@ -26,7 +26,7 @@ const program = new Command();
 
 program
   .name("deepaudit")
-  .description("AI-powered vulnerability scanner for any codebase")
+  .description("AI-powered code auditor for any codebase")
   .version(getDeepauditVersion())
   .addHelpText(
     "after",
@@ -96,7 +96,7 @@ Examples:
 
 program
   .command("scan")
-  .description("Run regex matchers across a project to find candidate vulnerability sites")
+  .description("Run regex matchers across a project to find candidate violation sites")
   .option(
     "--project-id <id>",
     "Project identifier (default: the only project in deepaudit.config.ts; required if there are multiple)",

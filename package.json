@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI-powered vulnerability scanner for any codebase",
+  "description": "AI-powered code auditor for any codebase",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=22"

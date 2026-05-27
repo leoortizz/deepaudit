@@ -178,7 +178,7 @@ process stage carries. A few starter matchers for the new language are
 worth writing; they front-load file selection so the AI gets the most
 promising sites first.
 
-## What if I find a vulnerability in deepaudit itself?
+## What if I find a violation in deepaudit itself?
 
 See [SECURITY.md](../SECURITY.md). Don't open a public issue — use
 GitHub Security Advisories instead.

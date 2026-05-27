@@ -1,9 +1,10 @@
 # deepaudit
 
-`deepaudit` an agent-powered vulnerability scanner that you can run in your own infrastructure, optimized to perform on-demand review of all code in existing 
-large-scale repos.
+`deepaudit` is an agent-powered code auditor that you can run in your own infrastructure, optimized to perform on-demand review of all code in existing large-scale repos against the project's own conventions plus a configurable rule pack.
 
-`deepaudit` is designed to surface hard-to-find issues that have been lurking in applications for a long time. It is configured to use the best models at maximum thinking levels, meaning scans can cost thousands or even tens-of-thousands of dollars for large codebases. Our customers have found the cost worth it for how quickly they were able to patch vulnerabilities that would have otherwise gone unfixed.
+`deepaudit` is designed to surface conformance issues that have been lurking in applications for a long time — places where the code drifted from the team's stated rules, or accumulated patterns the team agreed to avoid. It is configured to use the best models at maximum thinking levels, meaning audits can cost thousands or even tens-of-thousands of dollars for large codebases. Teams who care about consistency at scale have found the cost worth it for how cleanly they were able to align long-lived code with current conventions.
+
+This project began as a fork of [deepsec](https://github.com/vercel-labs/deepsec), an AI-powered security scanner. The pipeline (file-grained, idempotent, parallelized across Vercel Sandbox microVMs) is unchanged; the rule set, prompts, and severity taxonomy were rebuilt for conformance auditing.
 
 For large codebases, work fans out across worker machines in parallel.
 If a run is interrupted or errors out partway through, just re-run the same
@@ -12,12 +13,12 @@ analyzed and only investigating the rest.
 
 ## Get started
 
-Navigate to the root of the repository that you want to scan, then:
+Navigate to the root of the repository that you want to audit, then:
 
 ```bash
 npx deepaudit init       # creates .deepaudit/ with this repo as the first project
 cd .deepaudit
-pnpm install           # installs deepaudit from npm
+pnpm install             # installs deepaudit from npm
 
 # Proceed as instructed by `init` output
 ```
@@ -26,34 +27,36 @@ Now have your coding agent bootstrap your installation. Open the agent of choice
 and prompt:
 
 > Read `.deepaudit/node_modules/deepaudit/SKILL.md` to understand the
-> tool. Then read `.deepaudit/data/<id>/SETUP.md` and follow it:
-> skim this repo's README, any AGENTS.md/CLAUDE.md, and a handful
-> of representative code files, then replace each section of
-> `.deepaudit/data/<id>/RULES.md`.
+> tool. Then read `.deepaudit/data/<id>/SETUP.md` and follow it: open
+> this repo, skim any existing CLAUDE.md / AGENTS.md / .cursor/rules,
+> plus the README and CONTRIBUTING.md, then populate each section of
+> `.deepaudit/data/<id>/RULES.md` with the project's actual
+> conventions.
 >
-> Keep it SHORT — target 50–100 lines total. Pick 3–5 examples per
-> section, not exhaustive enumeration. Name primitives (auth helpers,
-> middleware) but no line numbers. Skip generic CWE categories —
-> built-in matchers cover those. Cover only what's project-specific.
-> RULES.md is injected into every scan batch; verbose context dilutes
-> signal.
+> Keep it SHORT — target 50–100 lines total. Each entry should be an
+> imperative ("do X", "don't Y", "prefer X"). Skip descriptive prose
+> (repo layout, dev commands) — that isn't a rule. Cover only what's
+> project-specific; the default pack handles the basics. RULES.md is
+> injected into every audit batch; verbose context dilutes signal.
 
-Then scan from inside `.deepaudit/`:
+Then audit from inside `.deepaudit/`:
 
 ```bash
 pnpm deepaudit scan
-pnpm deepaudit process    
+pnpm deepaudit process
 pnpm deepaudit revalidate # optional, cuts FP rate
 pnpm deepaudit export --format md-dir --out ./violations
 ```
 
-If you feel like the `deepaudit` should look at more parts of the code, give it [the writing matchers](docs/writing-matchers.md) doc to find more valuable starting points in your code base.
+If you'd like deepaudit to look at more conformance dimensions, give your
+coding agent [the writing matchers](docs/writing-matchers.md) doc and ask
+it to grow the matcher set for patterns specific to your codebase.
 
 ## Docs
 
-- [docs/getting-started.md](docs/getting-started.md) — first-scan walkthrough
+- [docs/getting-started.md](docs/getting-started.md) — first-audit walkthrough
 - [docs/reviewing-changes.md](docs/reviewing-changes.md) — `process --diff` for PR review and CI gating
-- [docs/supported-tech.md](docs/supported-tech.md) — frameworks and ecosystems deepaudit recognizes out of the box
+- [docs/supported-tech.md](docs/supported-tech.md) — languages and frameworks deepaudit recognizes out of the box
 - [docs/writing-matchers.md](docs/writing-matchers.md) — **prompt your coding agent to grow your matcher set**
 - [docs/configuration.md](docs/configuration.md) — `deepaudit.config.ts` reference
 - [docs/plugins.md](docs/plugins.md) — plugin authoring
@@ -70,9 +73,9 @@ If you feel like the `deepaudit` should look at more parts of the code, give it 
 When running locally, `deepaudit` falls back to your existing `claude` /
 `codex` subscription if you've logged in on this machine. Subscriptions
 (Claude Pro/Max, ChatGPT Plus) are useful for evaluating deepaudit but
-generally don't have enough headroom for full repo scans.
+generally don't have enough headroom for full repo audits.
 
-For real scans, use Vercel AI Gateway. One key covers both Claude and
+For real audits, use Vercel AI Gateway. One key covers both Claude and
 Codex, and the gateway's default quotas are sized for highly concurrent
 research.
 
@@ -106,30 +109,32 @@ tokens (CI) are supported — see
 
 ## Security model of deepaudit itself
 
-Treat `deepaudit` like a coding agent with full shell access on the enviroment that it is
-running on. It is designed to run on trusted inputs (your source code) but you may still
-be concerned about prompt injection due to external dependencies or vendored code.
+Treat `deepaudit` like a coding agent with full shell access on the
+environment that it is running on. It is designed to run on trusted
+inputs (your source code) but you may still be concerned about prompt
+injection due to external dependencies or vendored code.
 
-Running on a sandbox (see above) does limit the potential exposure substantially:
+Running on a sandbox (see above) does limit the potential exposure
+substantially:
 
-- The API keys for the coding agents are injected outside of the sandbox and hence cannot be exfiltrated
-- For the worker sandboxes, network egress from the sandbox is limited to coding agent hosts (Egress is allowed during the bootstrap process, but this does not run the coding agent)
+- The API keys for the coding agents are injected outside of the sandbox and hence cannot be exfiltrated.
+- For the worker sandboxes, network egress from the sandbox is limited to coding agent hosts (egress is allowed during the bootstrap process, but this does not run the coding agent).
 
 ## Workflow reference
 
-| Command         | What it does                                             |
-|-----------------|----------------------------------------------------------|
-| `scan`          | Find candidate sites with regex matchers (fast, no AI)   |
-| `process`       | AI investigation; emits violations + recommendation        |
-| `process --diff`| PR-mode: scan + investigate only files changed in a diff |
-| `triage`        | Lightweight P0/P1/P2 classification (cheaper model)      |
-| `revalidate`    | Re-check existing violations; checks git history for fixes |
-| `enrich`        | Add git committer info + (with a plugin) ownership data  |
-| `report`        | Markdown + JSON summary for one project                  |
-| `export`        | Per-violation JSON or directory of markdown files          |
-| `metrics`       | Cross-project counts: severities, vulns by type, TPs     |
-| `status`        | Snapshot of the project mirror                           |
-| `sandbox <cmd>` | Run any of the above on Vercel Sandbox microVMs          |
+| Command          | What it does                                             |
+|------------------|----------------------------------------------------------|
+| `scan`           | Find candidate sites with regex matchers (fast, no AI)   |
+| `process`        | AI audit; emits violations + recommendation              |
+| `process --diff` | PR-mode: scan + audit only files changed in a diff       |
+| `triage`         | Lightweight priority classification (cheaper model)      |
+| `revalidate`     | Re-check existing violations; checks git history for fixes |
+| `enrich`         | Add git committer info + (with a plugin) ownership data  |
+| `report`         | Markdown + JSON summary for one project                  |
+| `export`         | Per-violation JSON or directory of markdown files        |
+| `metrics`        | Cross-project counts: severities, rules, TPs             |
+| `status`         | Snapshot of the project mirror                           |
+| `sandbox <cmd>`  | Run any of the above on Vercel Sandbox microVMs          |
 
 ## License
 
