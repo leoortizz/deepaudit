@@ -163,26 +163,21 @@ describe("scan() honors every explicitly-requested matcher slug", () => {
   // `activeMatchers.length === 0 ? allSelected : activeMatchers` ran
   // only the ungated matcher and silently dropped the gated one. The
   // user explicitly named both — both must run.
-  it("runs gated matchers when named via params.matcherSlugs", async () => {
-    // Empty repo (no detected tech) so any tech-gated matcher would
-    // normally be skipped.
+  //
+  // The default conformance matcher set has no gated matchers post-fork,
+  // but the resolution path still needs to honor explicit selection.
+  it("runs every requested matcher even when no others would activate", async () => {
     const { scan } = await import("../index.js");
     const root = tmpRoot;
 
-    // Must register a project first; scan() calls ensureProject().
     const result = await scan({
       projectId: "matcher-honor-test",
       root,
-      // Mix a tech-gated matcher (php-laravel-route requires laravel
-      // tag, which this repo doesn't have) with an ungated one (xss).
-      matcherSlugs: ["php-laravel-route", "xss"],
+      matcherSlugs: ["console-log", "any-type"],
     });
 
-    // Both should be active despite no Laravel detection.
-    expect(result.activeMatchers).toEqual(expect.arrayContaining(["php-laravel-route", "xss"]));
-    expect(result.skippedMatchers).not.toContain("php-laravel-route");
+    expect(result.activeMatchers).toEqual(expect.arrayContaining(["console-log", "any-type"]));
 
-    // Cleanup the per-test data dir.
     const dataDir = path.resolve("data", "matcher-honor-test");
     if (fs.existsSync(dataDir)) {
       fs.rmSync(dataDir, { recursive: true });
