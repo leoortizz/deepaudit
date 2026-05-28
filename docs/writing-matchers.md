@@ -65,7 +65,7 @@ matcher wins** — useful for swapping in a tighter org-specific version.
 
 If a matcher is genuinely reusable across orgs (e.g. a CWE shape or a
 public-framework shape), consider contributing it back to the
-[deepsec repo](https://github.com/leoortizz/deepsec) instead. That
+[deepsec repo](https://github.com/leoortizz/deepaudit) instead. That
 flow is in `CONTRIBUTING.md` of that repo.
 
 ## Workflow
@@ -238,7 +238,7 @@ Decision tree:
 |---|---|
 | An org-specific helper, package, or route layout | Your inline plugin (`.deepsec/matchers/`) |
 | A reference to a concrete internal service name | Your inline plugin |
-| A CWE shape (path traversal, SSRF, prototype pollution) the public set misses | Consider upstreaming to [deepsec](https://github.com/leoortizz/deepsec) |
+| A CWE shape (path traversal, SSRF, prototype pollution) the public set misses | Consider upstreaming to [deepsec](https://github.com/leoortizz/deepaudit) |
 | A shape for a popular OSS framework (Hono, FastAPI, Drizzle) | Upstreaming benefits everyone |
 
 For copy-paste starting points, see

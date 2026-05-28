@@ -18,7 +18,7 @@ import { getVercelOidcToken } from "@vercel/oidc";
 // the rendered `main` version on github.com so it works whether the
 // CLI was invoked from inside the source repo, from an installed
 // package, or in CI.
-const SETUP_DOC_URL = "https://github.com/leoortizz/deepsec/blob/main/docs/vercel-setup.md";
+const SETUP_DOC_URL = "https://github.com/leoortizz/deepaudit/blob/main/docs/vercel-setup.md";
 
 // Vercel AI Gateway endpoints. The Anthropic adapter is at the root; the
 // OpenAI-compatible adapter is at /v1 (codex appends /responses to it).

@@ -284,7 +284,7 @@ After \`pnpm install\`:
 - Full docs: \`node_modules/deepaudit/dist/docs/{getting-started,configuration,models,writing-matchers,plugins,architecture,data-layout,vercel-setup,faq}.md\`
 
 Or browse on
-[GitHub](https://github.com/leoortizz/deepsec/tree/main/docs).
+[GitHub](https://github.com/leoortizz/deepaudit/tree/main/docs).
 `;
 }
 

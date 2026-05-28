@@ -9,7 +9,7 @@ description: Use deepsec (an AI-powered vulnerability scanner) — running scans
 when deepsec ships inside `node_modules/` — typically because the user
 ran `npx deepaudit …` (which caches the package locally). In the more
 common dedicated-git setup the user works inside a clone of
-`leoortizz/deepsec` and the same docs sit at `docs/` from the repo root —
+`leoortizz/deepaudit` and the same docs sit at `docs/` from the repo root —
 read those instead when this skill fires from outside a node_modules.
 
 When the user asks how to use, configure, or extend deepsec, read the

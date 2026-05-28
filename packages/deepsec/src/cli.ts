@@ -39,7 +39,7 @@ Quickstart:
   pnpm deepaudit process --project-id <id>
 
   See \`deepaudit init --help\` and the docs at:
-    https://github.com/leoortizz/deepsec`,
+    https://github.com/leoortizz/deepaudit`,
   );
 
 program
