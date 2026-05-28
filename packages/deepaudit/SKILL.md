@@ -9,7 +9,7 @@ description: Use deepaudit (an AI-powered code auditor that checks a repo agains
 own conventions (project `RULES.md`) plus a default rule pack. This
 skill activates when deepaudit ships inside `node_modules/` — typically
 because the user ran `npx deepaudit …`. In the more common dedicated-git
-setup the user works inside a clone of `vercel-labs/deepaudit` and the
+setup the user works inside a clone of `leoortizz/deepaudit` and the
 same docs sit at `docs/` from the repo root — read those instead when
 this skill fires from outside a node_modules.
 
