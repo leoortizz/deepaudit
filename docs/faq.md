@@ -7,7 +7,7 @@ want to scan, checked into git so teammates inherit project context.
 From the codebase's repo root:
 
 ```bash
-npx deepsec init       # creates .deepsec/ + registers this repo
+npx deepaudit init       # creates .deepsec/ + registers this repo
 cd .deepsec
 pnpm install
 ```
@@ -17,7 +17,7 @@ from the parent repo's lockfile and tooling. The parent repo only
 needs to know `.deepsec/` exists.
 
 To scan another codebase from the same `.deepsec/`, run
-`pnpm deepsec init-project <path>`. Each project gets its own
+`pnpm deepaudit init-project <path>`. Each project gets its own
 `data/<id>/` subdirectory.
 
 ### What about non-JS codebases?
@@ -126,14 +126,14 @@ Yes. The natural shape:
 
 ```bash
 # Cron — full scan every Sunday
-pnpm deepsec scan --project-id main --root .
-pnpm deepsec process --project-id main --concurrency 5
-pnpm deepsec revalidate --project-id main --min-severity HIGH
-pnpm deepsec export --project-id main --format json --out findings.json
+pnpm deepaudit scan --project-id main --root .
+pnpm deepaudit process --project-id main --concurrency 5
+pnpm deepaudit revalidate --project-id main --min-severity HIGH
+pnpm deepaudit export --project-id main --format json --out findings.json
 
 # Per-PR — incremental scan on changed files only
-pnpm deepsec scan --project-id main --root .
-pnpm deepsec process --project-id main --filter $CHANGED_PATH_PREFIX
+pnpm deepaudit scan --project-id main --root .
+pnpm deepaudit process --project-id main --filter $CHANGED_PATH_PREFIX
 ```
 
 The `data/` directory is your state — persist it between CI runs (cache

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { AnalysisEntry, FileRecord, Finding } from "@deepsec/core";
+import type { AnalysisEntry, FileRecord, Finding } from "@deepaudit/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   mergeAfterExtract,

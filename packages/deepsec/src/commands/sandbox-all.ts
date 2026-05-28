@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { getDataRoot, readProjectConfig } from "@deepsec/core";
+import { getDataRoot, readProjectConfig } from "@deepaudit/core";
 import { defaultModelForAgent } from "../agent-defaults.js";
 import { BOLD, CYAN, DIM, GREEN, RED, RESET, YELLOW } from "../formatters.js";
 import { assertAgentCredential, assertSandboxCredential } from "../preflight.js";

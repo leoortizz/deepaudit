@@ -55,7 +55,7 @@ await build({
 });
 
 // Bundle config.d.ts into a single self-contained file. The runtime side is
-// already inlined by esbuild, but tsc would emit `from "@deepsec/core"`
+// already inlined by esbuild, but tsc would emit `from "@deepaudit/core"`
 // re-exports — broken for consumers, since those workspace packages are not
 // published. dts-bundle-generator inlines all referenced types from internal
 // workspace packages.

@@ -17,19 +17,19 @@ Anthropic or OpenAI directly, point `ANTHROPIC_BASE_URL` /
 
 ```bash
 # Codex (default backend), default model:
-pnpm deepsec process --project-id my-app
+pnpm deepaudit process --project-id my-app
 
 # Claude with a specific model:
-pnpm deepsec process --project-id my-app --agent claude --model claude-sonnet-4-6
+pnpm deepaudit process --project-id my-app --agent claude --model claude-sonnet-4-6
 
 # Codex backend, default model:
-pnpm deepsec process --project-id my-app --agent codex
+pnpm deepaudit process --project-id my-app --agent codex
 
 # Codex backend, specific model:
-pnpm deepsec process --project-id my-app --agent codex --model gpt-5.4
+pnpm deepaudit process --project-id my-app --agent codex --model gpt-5.4
 
 # Triage uses Claude; pass a cheaper model if you want:
-pnpm deepsec triage --project-id my-app --model claude-haiku-4-5
+pnpm deepaudit triage --project-id my-app --model claude-haiku-4-5
 ```
 
 `--agent` and `--model` are also accepted on `revalidate`. Set the
@@ -101,8 +101,8 @@ open-weight contender — point `--model` at the new identifier and the
 rest of deepsec stays unchanged:
 
 ```bash
-pnpm deepsec process --project-id my-app --model anthropic-mythos-1
-pnpm deepsec process --project-id my-app --agent codex --model gpt-6
+pnpm deepaudit process --project-id my-app --model anthropic-mythos-1
+pnpm deepaudit process --project-id my-app --agent codex --model gpt-6
 ```
 
 Two small integration points:

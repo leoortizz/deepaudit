@@ -1,4 +1,4 @@
-import { defineConfig, setLoadedConfig } from "@deepsec/core";
+import { defineConfig, setLoadedConfig } from "@deepaudit/core";
 import { afterEach, describe, expect, it } from "vitest";
 import { resolveAgentType } from "../resolve-agent-type.js";
 

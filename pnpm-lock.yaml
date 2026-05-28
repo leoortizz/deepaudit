@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      deepsec:
+      deepaudit:
         specifier: workspace:*
         version: link:packages/deepsec
     devDependencies:
@@ -64,13 +64,13 @@ importers:
         specifier: ^7.5.13
         version: 7.5.13
     devDependencies:
-      '@deepsec/core':
+      '@deepaudit/core':
         specifier: workspace:*
         version: link:../core
-      '@deepsec/processor':
+      '@deepaudit/processor':
         specifier: workspace:*
         version: link:../processor
-      '@deepsec/scanner':
+      '@deepaudit/scanner':
         specifier: workspace:*
         version: link:../scanner
       commander:
@@ -91,10 +91,10 @@ importers:
       '@anthropic-ai/claude-agent-sdk':
         specifier: ^0.3.143
         version: 0.3.143(@anthropic-ai/sdk@0.96.0)(@modelcontextprotocol/sdk@1.29.0)(zod@4.4.3)
-      '@deepsec/core':
+      '@deepaudit/core':
         specifier: workspace:*
         version: link:../core
-      '@deepsec/scanner':
+      '@deepaudit/scanner':
         specifier: workspace:*
         version: link:../scanner
       '@openai/codex':
@@ -106,7 +106,7 @@ importers:
 
   packages/scanner:
     dependencies:
-      '@deepsec/core':
+      '@deepaudit/core':
         specifier: workspace:*
         version: link:../core
       glob:

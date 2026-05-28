@@ -13,7 +13,7 @@ runs, reports) stays gitignored.
 From the root of the codebase you want to scan:
 
 ```bash
-npx deepsec init                                   # creates .deepsec/ + registers this repo
+npx deepaudit init                                   # creates .deepsec/ + registers this repo
 cd .deepsec
 pnpm install                                       # installs deepsec
 ```
@@ -44,7 +44,7 @@ Prefer Anthropic directly? Set `ANTHROPIC_AUTH_TOKEN=sk-ant-…` and
 subscription. See [vercel-setup.md](vercel-setup.md).
 
 To scan a *different* codebase from the same `.deepsec/`, run
-`pnpm deepsec init-project <path>` — relative paths resolve against
+`pnpm deepaudit init-project <path>` — relative paths resolve against
 `.deepsec/`'s parent.
 
 ## Fill in INFO.md
@@ -82,7 +82,7 @@ scanned source file), `runs/`, plus `project.json` and the optional
 [data-layout.md](data-layout.md) for the full schema.
 
 ```bash
-pnpm deepsec scan
+pnpm deepaudit scan
 ```
 
 `--project-id` is auto-resolved when the config has a single project
@@ -96,7 +96,7 @@ On a 2,000-file project it takes ~15s. Output goes to
 `FileRecord`).
 
 ```bash
-pnpm deepsec status
+pnpm deepaudit status
 ```
 
 shows the current state: how many files were scanned, how many are
@@ -105,7 +105,7 @@ pending AI investigation, etc.
 ## Run the AI investigation
 
 ```bash
-pnpm deepsec process --concurrency 5
+pnpm deepaudit process --concurrency 5
 ```
 
 Defaults: Claude Opus, 5 files per batch,
@@ -134,7 +134,7 @@ applies to `revalidate`.
 For a cheaper backend:
 
 ```bash
-pnpm deepsec process --agent codex --model gpt-5.5
+pnpm deepaudit process --agent codex --model gpt-5.5
 ```
 
 Codex is the OpenAI-flavored backend. Same prompt, same JSON output,
@@ -146,8 +146,8 @@ models.
 ## Triage and revalidate
 
 ```bash
-pnpm deepsec triage --severity HIGH
-pnpm deepsec revalidate --min-severity HIGH
+pnpm deepaudit triage --severity HIGH
+pnpm deepaudit revalidate --min-severity HIGH
 ```
 
 - **triage**: classifies findings P0/P1/P2 without re-reading the code.
@@ -161,8 +161,8 @@ Both optional, but worth running on the HIGH/CRITICAL set.
 ## Get the findings out
 
 ```bash
-pnpm deepsec export --format md-dir --out ./findings
-pnpm deepsec export --format json   --out findings.json
+pnpm deepaudit export --format md-dir --out ./findings
+pnpm deepaudit export --format json   --out findings.json
 ```
 
 `md-dir` writes one markdown file per finding under
@@ -172,7 +172,7 @@ suitable for piping to a downstream issue tracker.
 For a quick aggregate look:
 
 ```bash
-pnpm deepsec metrics
+pnpm deepaudit metrics
 ```
 
 (Each of these commands accepts `--project-id <id>` if your config has

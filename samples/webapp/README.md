@@ -29,7 +29,7 @@ shape; don't copy it as your starting point. The intended flow:
 
 ```bash
 # Start minimal: from your repo root.
-npx deepsec init
+npx deepaudit init
 cd .deepsec && pnpm install
 # Let your agent fill INFO.md, then scan.
 
@@ -44,8 +44,8 @@ From this directory (works because the monorepo symlinks `deepsec` in
 for tests):
 
 ```bash
-pnpm deepsec scan     --project-id webapp --root ./your-app
-pnpm deepsec process  --project-id webapp
+pnpm deepaudit scan     --project-id webapp --root ./your-app
+pnpm deepaudit process  --project-id webapp
 ```
 
 `deepsec` walks up from cwd to find `deepsec.config.ts`, so any

@@ -1,4 +1,4 @@
-import type { CandidateMatch, MatcherPlugin } from "@deepsec/core";
+import type { CandidateMatch, MatcherPlugin } from "@deepaudit/core";
 
 /**
  * tRPC procedures defined as `publicProcedure` that look like they should be

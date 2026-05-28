@@ -19,7 +19,7 @@ export interface TechHighlight {
    * batch of Python files in a polyglot Next.js+Django repo doesn't
    * need Next.js highlights, even though the project as a whole has
    * them. Use the canonical language names from
-   * `LANGUAGE_EXTENSIONS` in `@deepsec/scanner`: `typescript`,
+   * `LANGUAGE_EXTENSIONS` in `@deepaudit/scanner`: `typescript`,
    * `javascript`, `python`, `php`, `ruby`, `go`, `rust`, `java`,
    * `kotlin`, `csharp`, `lua`, `terraform`. Multiple languages allowed
    * (e.g. JS frameworks tag both `typescript` and `javascript`).

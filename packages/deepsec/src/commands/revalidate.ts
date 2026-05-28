@@ -1,6 +1,6 @@
-import type { Severity } from "@deepsec/core";
-import { readProjectConfig } from "@deepsec/core";
-import { revalidate } from "@deepsec/processor";
+import type { Severity } from "@deepaudit/core";
+import { readProjectConfig } from "@deepaudit/core";
+import { revalidate } from "@deepaudit/processor";
 import { defaultModelForAgent } from "../agent-defaults.js";
 import { BOLD, CYAN, DIM, GREEN, RED, RESET, YELLOW } from "../formatters.js";
 import { assertAgentCredential } from "../preflight.js";

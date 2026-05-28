@@ -1,5 +1,5 @@
 import path from "node:path";
-import { findProject, getConfig, getConfigPath } from "@deepsec/core";
+import { findProject, getConfig, getConfigPath } from "@deepaudit/core";
 
 // Strict allowlist for project ids. Catches `..`, path separators, shell
 // metacharacters, and whitespace in one place — every CLI entry point and

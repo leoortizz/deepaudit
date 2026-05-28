@@ -105,7 +105,7 @@ export function initCommand(opts: InitOpts) {
 
 function printAgentPrompt(id: string, targetRel: string): void {
   const lines = [
-    `Read node_modules/deepsec/SKILL.md to understand the tool. Then`,
+    `Read node_modules/deepaudit/SKILL.md to understand the tool. Then`,
     `read data/${id}/SETUP.md and follow it: open ${targetRel}, skim`,
     `its README + AGENTS.md/CLAUDE.md + a handful of representative`,
     `code files, then replace each section of data/${id}/INFO.md.`,
@@ -161,7 +161,7 @@ function packageJson(name: string): string {
       // `.deepsec/` refuse to run. Setting it here stops the walk at the
       // workspace root.
       packageManager: detectPackageManager(),
-      dependencies: { deepsec: deepsecVersion },
+      dependencies: { deepaudit: deepsecVersion },
     },
     null,
     2,
@@ -200,7 +200,7 @@ function pnpmWorkspaceYaml(): string {
  * path called from `init`) appends new project entries above the marker.
  */
 function emptyConfigTs(): string {
-  return `import { defineConfig } from "deepsec/config";
+  return `import { defineConfig } from "deepaudit/config";
 
 export default defineConfig({
   projects: [
@@ -213,7 +213,7 @@ export default defineConfig({
 function readmeMd(id: string, targetRel: string): string {
   return `# deepsec
 
-This directory holds the [deepsec](https://www.npmjs.com/package/deepsec)
+This directory holds the [deepsec](https://www.npmjs.com/package/deepaudit)
 config for the parent repo. Checked into git so teammates inherit
 project context (auth shape, threat model, custom matchers); generated
 scan output is gitignored.
@@ -228,7 +228,7 @@ Currently configured project: \`${id}\` (target: \`${targetRel}\`).
    machine, you can skip the token for non-sandbox runs (\`process\` /
    \`revalidate\` / \`triage\`); deepsec auto-detects and reuses the
    subscription. See
-   \`node_modules/deepsec/dist/docs/vercel-setup.md\` after install.
+   \`node_modules/deepaudit/dist/docs/vercel-setup.md\` after install.
 3. Open the parent repo in your coding agent (Claude Code, Cursor, …)
    and have it follow \`data/${id}/SETUP.md\` to fill in
    \`data/${id}/INFO.md\`.
@@ -280,11 +280,11 @@ AGENTS.md                Pointer for coding agents
 
 After \`pnpm install\`:
 
-- Skill: \`node_modules/deepsec/SKILL.md\`
-- Full docs: \`node_modules/deepsec/dist/docs/{getting-started,configuration,models,writing-matchers,plugins,architecture,data-layout,vercel-setup,faq}.md\`
+- Skill: \`node_modules/deepaudit/SKILL.md\`
+- Full docs: \`node_modules/deepaudit/dist/docs/{getting-started,configuration,models,writing-matchers,plugins,architecture,data-layout,vercel-setup,faq}.md\`
 
 Or browse on
-[GitHub](https://github.com/vercel/deepsec/tree/main/docs).
+[GitHub](https://github.com/leoortizz/deepsec/tree/main/docs).
 `;
 }
 

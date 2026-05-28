@@ -132,7 +132,7 @@ jobs:
           AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
           CLAUDE_CODE_EXECUTABLE: claude
         run: |
-          pnpm deepsec process \
+          pnpm deepaudit process \
             --diff origin/${{ github.event.pull_request.base.ref }} \
             --comment-out comment.md
 
@@ -192,7 +192,7 @@ jobs:
   is what the SDK actually drives. Installing it globally + setting
   `CLAUDE_CODE_EXECUTABLE: claude` skips the SDK's bundled-binary
   resolution, which can fail on Linux under some package managers.
-- **`pnpm deepsec`** — swap for `npx -y deepsec`, `npm exec deepsec`,
+- **`pnpm deepsec`** — swap for `npx -y deepaudit`, `npm exec deepaudit`,
   or `yarn deepsec` to match your package manager.
 - **`comment.md` is uploaded only when findings exist** —
   `--comment-out` writes nothing on a green run, so the upload step's

@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { FileRecord, MatcherGate } from "@deepsec/core";
+import type { FileRecord, MatcherGate } from "@deepaudit/core";
 import {
   completeRun,
   createRunMeta,
@@ -13,7 +13,7 @@ import {
   readFileRecord,
   writeFileRecord,
   writeRunMeta,
-} from "@deepsec/core";
+} from "@deepaudit/core";
 import { glob, globSync } from "glob";
 import { escape as escapeGlob, minimatch } from "minimatch";
 import { type DetectedTech, detectTech, readTechJson, writeTechJson } from "./detect-tech.js";

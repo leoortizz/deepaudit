@@ -1,4 +1,4 @@
-import type { Severity } from "@deepsec/core";
+import type { Severity } from "@deepaudit/core";
 
 export function severityColor(severity: Severity): string {
   switch (severity) {

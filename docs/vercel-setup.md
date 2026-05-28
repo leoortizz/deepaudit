@@ -54,8 +54,8 @@ deepsec auto-refreshes the token when it's near expiry (via `@vercel/oidc`), but
 Run a small scan to confirm the credential works:
 
 ```bash
-pnpm deepsec scan --limit 20         # cheap, no AI calls
-pnpm deepsec process --limit 5       # exercises the gateway
+pnpm deepaudit scan --limit 20         # cheap, no AI calls
+pnpm deepaudit process --limit 5       # exercises the gateway
 ```
 
 If the second command fails with `Missing AI credentials` or a `401`, see [Troubleshooting](#troubleshooting).
@@ -176,7 +176,7 @@ You can keep both sets of env vars in `.env.local`. The SDK prefers `VERCEL_OIDC
 ### Try a sandbox run
 
 ```bash
-pnpm deepsec sandbox process --project-id my-app --sandboxes 4
+pnpm deepaudit sandbox process --project-id my-app --sandboxes 4
 ```
 
 If the sandbox can't authenticate, the spawn fails with the SDK's error. Re-run `vercel env pull` (OIDC) or double-check the three access-token vars.

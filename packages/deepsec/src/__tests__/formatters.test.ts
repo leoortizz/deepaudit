@@ -1,4 +1,4 @@
-import type { Severity } from "@deepsec/core";
+import type { Severity } from "@deepaudit/core";
 import { describe, expect, it } from "vitest";
 import { formatCount, formatDuration, severityColor } from "../formatters.js";
 

@@ -3,7 +3,7 @@ import { config as dotenvConfig } from "dotenv";
 dotenvConfig({ path: ".env.local" });
 dotenvConfig(); // also load .env as fallback
 
-import { getRegistry } from "@deepsec/core";
+import { getRegistry } from "@deepaudit/core";
 import { Command } from "commander";
 import { enrichCommand } from "./commands/enrich.js";
 import { exportCommand } from "./commands/export.js";
@@ -25,7 +25,7 @@ import { getDeepsecVersion } from "./version.js";
 const program = new Command();
 
 program
-  .name("deepsec")
+  .name("deepaudit")
   .description("AI-powered vulnerability scanner for any codebase")
   .version(getDeepsecVersion())
   .addHelpText(
@@ -33,13 +33,13 @@ program
     `
 Quickstart:
   cd <your-repo>                 first, in the codebase you want to scan
-  npx deepsec init               scaffold .deepsec/ + register this repo
+  npx deepaudit init             scaffold .deepsec/ + register this repo
   cd .deepsec && pnpm install
-  pnpm deepsec scan    --project-id <id>
-  pnpm deepsec process --project-id <id>
+  pnpm deepaudit scan    --project-id <id>
+  pnpm deepaudit process --project-id <id>
 
-  See \`deepsec init --help\` and the docs at:
-    https://github.com/vercel/deepsec`,
+  See \`deepaudit init --help\` and the docs at:
+    https://github.com/leoortizz/deepsec`,
   );
 
 program

@@ -5,9 +5,9 @@
   "description": "deepsec scanning workspace",
   "type": "module",
   "scripts": {
-    "deepsec": "pnpm -s -C ../packages/deepsec bundle && pnpm exec deepsec"
+    "deepaudit": "pnpm -s -C ../packages/deepsec bundle && pnpm exec deepaudit"
   },
   "dependencies": {
-    "deepsec": "link:../packages/deepsec"
+    "deepaudit": "link:../packages/deepsec"
   }
 }

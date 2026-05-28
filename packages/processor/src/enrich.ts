@@ -1,13 +1,13 @@
 import { execSync, spawnSync } from "node:child_process";
 import path from "node:path";
-import type { FileRecord, Severity } from "@deepsec/core";
+import type { FileRecord, Severity } from "@deepaudit/core";
 import {
   defaultConcurrency,
   getRegistry,
   loadAllFileRecords,
   readProjectConfig,
   writeFileRecord,
-} from "@deepsec/core";
+} from "@deepaudit/core";
 
 interface Committer {
   name: string;

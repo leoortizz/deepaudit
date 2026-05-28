@@ -1,4 +1,4 @@
-import type { CandidateMatch } from "@deepsec/core";
+import type { CandidateMatch } from "@deepaudit/core";
 import type { MatcherPlugin } from "../types.js";
 
 export const securityBehindFlagMatcher: MatcherPlugin = {

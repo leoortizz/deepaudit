@@ -2,7 +2,7 @@ import path from "node:path";
 
 /**
  * Map a file extension to a canonical language name. Mirrors
- * `LANGUAGE_EXTENSIONS` in @deepsec/scanner, kept as a small local copy
+ * `LANGUAGE_EXTENSIONS` in @deepaudit/scanner, kept as a small local copy
  * so the processor doesn't have to import it just to classify a path.
  *
  * Returning `null` for unknown extensions is intentional — the assembler

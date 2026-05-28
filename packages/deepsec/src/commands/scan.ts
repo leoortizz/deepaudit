@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { findProject, getConfigPath, loadAllFileRecords, projectConfigPath } from "@deepsec/core";
-import { scan } from "@deepsec/scanner";
+import { findProject, getConfigPath, loadAllFileRecords, projectConfigPath } from "@deepaudit/core";
+import { scan } from "@deepaudit/scanner";
 import { BOLD, CYAN, DIM, GREEN, RESET, YELLOW } from "../formatters.js";
 import { requireExistingDir } from "../require-dir.js";
 import { resolveProjectId } from "../resolve-project-id.js";

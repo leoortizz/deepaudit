@@ -14,7 +14,7 @@ packages/
   core/                Types, schemas, plugin contracts, config loader
   scanner/             Regex matchers + scanning engine
   processor/           AI agent integration (Claude SDK, Codex SDK), enrich, triage, revalidate
-  deepsec/              Publishable package: bundled CLI + the `deepsec/config` sub-export + the @vercel/sandbox executor
+  deepsec/              Publishable package: bundled CLI + the `deepaudit/config` sub-export + the @vercel/sandbox executor
 e2e/                   End-to-end tests against a fixture project
 fixtures/
   vulnerable-app/      Intentionally vulnerable test data (excluded from lint/knip)
@@ -32,7 +32,7 @@ pnpm -r build           # tsc across all workspaces (typecheck)
 pnpm lint               # biome check
 pnpm lint:fix           # biome check --write
 pnpm knip               # unused code/dep detection
-pnpm deepsec --help      # the CLI (via tsx)
+pnpm deepaudit --help      # the CLI (via tsx)
 ```
 
 Bundle for distribution:
@@ -43,7 +43,7 @@ pnpm test:bundle        # bundle e2e: runs the produced binary as a subprocess
 ```
 
 All of build, test, lint, and knip must pass before a PR is mergeable.
-PRs that touch the publish surface (anything imported via `deepsec/config`)
+PRs that touch the publish surface (anything imported via `deepaudit/config`)
 must also pass `pnpm test:bundle`.
 
 ### Live-sandbox e2e (manual)
@@ -79,7 +79,7 @@ Short version (full version in [docs/writing-matchers.md](docs/writing-matchers.
    export.
 2. Register it in `packages/scanner/src/matchers/index.ts` (import +
    `registry.register(...)`).
-3. Run `pnpm deepsec scan --project-id <id> --root <path> --matchers <slug>`
+3. Run `pnpm deepaudit scan --project-id <id> --root <path> --matchers <slug>`
    and check the candidate count is reasonable.
 4. `pnpm test` and `pnpm lint`.
 
@@ -96,7 +96,7 @@ full guide.
 The minimal shape:
 
 ```ts
-import type { DeepsecPlugin } from "deepsec/config";
+import type { DeepsecPlugin } from "deepaudit/config";
 import { myMatcher } from "./matchers/my-matcher.js";
 
 export default function myPlugin(): DeepsecPlugin {

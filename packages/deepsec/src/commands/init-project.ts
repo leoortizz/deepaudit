@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { dataDir, ensureProject } from "@deepsec/core";
+import { dataDir, ensureProject } from "@deepaudit/core";
 import { BOLD, CYAN, DIM, GREEN, RESET, YELLOW } from "../formatters.js";
 import { requireExistingDir } from "../require-dir.js";
 import { validateProjectId } from "../resolve-project-id.js";

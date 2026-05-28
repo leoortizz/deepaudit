@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import type { FileRecord, Finding, Severity, TriagePriority } from "@deepsec/core";
+import type { FileRecord, Finding, Severity, TriagePriority } from "@deepaudit/core";
 import {
   completeRun,
   createRunMeta,
@@ -11,7 +11,7 @@ import {
   readProjectConfig,
   writeFileRecord,
   writeRunMeta,
-} from "@deepsec/core";
+} from "@deepaudit/core";
 
 const TRIAGE_BATCH_SIZE = 30;
 

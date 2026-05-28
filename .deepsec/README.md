@@ -21,10 +21,10 @@ Currently configured project: `deepsec` (target: `..`).
 ## Daily commands
 
 ```bash
-pnpm deepsec scan
-pnpm deepsec process     --concurrency 5
-pnpm deepsec revalidate  --concurrency 5                  # cuts FP rate
-pnpm deepsec export      --format md-dir --out ./findings
+pnpm deepaudit scan
+pnpm deepaudit process     --concurrency 5
+pnpm deepaudit revalidate  --concurrency 5                  # cuts FP rate
+pnpm deepaudit export      --format md-dir --out ./findings
 ```
 
 `--project-id` is auto-resolved while there's only one project in
@@ -39,7 +39,7 @@ on Opus by default). Run state goes to `data/deepsec/`.
 To scan another codebase from this same `.deepsec/`:
 
 ```bash
-pnpm deepsec init-project ../some-other-package   # path relative to .deepsec/
+pnpm deepaudit init-project ../some-other-package   # path relative to .deepsec/
 ```
 
 Appends an entry to `deepsec.config.ts` and writes

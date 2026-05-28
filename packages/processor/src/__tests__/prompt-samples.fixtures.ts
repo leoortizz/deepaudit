@@ -1,4 +1,4 @@
-import type { CandidateMatch, FileRecord } from "@deepsec/core";
+import type { CandidateMatch, FileRecord } from "@deepaudit/core";
 import { TECH_HIGHLIGHTS } from "../prompt/highlights.js";
 
 /**

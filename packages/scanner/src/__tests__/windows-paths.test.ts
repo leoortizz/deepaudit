@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { MatcherPlugin } from "@deepsec/core";
+import type { MatcherPlugin } from "@deepaudit/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock glob before importing the scanner so the driver picks up the mock.

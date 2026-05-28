@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { loadAllFileRecords, readFileRecord, readRunMeta } from "@deepsec/core";
+import { loadAllFileRecords, readFileRecord, readRunMeta } from "@deepaudit/core";
 import { afterEach, describe, expect, it } from "vitest";
 import { scanFiles } from "../index.js";
 

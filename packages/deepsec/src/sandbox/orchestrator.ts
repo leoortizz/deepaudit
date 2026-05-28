@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { dataDir, getConfigPath, readProjectConfig } from "@deepsec/core";
+import { dataDir, getConfigPath, readProjectConfig } from "@deepaudit/core";
 import { Sandbox } from "@vercel/sandbox";
 import { downloadResults } from "./download.js";
 import { partitionFiles } from "./partitioner.js";
@@ -68,12 +68,12 @@ const PARTITIONABLE_COMMANDS = new Set(["process", "revalidate"]);
  *     root (the dir with `pnpm-workspace.yaml`) so the full monorepo +
  *     lockfile ship over. Workers run `tsx packages/deepsec/src/cli.ts`.
  *
- *   - **installed**: this CLI is running from `node_modules/deepsec/` inside
+ *   - **installed**: this CLI is running from `node_modules/deepaudit/` inside
  *     a user's `.deepsec/` workspace. Tarball that workspace dir (parent of
  *     `deepsec.config.ts`) — it's a one-package npm project; the sandbox
- *     re-installs `deepsec` from npm. Workers run `node_modules/.bin/deepsec`.
+ *     re-installs `deepaudit` from npm. Workers run `node_modules/.bin/deepsec`.
  *
- * The deepsec package is identified by `package.json:name === "deepsec"`,
+ * The deepsec package is identified by `package.json:name === "deepaudit"`,
  * NOT by `pnpm-workspace.yaml`, so we don't accidentally pick the user's
  * parent monorepo if they happen to have one above `.deepsec/`.
  */
@@ -84,7 +84,7 @@ function resolveDeepsecAppContext(): { root: string; mode: DeepsecMode } {
     if (fs.existsSync(pkgPath)) {
       try {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-        if (pkg.name === "deepsec") {
+        if (pkg.name === "deepaudit") {
           if (dir.includes(`${path.sep}node_modules${path.sep}`)) {
             // Installed: ship the user's .deepsec/ workspace, not the
             // node_modules/deepsec package itself. The workspace has its
@@ -117,7 +117,7 @@ function resolveDeepsecAppContext(): { root: string; mode: DeepsecMode } {
     dir = path.dirname(dir);
   }
   throw new Error(
-    "Could not locate the deepsec package directory (no package.json with name 'deepsec' found in any ancestor)",
+    "Could not locate the deepsec package directory (no package.json with name 'deepaudit' found in any ancestor)",
   );
 }
 

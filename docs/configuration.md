@@ -4,7 +4,7 @@ deepsec reads `deepsec.config.{ts,mjs,js,cjs}` from the current working
 directory, walking up. The CLI inherits whatever the file declares.
 
 ```ts
-import { defineConfig } from "deepsec/config";
+import { defineConfig } from "deepaudit/config";
 import myPlugin from "@my-org/deepsec-plugin-foo";
 
 export default defineConfig({

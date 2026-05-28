@@ -1,7 +1,7 @@
 # Writing matchers with your coding agent
 
 This doc is for users running deepsec inside a `.deepsec/` workspace —
-i.e. you ran `npx deepsec init`, deepsec is installed in
+i.e. you ran `npx deepaudit init`, deepsec is installed in
 `node_modules/`, and you have a `data/<id>/` directory with at least
 one scan in it. The matchers you write here live in *your* config; they
 ship alongside deepsec's built-ins for the projects in this workspace.
@@ -45,7 +45,7 @@ Reference setup (ships in `node_modules/deepsec/dist/samples/webapp/`):
 `deepsec.config.ts` looks like:
 
 ```ts
-import { defineConfig, type DeepsecPlugin } from "deepsec/config";
+import { defineConfig, type DeepsecPlugin } from "deepaudit/config";
 import { myRouteNoAuth } from "./matchers/my-route-no-auth.js";
 import { myInternalRpc } from "./matchers/my-internal-rpc.js";
 
@@ -65,7 +65,7 @@ matcher wins** — useful for swapping in a tighter org-specific version.
 
 If a matcher is genuinely reusable across orgs (e.g. a CWE shape or a
 public-framework shape), consider contributing it back to the
-[deepsec repo](https://github.com/vercel-labs/deepsec) instead. That
+[deepsec repo](https://github.com/leoortizz/deepsec) instead. That
 flow is in `CONTRIBUTING.md` of that repo.
 
 ## Workflow
@@ -75,9 +75,9 @@ flow is in `CONTRIBUTING.md` of that repo.
 You want real `data/` to point the agent at.
 
 ```bash
-pnpm deepsec scan
-pnpm deepsec process --limit 50          # cheap calibration pass
-pnpm deepsec revalidate --min-severity HIGH
+pnpm deepaudit scan
+pnpm deepaudit process --limit 50          # cheap calibration pass
+pnpm deepaudit revalidate --min-severity HIGH
 ```
 
 ### 2. Hand the workspace to your agent
@@ -140,12 +140,12 @@ agent so it can read both the source and `.deepsec/data/`. Then paste:
 >    - **Regex(es)** that match the shape. Skip test files
 >      (`.test.`, `.spec.`, `__tests__`, `_test.go`, etc.).
 >    - Save to `.deepsec/matchers/<slug>.ts`. Import types from
->      `"deepsec/config"`.
+>      `"deepaudit/config"`.
 > 5. Wire the new matchers into the inline plugin in
 >    `.deepsec/deepsec.config.ts` (create the plugin if it doesn't
 >    exist yet — see `samples/webapp/deepsec.config.ts`).
 > 6. Run
->    `pnpm deepsec scan --matchers <slug1>,<slug2>,…` from `.deepsec/`
+>    `pnpm deepaudit scan --matchers <slug1>,<slug2>,…` from `.deepsec/`
 >    and report how many candidates each matcher fired. Open 3 of the
 >    candidates per matcher to spot-check the regex isn't producing
 >    obvious false positives.
@@ -167,7 +167,7 @@ dozen lines for `MatcherPlugin`, plus the `regexMatcher` helper), walk
 ### 3. Run them, tune them, ship them
 
 ```bash
-pnpm deepsec scan --matchers <new-slug>
+pnpm deepaudit scan --matchers <new-slug>
 ```
 
 Watch the candidate count. 0 means too strict (loosen). >100 in a
@@ -238,7 +238,7 @@ Decision tree:
 |---|---|
 | An org-specific helper, package, or route layout | Your inline plugin (`.deepsec/matchers/`) |
 | A reference to a concrete internal service name | Your inline plugin |
-| A CWE shape (path traversal, SSRF, prototype pollution) the public set misses | Consider upstreaming to [deepsec](https://github.com/vercel-labs/deepsec) |
+| A CWE shape (path traversal, SSRF, prototype pollution) the public set misses | Consider upstreaming to [deepsec](https://github.com/leoortizz/deepsec) |
 | A shape for a popular OSS framework (Hono, FastAPI, Drizzle) | Upstreaming benefits everyone |
 
 For copy-paste starting points, see

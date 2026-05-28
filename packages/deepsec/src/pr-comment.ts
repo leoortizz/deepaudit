@@ -1,4 +1,4 @@
-import { type FileRecord, loadAllFileRecords, type Severity } from "@deepsec/core";
+import { type FileRecord, loadAllFileRecords, type Severity } from "@deepaudit/core";
 
 /**
  * Severity ordering used to sort findings within the PR comment. Mirrors

@@ -14,13 +14,13 @@
 // (`isUsingAiGateway`) is also there so it can be reused by tests and
 // downstream consumers without importing the CLI.
 
-import { isUsingAiGateway, type QuotaSource } from "@deepsec/processor";
+import { isUsingAiGateway, type QuotaSource } from "@deepaudit/processor";
 import { BOLD, DIM, RED, RESET, YELLOW } from "./formatters.js";
 
 // Top-level setup doc — already used by preflight.ts. Kept identical here
 // so the message stays consistent across credential failures and quota
 // failures.
-const SETUP_DOC_URL = "https://github.com/vercel-labs/deepsec/blob/main/docs/vercel-setup.md";
+const SETUP_DOC_URL = "https://github.com/leoortizz/deepsec/blob/main/docs/vercel-setup.md";
 // Canonical AI Gateway top-up deep link — exactly the URL the gateway
 // itself embeds in its `insufficient_funds` (HTTP 402) error response
 // (see vercel/ai-gateway/lib/gateway/check-billing.ts:44). Lands on the

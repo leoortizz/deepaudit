@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { dataDir, type FileRecord, type Finding, type RefusalReport } from "@deepsec/core";
+import { dataDir, type FileRecord, type Finding, type RefusalReport } from "@deepaudit/core";
 import type { InvestigateResult, RevalidateVerdict } from "./types.js";
 
 // --- Retry / backoff -------------------------------------------------------

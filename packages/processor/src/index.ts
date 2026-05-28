@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { FileRecord, Severity } from "@deepsec/core";
+import type { FileRecord, Severity } from "@deepaudit/core";
 import {
   acquireProcessLock,
   completeRun,
@@ -17,8 +17,8 @@ import {
   registerActiveRun,
   writeFileRecord,
   writeRunMeta,
-} from "@deepsec/core";
-import { noiseScore, readTechJson } from "@deepsec/scanner";
+} from "@deepaudit/core";
+import { noiseScore, readTechJson } from "@deepaudit/scanner";
 import { ClaudeAgentSdkPlugin } from "./agents/claude-agent-sdk.js";
 import { CodexAgentSdkPlugin } from "./agents/codex-sdk.js";
 import { AgentRegistry } from "./agents/registry.js";

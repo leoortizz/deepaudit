@@ -7,9 +7,9 @@ description: Use deepsec (an AI-powered vulnerability scanner) — running scans
 
 `deepsec` is an AI-powered vulnerability scanner. This skill activates
 when deepsec ships inside `node_modules/` — typically because the user
-ran `npx deepsec …` (which caches the package locally). In the more
+ran `npx deepaudit …` (which caches the package locally). In the more
 common dedicated-git setup the user works inside a clone of
-`vercel-labs/deepsec` and the same docs sit at `docs/` from the repo root —
+`leoortizz/deepsec` and the same docs sit at `docs/` from the repo root —
 read those instead when this skill fires from outside a node_modules.
 
 When the user asks how to use, configure, or extend deepsec, read the

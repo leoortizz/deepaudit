@@ -28,7 +28,7 @@ function runBundle(
 function makeWorkspace(): string {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "deepsec-bundle-"));
   // Symlink the repo's node_modules so the temp workspace can resolve
-  // `deepsec/config` (workspace symlink) and the externalized native deps.
+  // `deepaudit/config` (workspace symlink) and the externalized native deps.
   fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(dir, "node_modules"), "dir");
   return dir;
 }
@@ -43,16 +43,16 @@ describe("bundle e2e", () => {
   it("--help exits 0 and prints the help banner", () => {
     const { stdout, status } = runBundle(["--help"]);
     expect(status).toBe(0);
-    expect(stdout).toContain("deepsec");
+    expect(stdout).toContain("deepaudit");
     expect(stdout).toContain("scan");
     expect(stdout).toContain("process");
   });
 
-  it("config.d.ts is self-contained (no internal @deepsec/* re-exports)", () => {
+  it("config.d.ts is self-contained (no internal @deepaudit/* re-exports)", () => {
     const dts = fs.readFileSync(path.join(ROOT, "packages/deepsec/dist/config.d.ts"), "utf-8");
-    // Consumers install only `deepsec` from npm — `@deepsec/core` and
-    // `@deepsec/scanner` are workspace-internal. Any leaked re-export
-    // here breaks typing for `import { defineConfig } from "deepsec/config"`.
+    // Consumers install only `deepaudit` from npm — `@deepaudit/core` and
+    // `@deepaudit/scanner` are workspace-internal. Any leaked re-export
+    // here breaks typing for `import { defineConfig } from "deepaudit/config"`.
     expect(dts).not.toMatch(/from\s+["']@deepsec\//);
   });
 
@@ -69,7 +69,7 @@ describe("bundle e2e", () => {
     const cwd = makeWorkspace();
     fs.writeFileSync(
       path.join(cwd, "deepsec.config.ts"),
-      `import { defineConfig } from "deepsec/config";
+      `import { defineConfig } from "deepaudit/config";
 export default defineConfig({
   projects: [{ id: "fixture", root: ${JSON.stringify(FIXTURES)} }],
 });`,
@@ -92,7 +92,7 @@ export default defineConfig({
     const cwd = makeWorkspace();
     fs.writeFileSync(
       path.join(cwd, "deepsec.config.ts"),
-      `import { defineConfig } from "deepsec/config";
+      `import { defineConfig } from "deepaudit/config";
 console.error("[config-loaded-marker]");
 export default defineConfig({
   projects: [{ id: "fixture", root: ${JSON.stringify(FIXTURES)} }],
@@ -110,7 +110,7 @@ export default defineConfig({
     // and visible in the scan log.
     fs.writeFileSync(
       path.join(cwd, "deepsec.config.ts"),
-      `import { defineConfig } from "deepsec/config";
+      `import { defineConfig } from "deepaudit/config";
 const plugin = {
   name: "inline-test-plugin",
   matchers: [{
@@ -137,7 +137,7 @@ export default defineConfig({
 
   it("samples/webapp/ — config loads and custom matchers register", () => {
     const sampleDir = path.join(ROOT, "samples/webapp");
-    // Symlink node_modules so the sample's `deepsec/config` import resolves.
+    // Symlink node_modules so the sample's `deepaudit/config` import resolves.
     const link = path.join(sampleDir, "node_modules");
     if (!fs.existsSync(link)) {
       fs.symlinkSync(path.join(ROOT, "node_modules"), link, "dir");
@@ -460,7 +460,7 @@ export default defineConfig({
       expect(init.status, `init: ${init.stdout}\n${init.stderr}`).toBe(0);
 
       // Symlink node_modules so the freshly-init'd workspace can resolve
-      // `deepsec/config` during config evaluation by jiti.
+      // `deepaudit/config` during config evaluation by jiti.
       fs.symlinkSync(path.join(ROOT, "node_modules"), path.join(workspace, "node_modules"), "dir");
 
       const scan = runBundle(["scan", "--project-id", "my-app"], { cwd: workspace });

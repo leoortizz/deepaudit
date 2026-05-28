@@ -1,4 +1,4 @@
-import { getConfig } from "@deepsec/core";
+import { getConfig } from "@deepaudit/core";
 
 /**
  * Resolve the agent backend from CLI input or the loaded config.

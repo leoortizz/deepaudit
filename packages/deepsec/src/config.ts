@@ -2,7 +2,7 @@
  * Public SDK surface for `deepsec` configuration files and plugin authors.
  *
  * Users write:
- *   import { defineConfig } from "deepsec/config";
+ *   import { defineConfig } from "deepaudit/config";
  *
  * Plugin authors writing matchers can also import `regexMatcher` and the
  * matcher-related types from here.
@@ -45,7 +45,7 @@ export type {
   Severity,
   Triage,
   TriagePriority,
-} from "@deepsec/core";
+} from "@deepaudit/core";
 export {
   defineConfig,
   findProject,
@@ -54,6 +54,6 @@ export {
   getRegistry,
   PluginRegistry,
   setLoadedConfig,
-} from "@deepsec/core";
+} from "@deepaudit/core";
 
-export { createDefaultRegistry, MatcherRegistry, regexMatcher } from "@deepsec/scanner";
+export { createDefaultRegistry, MatcherRegistry, regexMatcher } from "@deepaudit/scanner";

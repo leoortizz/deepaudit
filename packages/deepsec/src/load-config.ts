@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { DeepsecConfig } from "@deepsec/core";
-import { setLoadedConfig } from "@deepsec/core";
+import type { DeepsecConfig } from "@deepaudit/core";
+import { setLoadedConfig } from "@deepaudit/core";
 import { createJiti } from "jiti";
 
 const CONFIG_FILENAMES = [
@@ -65,7 +65,7 @@ export async function loadConfig(
 
   if (!config || !Array.isArray(config.projects)) {
     throw new Error(
-      `${file}: config must export a default with at least a "projects" array. Use defineConfig() from @deepsec/core for type help.`,
+      `${file}: config must export a default with at least a "projects" array. Use defineConfig() from @deepaudit/core for type help.`,
     );
   }
 

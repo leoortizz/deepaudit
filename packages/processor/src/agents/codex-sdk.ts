@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import * as os from "node:os";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { RefusalReport } from "@deepsec/core";
+import type { RefusalReport } from "@deepaudit/core";
 import {
   Codex,
   type CodexOptions,

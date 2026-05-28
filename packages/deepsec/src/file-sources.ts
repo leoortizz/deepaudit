@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { deepsecDataIgnoreGlobs, IGNORE_DIRS } from "@deepsec/scanner";
+import { deepsecDataIgnoreGlobs, IGNORE_DIRS } from "@deepaudit/scanner";
 import { minimatch } from "minimatch";
 
 /**

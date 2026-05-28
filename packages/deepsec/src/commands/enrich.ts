@@ -1,5 +1,5 @@
-import type { Severity } from "@deepsec/core";
-import { enrich } from "@deepsec/processor";
+import type { Severity } from "@deepaudit/core";
+import { enrich } from "@deepaudit/processor";
 import { commitAndPushData } from "../data-commit.js";
 import { BOLD, DIM, GREEN, RESET } from "../formatters.js";
 import { resolveProjectId } from "../resolve-project-id.js";

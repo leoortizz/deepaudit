@@ -1,6 +1,6 @@
-import type { Severity } from "@deepsec/core";
-import { readProjectConfig } from "@deepsec/core";
-import { triage } from "@deepsec/processor";
+import type { Severity } from "@deepaudit/core";
+import { readProjectConfig } from "@deepaudit/core";
+import { triage } from "@deepaudit/processor";
 import { BOLD, CYAN, DIM, GREEN, RED, RESET, YELLOW } from "../formatters.js";
 import { assertAgentCredential } from "../preflight.js";
 import { resolveProjectId } from "../resolve-project-id.js";

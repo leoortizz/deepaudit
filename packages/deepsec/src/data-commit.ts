@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { getDataRoot } from "@deepsec/core";
+import { getDataRoot } from "@deepaudit/core";
 
 const DATA_DIR = path.resolve(getDataRoot());
 

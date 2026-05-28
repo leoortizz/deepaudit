@@ -1,8 +1,8 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { FileRecord, Finding, Severity } from "@deepsec/core";
-import { dataDir, getDataRoot, loadAllFileRecords } from "@deepsec/core";
+import type { FileRecord, Finding, Severity } from "@deepaudit/core";
+import { dataDir, getDataRoot, loadAllFileRecords } from "@deepaudit/core";
 import { BOLD, DIM, GREEN, RESET, YELLOW } from "../formatters.js";
 import { resolveAgentType } from "../resolve-agent-type.js";
 
@@ -273,7 +273,7 @@ function writeMdDir(findings: ExportedFinding[], out: string) {
 
   // Only sweep severity subdirs we recognize — keeps an accidental
   // `--out ~/Documents` from nuking unrelated files. Severity values are
-  // a closed enum (see `Severity` in @deepsec/core), so this list IS the
+  // a closed enum (see `Severity` in @deepaudit/core), so this list IS the
   // namespace md-dir mode owns.
   const ourSeverityDirs = Object.keys(SEVERITY_ORDER) as Severity[];
   let droppedStale = 0;

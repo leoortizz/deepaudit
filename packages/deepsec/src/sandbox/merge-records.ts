@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { type AnalysisEntry, type FileRecord, type Finding, fileRecordSchema } from "@deepsec/core";
+import { type AnalysisEntry, type FileRecord, type Finding, fileRecordSchema } from "@deepaudit/core";
 
 /**
  * Tarball extraction is `cwd=dataDir(projectId)`, so file records live

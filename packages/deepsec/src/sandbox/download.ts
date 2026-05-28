@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { dataDir } from "@deepsec/core";
+import { dataDir } from "@deepaudit/core";
 import type { Sandbox } from "@vercel/sandbox";
 import * as tar from "tar";
 import { mergeAfterExtract, snapshotFileRecords } from "./merge-records.js";

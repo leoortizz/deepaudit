@@ -1,5 +1,5 @@
 import { query, type SandboxSettings } from "@anthropic-ai/claude-agent-sdk";
-import type { RefusalReport } from "@deepsec/core";
+import type { RefusalReport } from "@deepaudit/core";
 import {
   backoff,
   buildInvestigatePrompt,

@@ -1,4 +1,4 @@
-import type { FileRecord, Finding, RefusalReport, RevalidationVerdict } from "@deepsec/core";
+import type { FileRecord, Finding, RefusalReport, RevalidationVerdict } from "@deepaudit/core";
 
 export interface AgentProgress {
   type: "started" | "tool_use" | "thinking" | "complete" | "error";

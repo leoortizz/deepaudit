@@ -133,8 +133,8 @@ function injectStubPlugin(configPath: string): void {
   const original = fs.readFileSync(configPath, "utf-8");
   const patched = original
     .replace(
-      'import { defineConfig } from "deepsec/config";\n',
-      'import { defineConfig } from "deepsec/config";\nimport stubPlugin from "./stub-plugin.mjs";\n',
+      'import { defineConfig } from "deepaudit/config";\n',
+      'import { defineConfig } from "deepaudit/config";\nimport stubPlugin from "./stub-plugin.mjs";\n',
     )
     .replace(
       /export default defineConfig\(\{\s*\n\s*projects:/,
@@ -273,18 +273,18 @@ describe.skipIf(!SHOULD_RUN)("pipeline e2e — live sandbox", () => {
         );
         expect(init.status).toBe(0);
 
-        // 2. Substitute the scaffolded `"deepsec": "^x.y.z"` (which
+        // 2. Substitute the scaffolded `"deepaudit": "^x.y.z"` (which
         // points at npm) with a `file:` reference to a tarball of the
         // local source. Otherwise: every version bump in HEAD breaks
         // this test until npm catches up — `pnpm install` inside the
         // sandbox can't resolve a version that hasn't been published
-        // yet. With `file:./deepsec-x.y.z.tgz`, the sandbox uses
+        // yet. With `file:./deepaudit-x.y.z.tgz`, the sandbox uses
         // exactly the code in this branch, every run.
         const tarballPath = packLocalDeepsec(workspaceDir);
         const tarballName = path.basename(tarballPath);
         const pkgPath = path.join(workspaceDir, "package.json");
         const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-        pkg.dependencies.deepsec = `file:./${tarballName}`;
+        pkg.dependencies.deepaudit = `file:./${tarballName}`;
         fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
 
         // 3. Drop the stub plugin + register it. Same shape as

@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { FileRecord } from "@deepsec/core";
-import { dataDir, loadAllFileRecords } from "@deepsec/core";
-import { noiseScore } from "@deepsec/scanner";
+import type { FileRecord } from "@deepaudit/core";
+import { dataDir, loadAllFileRecords } from "@deepaudit/core";
+import { noiseScore } from "@deepaudit/scanner";
 import type { PartitionResult, SandboxSubcommand } from "./types.js";
 
 const SEVERITY_ORDER: Record<string, number> = {

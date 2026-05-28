@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { type DeepsecPlugin, defineConfig } from "deepsec/config";
+import { type DeepsecPlugin, defineConfig } from "deepaudit/config";
 import { webappDebugFlag } from "./matchers/webapp-debug-flag.js";
 import { webappRouteNoRateLimit } from "./matchers/webapp-route-no-rate-limit.js";
 

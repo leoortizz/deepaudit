@@ -55,7 +55,7 @@ jobs:
           CLAUDE_CODE_EXECUTABLE: claude
           BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          pnpm exec deepsec process --agent codex \
+          pnpm exec deepaudit process --agent codex \
             --diff "origin/${BASE_REF}" \
             --comment-out ../comment.md
 

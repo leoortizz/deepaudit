@@ -1,4 +1,4 @@
-import type { MatcherPlugin } from "@deepsec/core";
+import type { MatcherPlugin } from "@deepaudit/core";
 import { describe, expect, it } from "vitest";
 import { createDefaultRegistry } from "../matchers/index.js";
 

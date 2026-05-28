@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { FileRecord, Finding, Severity } from "@deepsec/core";
-import { loadAllFileRecords, readProjectConfig, reportJsonPath, reportMdPath } from "@deepsec/core";
+import type { FileRecord, Finding, Severity } from "@deepaudit/core";
+import { loadAllFileRecords, readProjectConfig, reportJsonPath, reportMdPath } from "@deepaudit/core";
 import { BOLD, DIM, RESET, severityColor } from "../formatters.js";
 import { resolveProjectId } from "../resolve-project-id.js";
 

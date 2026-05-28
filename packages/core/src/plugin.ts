@@ -165,7 +165,7 @@ export interface ExecutorProvider {
 }
 
 // --- Agent backends ---
-// AgentPlugin is defined in @deepsec/processor and re-shipped via plugins by
+// AgentPlugin is defined in @deepaudit/processor and re-shipped via plugins by
 // reference — the field below intentionally accepts any shape so core stays
 // dependency-free. The processor validates the actual contract at use site.
 

@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { ensureProject, readProjectConfig } from "@deepsec/core";
-import { process as processRun } from "@deepsec/processor";
-import { scanFiles } from "@deepsec/scanner";
+import { ensureProject, readProjectConfig } from "@deepaudit/core";
+import { process as processRun } from "@deepaudit/processor";
+import { scanFiles } from "@deepaudit/scanner";
 import { defaultModelForAgent } from "../agent-defaults.js";
 import { resolveFiles } from "../file-sources.js";
 import { BOLD, CYAN, DIM, GREEN, RED, RESET, YELLOW } from "../formatters.js";

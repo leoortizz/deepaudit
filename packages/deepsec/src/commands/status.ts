@@ -1,5 +1,5 @@
-import type { FileStatus, ProjectConfig } from "@deepsec/core";
-import { listRuns, loadAllFileRecords, readProjectConfig } from "@deepsec/core";
+import type { FileStatus, ProjectConfig } from "@deepaudit/core";
+import { listRuns, loadAllFileRecords, readProjectConfig } from "@deepaudit/core";
 import { BOLD, CYAN, DIM, formatDuration, GREEN, RED, RESET, YELLOW } from "../formatters.js";
 import { resolveProjectId } from "../resolve-project-id.js";
 

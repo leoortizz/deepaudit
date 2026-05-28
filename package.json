@@ -1,5 +1,5 @@
 {
-  "name": "deepsec-monorepo",
+  "name": "deepaudit-monorepo",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,12 +11,12 @@
   "packageManager": "pnpm@8.15.9",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vercel-labs/deepsec"
+    "url": "https://github.com/leoortizz/deepsec"
   },
   "scripts": {
     "build": "tsc --build",
-    "bundle": "pnpm --filter deepsec bundle",
-    "deepsec": "tsx packages/deepsec/src/cli.ts",
+    "bundle": "pnpm --filter deepaudit bundle",
+    "deepaudit": "tsx packages/deepsec/src/cli.ts",
     "test": "vitest run",
     "test:unit": "vitest run --project core --project scanner --project processor --project cli",
     "test:e2e": "vitest run --project e2e",
@@ -37,7 +37,7 @@
     "ai",
     "static-analysis"
   ],
-  "author": "Vercel",
+  "author": "leoortizz",
   "devDependencies": {
     "@biomejs/biome": "^2.4.13",
     "@types/node": "^22.0.0",
@@ -47,6 +47,6 @@
     "vitest": "^3.1.0"
   },
   "dependencies": {
-    "deepsec": "workspace:*"
+    "deepaudit": "workspace:*"
   }
 }

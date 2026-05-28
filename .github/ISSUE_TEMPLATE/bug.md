@@ -20,7 +20,7 @@ labels: bug
 
 ## Environment
 
-- deepsec version (`pnpm deepsec --version`):
+- deepsec version (`pnpm deepaudit --version`):
 - Node version (`node --version`):
 - OS:
 - Agent backend (`claude-agent-sdk` / `codex`):

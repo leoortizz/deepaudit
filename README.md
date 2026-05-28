@@ -15,7 +15,7 @@ analyzed and only investigating the rest.
 Navigate to the root of the repository that you want to scan, then:
 
 ```bash
-npx deepsec init       # creates .deepsec/ with this repo as the first project
+npx deepaudit init       # creates .deepsec/ with this repo as the first project
 cd .deepsec
 pnpm install           # installs deepsec from npm
 
@@ -41,10 +41,10 @@ and prompt:
 Then scan from inside `.deepsec/`:
 
 ```bash
-pnpm deepsec scan
-pnpm deepsec process    
-pnpm deepsec revalidate # optional, cuts FP rate
-pnpm deepsec export --format md-dir --out ./findings
+pnpm deepaudit scan
+pnpm deepaudit process    
+pnpm deepaudit revalidate # optional, cuts FP rate
+pnpm deepaudit export --format md-dir --out ./findings
 ```
 
 If you feel like the `deepsec` should look at more parts of the code, give it [the writing matchers](docs/writing-matchers.md) doc to find more valuable starting points in your code base.
@@ -96,7 +96,7 @@ where it left off.
 Large monorepos can fan work across [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox) microVMs:
 
 ```bash
-pnpm deepsec sandbox process --project-id my-app --sandboxes 10 --concurrency 4
+pnpm deepaudit sandbox process --project-id my-app --sandboxes 10 --concurrency 4
 ```
 
 Needs a Vercel account. The local working tree is tarballed and

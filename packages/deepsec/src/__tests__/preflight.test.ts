@@ -70,7 +70,7 @@ describe("assertAgentCredential", () => {
     expect(() => assertAgentCredential("claude-agent-sdk")).toThrow(/ANTHROPIC_AUTH_TOKEN/);
     expect(() => assertAgentCredential("claude-agent-sdk")).toThrow(/AI_GATEWAY_API_KEY/);
     expect(() => assertAgentCredential("claude-agent-sdk")).toThrow(
-      /https:\/\/github\.com\/vercel-labs\/deepsec\/blob\/main\/docs\/vercel-setup\.md/,
+      /https:\/\/github\.com\/leoortizz\/deepsec\/blob\/main\/docs\/vercel-setup\.md/,
     );
   });
 
@@ -157,7 +157,7 @@ describe("assertSandboxCredential", () => {
     expect(() => assertSandboxCredential()).toThrow(/vercel link/);
     expect(() => assertSandboxCredential()).toThrow(/VERCEL_OIDC_TOKEN/);
     expect(() => assertSandboxCredential()).toThrow(
-      /https:\/\/github\.com\/vercel-labs\/deepsec\/blob\/main\/docs\/vercel-setup\.md/,
+      /https:\/\/github\.com\/leoortizz\/deepsec\/blob\/main\/docs\/vercel-setup\.md/,
     );
   });
 

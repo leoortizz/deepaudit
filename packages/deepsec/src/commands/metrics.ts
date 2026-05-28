@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { getDataRoot, loadAllFileRecords } from "@deepsec/core";
+import { getDataRoot, loadAllFileRecords } from "@deepaudit/core";
 import { BOLD, CYAN, DIM, GREEN, RED, RESET, YELLOW } from "../formatters.js";
 
 const SEVERITY_ORDER: Record<string, number> = {

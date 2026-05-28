@@ -10,5 +10,5 @@ Copy-paste starting points showing how deepsec looks in practice.
   `config.json`.
 
 Each sample is self-contained: copy the directory next to your real
-project, point `root` at your codebase, and run `pnpm deepsec scan` from
+project, point `root` at your codebase, and run `pnpm deepaudit scan` from
 inside.
