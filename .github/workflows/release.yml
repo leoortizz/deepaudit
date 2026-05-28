@@ -10,7 +10,7 @@ name: Release
 #      maintainer of the package).
 #   2. Under "Publishing access" → "Trusted Publisher", click Configure.
 #   3. Pick "GitHub Actions" and fill in:
-#        Organization or user:  vercel-labs
+#        Organization or user:  leoortizz
 #        Repository:            deepaudit
 #        Workflow filename:     release.yml
 #        Environment name:      (leave blank)
