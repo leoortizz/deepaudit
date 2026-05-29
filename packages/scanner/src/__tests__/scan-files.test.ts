@@ -89,9 +89,9 @@ describe("scanFiles()", () => {
 
   it("preserves prior candidates when a file is rescanned", async () => {
     const { root, projectId } = makeProject({
-      // Use a pattern that an actual matcher will fire on. SQL injection
-      // matchers fire on `"SELECT * FROM users WHERE id = " + req.query.id`.
-      "src/x.ts": 'const q = "SELECT * FROM users WHERE id = " + req.query.id;\n',
+      // Use a pattern that an actual matcher will fire on. The
+      // process-env-direct matcher fires on `process.env.X` access.
+      "src/x.ts": "const url = process.env.DATABASE_URL;\n",
     });
 
     await scanFiles({ projectId, root, filePaths: ["src/x.ts"] });

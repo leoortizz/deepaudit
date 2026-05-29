@@ -35,7 +35,7 @@ describe("severity levels", () => {
 describe("revalidation adjustedSeverity", () => {
   const baseRevalidation = {
     verdict: "true-positive" as const,
-    reasoning: "Confirmed exploitable",
+    reasoning: "Confirmed violation",
     revalidatedAt: "2026-04-01T00:00:00Z",
     runId: "run1",
     model: "claude-opus-4-6",
@@ -76,8 +76,6 @@ describe("violation with triage and revalidation", () => {
       confidence: "medium",
       triage: {
         priority: "P1",
-        exploitability: "moderate",
-        impact: "high",
         reasoning: "Could cause data inconsistency in production",
         triagedAt: "2026-04-01T12:00:00Z",
         model: "claude-sonnet-4-6",

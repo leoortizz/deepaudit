@@ -200,7 +200,7 @@ jobs:
   artifact. That keeps the post-comment job a no-op when there's
   nothing to say.
 
-### Threat model notes
+### CI workflow safety
 
 - **Don't grant `pull-requests: write` to a job that runs PR code.**
   The two-job pattern above keeps PR code in the no-write `analyze`

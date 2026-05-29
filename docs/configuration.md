@@ -46,7 +46,7 @@ see [`samples/webapp/deepaudit.config.ts`](../samples/webapp/deepaudit.config.ts
 If `infoMarkdown` isn't set in the config, deepaudit looks for
 `data/<id>/RULES.md` and injects its contents into the prompt for
 `process`, `triage`, and `revalidate`. A few hundred words of repo
-context (what the codebase does, the auth shape, the threat model,
+context (what the codebase does, its conventions and architecture,
 known false-positive sources) is the right length. See
 [getting-started.md](getting-started.md) for a coding-agent prompt that
 writes a good RULES.md.
@@ -55,8 +55,8 @@ writes a good RULES.md.
 
 ```ts
 matchers: {
-  only: ["sql-injection", "auth-bypass"],   // run *only* these
-  exclude: ["framework-internal-header"],    // skip these
+  only: ["console-log", "any-type"],   // run *only* these
+  exclude: ["todo-no-link"],            // skip these
 }
 ```
 

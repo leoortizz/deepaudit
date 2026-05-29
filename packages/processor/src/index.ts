@@ -203,7 +203,7 @@ export async function process(params: {
     // No config.json — that's fine
   }
 
-  // Tech detection result drives per-batch threat highlights. Read once
+  // Tech detection result drives per-batch audit highlights. Read once
   // from `data/<id>/tech.json` (written by `scan()`); empty list when the
   // project predates tech detection — assembler then falls back to bare
   // core prompt, which matches the legacy DEFAULT_PROMPT_TEMPLATE shape.
@@ -573,7 +573,7 @@ export async function process(params: {
       try {
         // When using the modular assembled prompt, RULES.md is already
         // injected by `assemblePrompt()` (between `---` separators after
-        // the threat highlights). Pass `""` to the agent layer to avoid a
+        // the audit highlights). Pass `""` to the agent layer to avoid a
         // second `## Project Context` block being appended on top of it.
         // Custom-template callers don't go through the assembler, so they
         // still need the agent layer to inject RULES.md for them.

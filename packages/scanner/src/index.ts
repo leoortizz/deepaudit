@@ -459,8 +459,8 @@ export async function scan(params: {
   // Explicit `--matchers <slug>` is a stronger signal than the gate —
   // when the caller named the matchers, honor every single one. We do
   // this per-matcher (not "only if all are gated out") because mixing
-  // gated and ungated slugs in `--matchers ...,xss` would otherwise
-  // silently drop the gated half: `xss` runs, the gated slug is
+  // gated and ungated slugs in `--matchers ...,console-log` would otherwise
+  // silently drop the gated half: `console-log` runs, the gated slug is
   // dropped, and the user has no way to know.
   const honorAllSelected = !!params.matcherSlugs;
   const activeMatchers: MatcherPlugin[] = [];

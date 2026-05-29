@@ -8,7 +8,7 @@ import { regexMatcher } from "deepaudit/config";
  *
  * Production envs occasionally leak NODE_ENV != "production" (preview
  * deploys, staging without strict env, container default), which means
- * these gates aren't a real authorization boundary. The AI's job is to
+ * these gates aren't a reliable guard on their own. The AI's job is to
  * confirm whether the gated surface is sensitive and whether it has
  * any other guard.
  */

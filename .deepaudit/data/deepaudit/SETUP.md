@@ -24,10 +24,11 @@ still has placeholder sections.
    - Name primitives by their public name (e.g. `withAuthentication`,
      `auth.can()`, `isTeamAdmin`). **No line numbers.** Don't enumerate
      more than 5 paths in any list.
-   - Skip generic CWE categories — built-in matchers already cover
-     "SSRF", "SQL injection", "XSS". Cover what's *project-specific*:
-     internal auth helpers, custom middleware names, fork-specific
-     stubs, intended-public endpoints.
+   - Skip patterns the built-in matchers already cover (stray
+     `console.log`, `any` types, direct `process.env` access, unlinked
+     TODOs). Cover what's *project-specific*: internal helpers, custom
+     middleware names, naming/structure conventions, intended
+     exceptions to a rule.
    - One short paragraph or 3–5 short bullets per section. Not both.
 
    Source material (read in this order, stop when you have enough):

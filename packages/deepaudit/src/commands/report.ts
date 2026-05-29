@@ -33,7 +33,7 @@ function generateMarkdown(records: FileRecord[], projectId: string): string {
 
   const analyzedCount = records.filter((r) => r.status === "analyzed").length;
 
-  let md = `# Vulnerability Scan Report\n\n`;
+  let md = `# Audit Report\n\n`;
   md += `| Field | Value |\n|-------|-------|\n`;
   md += `| Project | ${projectId} |\n`;
   md += `| Date | ${new Date().toISOString()} |\n`;
@@ -48,7 +48,7 @@ function generateMarkdown(records: FileRecord[], projectId: string): string {
   md += `| HIGH | ${bySeverity.HIGH.length} |\n`;
   md += `| MEDIUM | ${bySeverity.MEDIUM.length} |\n\n`;
 
-  for (const severity of ["CRITICAL", "HIGH", "MEDIUM", "HIGH", "MEDIUM"] as Severity[]) {
+  for (const severity of ACTIONABLE_SEVERITIES) {
     const violations = bySeverity[severity];
     if (violations.length === 0) continue;
 
@@ -171,7 +171,7 @@ function printStdoutSummary(args: {
   const date = new Date().toISOString().slice(0, 10);
 
   console.log();
-  console.log(`${BOLD}Vulnerability scan report — ${projectId}${RESET}`);
+  console.log(`${BOLD}Audit report — ${projectId}${RESET}`);
   console.log(`${DIM}Generated ${date}${runId ? ` · run ${runId}` : ""}${RESET}`);
   console.log();
   console.log(`  Files analyzed: ${records.length}`);

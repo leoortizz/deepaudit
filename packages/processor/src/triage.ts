@@ -18,8 +18,6 @@ const TRIAGE_BATCH_SIZE = 30;
 interface TriageVerdict {
   title: string;
   priority: TriagePriority;
-  exploitability: "trivial" | "moderate" | "difficult";
-  impact: "critical" | "high" | "medium" | "low";
   reasoning: string;
 }
 
@@ -132,7 +130,7 @@ export async function triage(params: {
       })
       .join("\n\n");
 
-    const prompt = `You are a security triage expert. Given a list of vulnerability violations, classify each by priority for remediation.
+    const prompt = `You are a triage expert. Given a list of rule-conformance violations, classify each by priority for remediation.
 
 ${projectRules ? `## Project Context (summary only)\n\n${projectRules.slice(0, 2000)}\n` : ""}
 
@@ -142,24 +140,13 @@ ${violationsList}
 
 ## Classification Criteria
 
-**P0 — Fix immediately:** Exploitable by external attackers with trivial effort. Direct impact on user data, auth bypass, or code execution. No mitigations in place.
+**P0 — Fix immediately:** Breaks a load-bearing rule in a way likely to cause incidents (data loss, broken builds, leaked secrets). Wide blast radius. Should block the change.
 
-**P1 — Fix soon:** Real vulnerability but requires specific conditions (internal access, feature flag enabled, race condition). Moderate impact.
+**P1 — Fix soon:** Clear violation of a stated rule with material impact, but contained — limited to one module, or only bites under specific conditions.
 
-**P2 — Fix eventually:** Low-impact or difficult to exploit. Defense-in-depth improvements. Code quality issues with security implications.
+**P2 — Fix eventually:** Low blast radius. Defensive or stylistic violations, soft preferences clearly stated in the rules, gradual cleanup.
 
-**skip — Not actionable:** False positive, already mitigated, test-only code, or too vague to act on.
-
-## Exploitability scale
-- **trivial**: Can be exploited with a single crafted HTTP request or URL
-- **moderate**: Requires some setup (valid auth, specific timing, internal network)
-- **difficult**: Requires deep knowledge, chained exploits, or unlikely conditions
-
-## Impact scale
-- **critical**: Full auth bypass, RCE, data exfiltration across tenants
-- **high**: Single-tenant data access, privilege escalation, secret exposure
-- **medium**: Information disclosure, DoS, weak crypto
-- **low**: Cosmetic, theoretical, or minimal real-world impact
+**skip — Not actionable:** False positive, already addressed elsewhere in the file, test-only code, or too vague to act on.
 
 ## Output
 
@@ -168,8 +155,6 @@ ${violationsList}
   {
     "title": "exact title",
     "priority": "P0" | "P1" | "P2" | "skip",
-    "exploitability": "trivial" | "moderate" | "difficult",
-    "impact": "critical" | "high" | "medium" | "low",
     "reasoning": "1-2 sentences"
   }
 ]
@@ -206,8 +191,6 @@ ${violationsList}
 
         item.violation.triage = {
           priority: verdict.priority,
-          exploitability: verdict.exploitability,
-          impact: verdict.impact,
           reasoning: verdict.reasoning,
           triagedAt: new Date().toISOString(),
           model,

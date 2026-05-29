@@ -81,19 +81,19 @@ describe("mergeFileRecord", () => {
 
   it("unions violations by ruleSlug+title signature", () => {
     const host = record({
-      violations: [violation("xss", "XSS via innerHTML")],
+      violations: [violation("any-type", "any in public API")],
     });
     const incoming = record({
-      violations: [violation("ssrf", "SSRF in webhook handler")],
+      violations: [violation("console-log", "console.log in request handler")],
     });
 
     const merged = mergeFileRecord(host, incoming);
 
-    expect(merged.violations.map((f) => f.ruleSlug).sort()).toEqual(["ssrf", "xss"]);
+    expect(merged.violations.map((f) => f.ruleSlug).sort()).toEqual(["any-type", "console-log"]);
   });
 
   it("preserves revalidation/triage from either side when violation signatures match", () => {
-    const hostViolation = violation("xss", "XSS", {
+    const hostViolation = violation("any-type", "any in handler", {
       revalidation: {
         verdict: "true-positive",
         reasoning: "confirmed",
@@ -102,12 +102,10 @@ describe("mergeFileRecord", () => {
         model: "gpt-5.5",
       },
     });
-    const incomingViolation = violation("xss", "xss", {
+    const incomingViolation = violation("any-type", "any in handler", {
       triage: {
         priority: "P0",
-        exploitability: "trivial",
-        impact: "critical",
-        reasoning: "trivial RCE",
+        reasoning: "drops type safety on a public boundary",
         triagedAt: "2026-05-06T16:05:00.000Z",
         model: "claude-sonnet-4-6",
       },

@@ -8,10 +8,10 @@ describe("fileRecordSchema", () => {
       projectId: "test",
       candidates: [
         {
-          ruleSlug: "xss",
+          ruleSlug: "console-log",
           lineNumbers: [10, 15],
           snippet: "some code",
-          matchedPattern: "dangerouslySetInnerHTML",
+          matchedPattern: "console.log(",
         },
       ],
       lastScannedAt: "2026-04-01T14:30:52.000Z",
@@ -35,8 +35,8 @@ describe("fileRecordSchema", () => {
       violations: [
         {
           severity: "HIGH",
-          ruleSlug: "xss",
-          title: "XSS via innerHTML",
+          ruleSlug: "console-log",
+          title: "console.log in committed code",
           description: "desc",
           lineNumbers: [10],
           recommendation: "fix",
@@ -84,7 +84,7 @@ describe("runMetaSchema", () => {
       createdAt: "2026-04-01T14:30:52.000Z",
       type: "scan",
       phase: "running",
-      scannerConfig: { matcherSlugs: ["xss", "rce"] },
+      scannerConfig: { matcherSlugs: ["console-log", "process-env-direct"] },
       stats: {},
     };
     expect(() => runMetaSchema.parse(valid)).not.toThrow();

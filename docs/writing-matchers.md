@@ -12,11 +12,11 @@ The intended loop:
 scan (fast, wide) → process (AI, slow + expensive) → revalidate → write better matchers
 ```
 
-The default matcher set covers common CWE shapes (SQL injection, SSRF,
-path traversal, etc.) and a handful of popular framework shapes
-(Next.js, Prisma, Express). It will miss patterns specific to your
-codebase: an internal RPC framework, a less common language, a custom
-auth helper, a non-default route layout. Custom matchers fill those
+The default matcher set covers broad, language-agnostic code-hygiene
+shapes (stray `console.log`, `any` types, TODOs without a tracking link,
+direct `process.env` access, etc.). It will miss conventions specific to
+your codebase: an internal naming scheme, a required wrapper around a
+helper, a layering rule, a banned import. Custom matchers fill those
 gaps.
 
 ## When to write one
@@ -63,8 +63,9 @@ export default defineConfig({
 Slugs are unique. If your slug collides with a built-in, **your
 matcher wins** — useful for swapping in a tighter org-specific version.
 
-If a matcher is genuinely reusable across orgs (e.g. a CWE shape or a
-public-framework shape), consider contributing it back to the
+If a matcher is genuinely reusable across orgs (e.g. a general
+code-hygiene shape or a public-framework convention), consider
+contributing it back to the
 [deepaudit repo](https://github.com/leoortizz/deepaudit) instead. That
 flow is in `CONTRIBUTING.md` of that repo.
 
@@ -109,8 +110,8 @@ agent so it can read both the source and `.deepaudit/data/`. Then paste:
 > 2. Compare that against the **target repository** (root above
 >    `.deepaudit/`). Identify the **major entry points** to the code:
 >    public HTTP handlers, RPC entry points, queue consumers, cron
->    jobs, CLI commands, anything that takes untrusted input from the
->    outside. Walk the directories that look like routes/handlers/api,
+>    jobs, CLI commands, anything that takes input from outside the
+>    codebase. Walk the directories that look like routes/handlers/api,
 >    and the framework config files (`next.config.*`,
 >    `wrangler.toml`, `serverless.yml`, `Procfile`, `main.go`,
 >    `app.py`, etc.) to figure out the entry-point shape.
@@ -129,7 +130,7 @@ agent so it can read both the source and `.deepaudit/data/`. Then paste:
 >    - **Slug** (kebab-case, names what it flags, e.g.
 >      `hono-route-no-auth`, `worker-fetch-handler`).
 >    - **Noise tier**:
->      - `precise` — pattern only matches the vulnerable shape, minimal FPs.
+>      - `precise` — pattern only matches the violating shape, minimal FPs.
 >      - `normal` — broader, the AI does the disambiguation. Default.
 >      - `noisy` — very wide net; intentionally forces AI review of a
 >        path glob (use for entry-point coverage where you just want
@@ -150,10 +151,10 @@ agent so it can read both the source and `.deepaudit/data/`. Then paste:
 >    candidates per matcher to spot-check the regex isn't producing
 >    obvious false positives.
 >
-> Bias toward `precise` when you can describe the bug exactly. Use
+> Bias toward `precise` when you can describe the violation exactly. Use
 > `noisy` deliberately when the goal is **entry-point coverage** —
 > you'd rather the AI look at every `**/api/**/route.ts` than rely on
-> a regex to predict which ones are vulnerable.
+> a regex to predict which ones break a rule.
 >
 > Generalize the *shape* of the pattern, not specific identifiers. If
 > the repo's auth helper is `requireSession()`, the matcher should
@@ -183,8 +184,8 @@ When happy, commit `.deepaudit/deepaudit.config.ts` and
 
 | Tier | When | Example |
 |---|---|---|
-| `precise` | Pattern is unambiguous. | `prisma-raw-sql`: `\$queryRawUnsafe\s*\(` matches only the unsafe API. |
-| `normal` | Pattern is broader; AI disambiguates. | `auth-bypass`: flags admin checks and skip-auth strings; AI judges. |
+| `precise` | Pattern is unambiguous. | `console-log`: `\bconsole\.log\s*\(` matches only the call. |
+| `normal` | Pattern is broader; AI disambiguates. | `todo-no-link`: flags `TODO`/`FIXME` comments; AI judges whether a tracking link is present. |
 | `noisy` | Every file matching a glob should be reviewed by the AI. | `service-entry-point`: every `**/api/**/route.ts` becomes a candidate. |
 
 Tier also influences ordering. `precise` candidates are processed
@@ -238,7 +239,7 @@ Decision tree:
 |---|---|
 | An org-specific helper, package, or route layout | Your inline plugin (`.deepaudit/matchers/`) |
 | A reference to a concrete internal service name | Your inline plugin |
-| A CWE shape (path traversal, SSRF, prototype pollution) the public set misses | Consider upstreaming to [deepaudit](https://github.com/leoortizz/deepaudit) |
+| A general code-hygiene shape (stray debug logging, `any` types, banned imports) the public set misses | Consider upstreaming to [deepaudit](https://github.com/leoortizz/deepaudit) |
 | A shape for a popular OSS framework (Hono, FastAPI, Drizzle) | Upstreaming benefits everyone |
 
 For copy-paste starting points, see

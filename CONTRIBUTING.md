@@ -17,7 +17,7 @@ packages/
   deepaudit/              Publishable package: bundled CLI + the `deepaudit/config` sub-export + the @vercel/sandbox executor
 e2e/                   End-to-end tests against a fixture project
 fixtures/
-  vulnerable-app/      Intentionally vulnerable test data (excluded from lint/knip)
+  sample-app/          Synthetic conformance issues for e2e tests (excluded from lint/knip)
 docs/                  User-facing documentation
 samples/               Copy-paste starting points for new users
 ```
@@ -125,7 +125,7 @@ the workspace config in `vitest.workspace.ts` glues them together.
 
 The standard matcher test pattern is in
 `packages/scanner/src/__tests__/matchers.test.ts`: a single test that
-asserts the matcher fires on a known-vulnerable input and doesn't on a
+asserts the matcher fires on a known-bad input and doesn't on a
 known-safe one.
 
 ## Reporting security issues in deepaudit

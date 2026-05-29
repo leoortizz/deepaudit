@@ -77,7 +77,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
   {
     name: "02-nextjs-tsx-batch",
     description:
-      "Typical Next.js + React project, batch of .tsx files. Carries Next.js + React highlights and slug notes for the matched candidates.",
+      "Typical Next.js + React project, batch of .tsx files. Carries slug notes for the matched candidates.",
     detectedTags: ["nextjs", "react", "node"],
     files: [
       {
@@ -86,7 +86,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
           {
             slug: "all-server-actions",
             lines: [12, 34],
-            pattern: "Server Action export — investigate auth + ownership",
+            pattern: "Server Action export — investigate rule conformance",
           },
         ],
       },
@@ -94,9 +94,9 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
         path: "app/profile/page.tsx",
         candidates: [
           {
-            slug: "xss",
+            slug: "console-log",
             lines: [48],
-            pattern: "dangerouslySetInnerHTML",
+            pattern: "console.log(",
           },
           {
             slug: "dangerous-html",
@@ -121,9 +121,9 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             pattern: "function-based view (def view(request))",
           },
           {
-            slug: "sql-injection",
+            slug: "any-type",
             lines: [55],
-            pattern: "Model.objects.raw with f-string",
+            pattern: "untyped parameter annotation",
           },
         ],
       },
@@ -154,9 +154,9 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             pattern: "class-based view",
           },
           {
-            slug: "sql-injection",
+            slug: "any-type",
             lines: [44],
-            pattern: "cursor.execute with %-formatted SQL",
+            pattern: "untyped parameter annotation",
           },
         ],
       },
@@ -186,7 +186,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             lines: [12, 18, 24],
             pattern: "app/router method registration",
           },
-          { slug: "xss", lines: [40], pattern: "innerHTML" },
+          { slug: "console-log", lines: [40], pattern: "console.log(" },
         ],
       },
     ],
@@ -216,9 +216,9 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             pattern: "class-based view",
           },
           {
-            slug: "sql-injection",
+            slug: "any-type",
             lines: [29],
-            pattern: "f-string SQL",
+            pattern: "untyped parameter annotation",
           },
         ],
       },
@@ -252,7 +252,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
       {
         path: "app/secrets.tsx",
         candidates: [
-          { slug: "xss", lines: [22], pattern: "dangerouslySetInnerHTML" },
+          { slug: "console-log", lines: [22], pattern: "console.log(" },
           {
             slug: "secret-in-fallback",
             lines: [4],
@@ -280,11 +280,11 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             pattern: "Controller class",
           },
           {
-            slug: "sql-injection",
+            slug: "any-type",
             lines: [31],
-            pattern: "DB::raw with interpolated input",
+            pattern: "untyped parameter annotation",
           },
-          { slug: "xss", lines: [48], pattern: "Blade {!! !!} render" },
+          { slug: "console-log", lines: [48], pattern: "console.log(" },
         ],
       },
     ],
@@ -292,7 +292,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
   {
     name: "10-rails-rb-batch",
     description:
-      "Rails project, batch of .rb controller files. Confirms the Rails highlight names raw / html_safe / <%== %> as XSS sinks (NOT bare <%= %>, which auto-escapes in Rails 3+).",
+      "Rails project, batch of .rb controller files. A Ruby-only batch carries slug notes for the matched candidates.",
     detectedTags: ["rails", "ruby"],
     files: [
       {
@@ -304,9 +304,9 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             pattern: "Rails controller class",
           },
           {
-            slug: "sql-injection",
+            slug: "any-type",
             lines: [29],
-            pattern: "where(\"col = '#{x}'\")",
+            pattern: "untyped parameter annotation",
           },
           {
             slug: "open-redirect",
@@ -320,7 +320,7 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
   {
     name: "11-go-multi-framework-batch",
     description:
-      "Go project that pulls in two Go frameworks (Gin + Chi) — both highlights ship for a Go-only batch.",
+      "Go project that pulls in two Go frameworks (Gin + Chi) for a Go-only batch.",
     detectedTags: ["gin", "chi", "go"],
     files: [
       {
@@ -337,9 +337,9 @@ export const PROMPT_SAMPLE_SCENARIOS: PromptSampleScenario[] = [
             pattern: "Chi method registration",
           },
           {
-            slug: "go-ssrf",
+            slug: "todo-no-link",
             lines: [60],
-            pattern: "http.Get with concatenated URL",
+            pattern: "TODO without a tracking link",
           },
         ],
       },

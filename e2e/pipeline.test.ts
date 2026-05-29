@@ -20,7 +20,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const BUNDLE = path.join(ROOT, "packages/deepaudit/dist/cli.mjs");
-const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
+const FIXTURES = path.join(ROOT, "fixtures/sample-app");
 
 interface RunResult {
   stdout: string;
@@ -252,7 +252,7 @@ describe("pipeline e2e", () => {
       expect(metrics.stdout).toMatch(/HIGH/);
       // Stub returns true-positive for every violation; ensure the TP
       // column reflects that.
-      expect(metrics.stdout).toMatch(/True Positives by Vulnerability Type/);
+      expect(metrics.stdout).toMatch(/True Positives by Rule/);
 
       // report — writes a JSON + Markdown summary under data/<id>/reports/
       const report = runBundle(["report"], workspaceDir);

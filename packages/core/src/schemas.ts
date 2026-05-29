@@ -45,8 +45,6 @@ export const violationSchema = z.object({
   triage: z
     .object({
       priority: z.enum(["P0", "P1", "P2", "skip"]),
-      exploitability: z.enum(["trivial", "moderate", "difficult"]),
-      impact: z.enum(["critical", "high", "medium", "low"]),
       reasoning: z.string(),
       triagedAt: z.string(),
       model: z.string(),

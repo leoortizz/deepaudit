@@ -21,8 +21,7 @@ const ALLOWED_EXTENSIONS = new Set([".json", ".md", ".csv", ".txt"]);
 // tampered with the archive, the extracted files can only land in these
 // known shapes. Critically, this rejects a top-level `project.json` (whose
 // `rootPath` field would otherwise be trusted by the next CLI run and steer
-// later sandbox uploads at attacker-chosen host paths). See the
-// "archive-extraction-untrusted" violation in .deepaudit/violations.
+// later sandbox uploads at attacker-chosen host paths).
 //
 // Path segments use `[^/\\\0]+` rather than a stricter character class so
 // real-world repo paths pass through unchanged: Next.js dynamic routes

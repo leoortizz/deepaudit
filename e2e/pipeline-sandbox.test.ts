@@ -42,7 +42,7 @@ import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
+const FIXTURES = path.join(ROOT, "fixtures/sample-app");
 
 // We invoke the bundle through `tmp/node_modules/deepaudit/dist/cli.mjs`
 // (a symlink chain back to the source package) WITH

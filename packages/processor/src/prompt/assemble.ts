@@ -25,7 +25,7 @@ export interface AssembleParams {
    */
   detectedTags: string[];
   /**
-   * Vulnerability slugs flagged in the current batch. Per-slug notes are
+   * Rule slugs flagged in the current batch. Per-slug notes are
    * only included when their slug appears here, so the prompt scales
    * with what the scanner actually saw — not the entire registry.
    */
@@ -94,7 +94,7 @@ function renderFrameworkSection(
 
   // Try the full version. If it's under the cap, ship it.
   const fullBody = knownHighlights.map(renderHighlight).join("\n\n");
-  const fullSection = `## Threat highlights for this repo's tech stack\n\n${fullBody}`;
+  const fullSection = `## Audit highlights for this repo's tech stack\n\n${fullBody}`;
 
   if (fullSection.length <= FRAMEWORK_SECTION_CHAR_BUDGET) {
     return {
@@ -110,8 +110,8 @@ function renderFrameworkSection(
   const titles = knownHighlights.map((h) => h.title).join(", ");
   const fallback =
     `## Tech in this repo\n\nThis repo uses ${knownHighlights.length} known frameworks: ${titles}. ` +
-    `Apply standard auth, input validation, and authorization thinking for each — pay particular ` +
-    `attention to cross-framework trust boundaries (one framework's "internal" call is another's public endpoint).`;
+    `Apply each framework's idioms and the project's stated conventions for each — pay particular ` +
+    `attention to cross-framework seams, where one framework's assumptions don't hold in another.`;
   return {
     text: fallback,
     includedTags: knownHighlights.map((h) => h.tag),
@@ -151,7 +151,7 @@ export interface AssembleResult {
  * Assemble the full investigation prompt. Composition:
  *
  *   [generic core]
- *   ## Threat highlights for this repo's tech stack
+ *   ## Audit highlights for this repo's tech stack
  *     ### <tech>
  *       - bullet
  *       - bullet

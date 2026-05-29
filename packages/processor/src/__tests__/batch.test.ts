@@ -8,7 +8,7 @@ function makeRecord(filePath: string): FileRecord {
     projectId: "test",
     candidates: [
       {
-        ruleSlug: "xss",
+        ruleSlug: "console-log",
         lineNumbers: [1],
         snippet: "code",
         matchedPattern: "test",

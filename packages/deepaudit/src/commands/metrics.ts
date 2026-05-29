@@ -32,8 +32,8 @@ interface ProjectMetrics {
   pending: number;
   violations: number;
   bySeverity: Record<string, number>;
-  byVulnType: Record<string, number>;
-  byVulnTypeTP: Record<string, number>;
+  byRule: Record<string, number>;
+  byRuleTP: Record<string, number>;
   byTriage: Record<string, number>;
   revalidation: {
     tp: number;
@@ -74,8 +74,8 @@ function getMetrics(projectId: string, minSeverity?: string): ProjectMetrics {
     pending: records.filter((r) => r.status === "pending" || r.status === "error").length,
     violations: 0,
     bySeverity: {},
-    byVulnType: {},
-    byVulnTypeTP: {},
+    byRule: {},
+    byRuleTP: {},
     byTriage: {},
     revalidation: { tp: 0, fp: 0, fixed: 0, uncertain: 0, duplicate: 0, pending: 0 },
     cost: 0,
@@ -85,13 +85,13 @@ function getMetrics(projectId: string, minSeverity?: string): ProjectMetrics {
   };
 
   for (const record of records) {
-    // Violations — severity / vulntype / triage / revalidation rollups
+    // Violations — severity / rule / triage / revalidation rollups
     for (const f of record.violations) {
       if (SEVERITY_ORDER[f.severity] > minOrder) continue;
       m.violations++;
       m.bySeverity[f.severity] = (m.bySeverity[f.severity] || 0) + 1;
       const slug = f.ruleSlug || "unknown";
-      m.byVulnType[slug] = (m.byVulnType[slug] || 0) + 1;
+      m.byRule[slug] = (m.byRule[slug] || 0) + 1;
 
       if (f.triage?.priority) {
         m.byTriage[f.triage.priority] = (m.byTriage[f.triage.priority] || 0) + 1;
@@ -100,7 +100,7 @@ function getMetrics(projectId: string, minSeverity?: string): ProjectMetrics {
       const verdict = f.revalidation?.verdict;
       if (verdict === "true-positive") {
         m.revalidation.tp++;
-        m.byVulnTypeTP[slug] = (m.byVulnTypeTP[slug] || 0) + 1;
+        m.byRuleTP[slug] = (m.byRuleTP[slug] || 0) + 1;
       } else if (verdict === "false-positive") m.revalidation.fp++;
       else if (verdict === "fixed") m.revalidation.fixed++;
       else if (verdict === "uncertain") m.revalidation.uncertain++;
@@ -249,27 +249,15 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
     }
   }
 
-  console.log(`\n${BOLD}Vulnerability Metrics${RESET} (min severity: ${minSev})\n`);
+  console.log(`\n${BOLD}Audit Metrics${RESET} (min severity: ${minSev})\n`);
 
   // --- Section 1: Per-project violations by severity + revalidation status ---
   // Columns: every severity bucket so a glance answers "where do these
   // violations sit?", plus TP/FP from revalidation. Pending/Uncertain were
   // dropped from this row — they live in the cost/triage tables below.
-  const sevW = [22, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5];
-  const sevH = [
-    "Project",
-    "Files",
-    "Done",
-    "CRIT",
-    "HIGH",
-    "MED",
-    "HBUG",
-    "MEDIUM",
-    "NIT",
-    "TP",
-    "FP",
-  ];
-  const sevRightCols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const sevW = [22, 6, 5, 5, 5, 5, 5, 5, 5];
+  const sevH = ["Project", "Files", "Done", "CRIT", "HIGH", "MED", "NIT", "TP", "FP"];
+  const sevRightCols = [1, 2, 3, 4, 5, 6, 7, 8];
 
   console.log(headerRow(sevH, sevW));
 
@@ -286,8 +274,8 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
     cost: 0,
     analysisCount: 0,
     tokens: emptyTokens(),
-    byVulnType: {} as Record<string, number>,
-    byVulnTypeTP: {} as Record<string, number>,
+    byRule: {} as Record<string, number>,
+    byRuleTP: {} as Record<string, number>,
     byTriage: {} as Record<string, number>,
     byAgent: {} as Record<string, AgentStats>,
   };
@@ -304,8 +292,6 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
           dimZero(sev.CRITICAL || 0, RED),
           dimZero(sev.HIGH || 0, YELLOW),
           dimZero(sev.MEDIUM || 0, CYAN),
-          dimZero(sev.HIGH || 0),
-          dimZero(sev.MEDIUM || 0),
           dimZero(sev.NIT || 0),
           dimZero(r.tp, GREEN),
           dimZero(r.fp, RED),
@@ -333,11 +319,11 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
     for (const [k, v] of Object.entries(m.bySeverity)) {
       totals.bySeverity[k] = (totals.bySeverity[k] || 0) + v;
     }
-    for (const [k, v] of Object.entries(m.byVulnType)) {
-      totals.byVulnType[k] = (totals.byVulnType[k] || 0) + v;
+    for (const [k, v] of Object.entries(m.byRule)) {
+      totals.byRule[k] = (totals.byRule[k] || 0) + v;
     }
-    for (const [k, v] of Object.entries(m.byVulnTypeTP)) {
-      totals.byVulnTypeTP[k] = (totals.byVulnTypeTP[k] || 0) + v;
+    for (const [k, v] of Object.entries(m.byRuleTP)) {
+      totals.byRuleTP[k] = (totals.byRuleTP[k] || 0) + v;
     }
     for (const [k, v] of Object.entries(m.byTriage)) {
       totals.byTriage[k] = (totals.byTriage[k] || 0) + v;
@@ -373,8 +359,6 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
           `${BOLD}${RED}${t.bySeverity.CRITICAL || 0}${RESET}`,
           `${BOLD}${YELLOW}${t.bySeverity.HIGH || 0}${RESET}`,
           `${BOLD}${CYAN}${t.bySeverity.MEDIUM || 0}${RESET}`,
-          `${BOLD}${t.bySeverity.HIGH || 0}${RESET}`,
-          `${BOLD}${t.bySeverity.MEDIUM || 0}${RESET}`,
           `${BOLD}${t.bySeverity.NIT || 0}${RESET}`,
           `${BOLD}${GREEN}${t.tp}${RESET}`,
           `${BOLD}${RED}${t.fp}${RESET}`,
@@ -493,24 +477,24 @@ export function metricsCommand(opts: { projectId?: string; minSeverity?: string 
     console.log(footerRow(trW));
   }
 
-  // --- Section 5: True Positives by Vulnerability Type (existing, retained) ---
+  // --- Section 5: True Positives by Rule (existing, retained) ---
   if (totals.tp > 0) {
-    console.log(`\n${BOLD}True Positives by Vulnerability Type${RESET}\n`);
+    console.log(`\n${BOLD}True Positives by Rule${RESET}\n`);
 
     const vtW = [30, 4, 5, 5];
-    const vtH = ["Category", "TP", "Total", "Rate"];
+    const vtH = ["Rule", "TP", "Total", "Rate"];
     console.log(headerRow(vtH, vtW));
 
-    const vulnTypes = Object.entries(totals.byVulnType).sort(
-      (a, b) => (totals.byVulnTypeTP[b[0]] || 0) - (totals.byVulnTypeTP[a[0]] || 0),
+    const rules = Object.entries(totals.byRule).sort(
+      (a, b) => (totals.byRuleTP[b[0]] || 0) - (totals.byRuleTP[a[0]] || 0),
     );
 
     let otherTP = 0;
     let otherTotal = 0;
     let otherCount = 0;
 
-    for (const [slug, total] of vulnTypes) {
-      const tp = totals.byVulnTypeTP[slug] || 0;
+    for (const [slug, total] of rules) {
+      const tp = totals.byRuleTP[slug] || 0;
       const isOther = slug.startsWith("other-");
 
       if (isOther && tp <= 2) {

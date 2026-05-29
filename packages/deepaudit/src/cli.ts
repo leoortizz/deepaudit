@@ -117,7 +117,7 @@ once a project has been scanned). Pass --root only when overriding.
 
 Examples:
   $ pnpm deepaudit scan --project-id my-app
-  $ pnpm deepaudit scan --project-id my-app --matchers auth-bypass,xss
+  $ pnpm deepaudit scan --project-id my-app --matchers console-log,any-type
   $ pnpm deepaudit scan --project-id my-app --root ../checkout-on-pr-branch`,
   )
   .action(scanCommand);

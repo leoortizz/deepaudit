@@ -92,8 +92,8 @@ Two things help most:
 
 1. **Revalidate `HIGH+` before acting on violations.** Worth the cost.
 2. **Write a good `RULES.md` per project.** Even a paragraph describing
-   the auth shape and threat model improves precision a lot. See
-   [getting-started.md](getting-started.md).
+   the codebase's conventions and architecture improves precision a lot.
+   See [getting-started.md](getting-started.md).
 
 ## When should I use sandbox mode?
 

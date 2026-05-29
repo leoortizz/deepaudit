@@ -56,11 +56,11 @@ describe("renderPrComment()", () => {
       violations: [
         {
           severity: "HIGH",
-          ruleSlug: "sql-injection",
-          title: "Concatenated query",
-          description: "User-controlled input flows into a string-concatenated SQL query.",
+          ruleSlug: "any-type",
+          title: "Explicit any annotation",
+          description: "A public function parameter is annotated with the `any` type.",
           lineNumbers: [12],
-          recommendation: "Use parameterized queries.",
+          recommendation: "Replace `any` with a precise type.",
           confidence: "high",
           producedByRunId: "r1", // net-new in this run
         },
@@ -110,7 +110,7 @@ describe("renderPrComment()", () => {
       violations: [
         {
           severity: "CRITICAL",
-          ruleSlug: "xss",
+          ruleSlug: "console-log",
           title: "Stale violation from older run",
           description: "Should not appear.",
           lineNumbers: [1],
@@ -137,7 +137,7 @@ describe("renderPrComment()", () => {
     expect(md).not.toBeNull();
     expect(md!).toContain("deepaudit found 1 violation");
     expect(md!).toContain("src/a.ts:L12");
-    expect(md!).toContain("Concatenated query");
+    expect(md!).toContain("Explicit any annotation");
     // Pre-existing violations from prior runs (or with no run id) are excluded.
     expect(md!).not.toContain("Pre-existing violation");
     expect(md!).not.toContain("Legacy violation without producedByRunId");

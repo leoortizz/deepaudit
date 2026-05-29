@@ -5,7 +5,7 @@ import type { CandidateMatch, MatcherPlugin } from "deepaudit/config";
  * wrapper or call `rateLimiter.check(...)`. The webapp's convention is
  * that every public-facing handler (`src/api/**`) wraps its export
  * with `withRateLimit(handler, { window, max })`. Handlers that skip
- * the wrapper are candidates for abuse / cost amplification.
+ * the wrapper are non-conformant with that convention.
  *
  * Skips internal-only routes under `src/api/_internal/` and webhook
  * receivers (which are gated by signature verification instead).

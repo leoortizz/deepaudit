@@ -13,8 +13,8 @@ Files (read in this order):
 3. [`matchers/webapp-debug-flag.ts`](matchers/webapp-debug-flag.ts) and
    [`matchers/webapp-route-no-rate-limit.ts`](matchers/webapp-route-no-rate-limit.ts)
    — example custom matchers tuned for this codebase's helpers.
-4. [`RULES.md`](RULES.md) — the AI prompt context: auth shape, threat
-   model, false-positive sources.
+4. [`RULES.md`](RULES.md) — the AI prompt context: auth/authorization
+   conventions, the rules that matter most, false-positive sources.
 5. [`config.json`](config.json) — optional per-project config
    (`priorityPaths`, `promptAppend`, `ignorePaths`).
 

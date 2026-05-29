@@ -22,28 +22,28 @@ subscriptions, Auth.js (NextAuth v5) for authentication, custom
   Webhook receivers under `src/api/webhooks/` use signature verification
   instead and skip rate limiting.
 
-## Threat model
+## Rules that matter most
 
 The webapp holds inventory data, supplier credentials (encrypted),
-purchase orders, and billing details. The most attractive attacks:
+purchase orders, and billing details. The conventions the reviewer
+should enforce most strictly:
 
-1. **Cross-tenant access** — every record has a `companyId` and a
-   `userId`. A handler that reads/writes by `id` without filtering by
-   `req.session.user.companyId` is an IDOR.
-2. **Privilege escalation** — flipping a non-admin user to admin via
-   the user-update endpoints. Look for `role` field assignments outside
-   of `src/api/admin/users/promote.ts`.
-3. **Stripe webhook replay / forgery** — `src/api/webhooks/stripe.ts`
-   verifies signatures. Any handler that processes Stripe events
-   without `verifyStripeSignature(req)` is suspect.
-4. **Supplier credential exfiltration** — credentials are encrypted at
-   rest with `vault.encrypt(value, { context })`. Decryption sites that
-   omit context, log decrypted values, or return them in API responses
-   are critical.
-5. **Debug-flag bypasses** — staging and preview deploys occasionally
-   set `NODE_ENV !== "production"`, which unlocks endpoints like
-   `/api/_dev/dump-cache`. Real production should never expose those
-   even when the flag is unset incorrectly.
+1. **Tenant scoping** — every record has a `companyId` and a `userId`.
+   A handler that reads or writes by `id` without also filtering by
+   `req.session.user.companyId` breaks tenant isolation. Flag it.
+2. **Role assignment location** — the `role` field may only be set in
+   `src/api/admin/users/promote.ts`. Flag `role` assignments anywhere
+   else in the user-update endpoints.
+3. **Stripe webhook verification** — `src/api/webhooks/stripe.ts` calls
+   `verifyStripeSignature(req)`. Any handler that processes Stripe
+   events without it is non-conformant.
+4. **Encrypted credential handling** — credentials are stored with
+   `vault.encrypt(value, { context })`. Decryption sites that omit the
+   `context` argument, log decrypted values, or return them in API
+   responses break the rule.
+5. **Debug endpoints** — endpoints gated only on
+   `NODE_ENV !== "production"` (e.g. `/api/_dev/dump-cache`) must never
+   be reachable in production. Flag any that rely on the env flag alone.
 
 ## False-positive sources to ignore
 
@@ -59,8 +59,8 @@ purchase orders, and billing details. The most attractive attacks:
 
 - Drizzle queries use the `db.query.<table>.findFirst({ where, with })`
   builder. `db.execute(sql\`...\`)` is forbidden by lint; flag any.
-- The custom `safeRedirect(targetUrl)` helper guards against open
-  redirects by checking against an `ALLOWED_HOSTS` list. Any redirect
-  that doesn't go through `safeRedirect` is an open-redirect candidate.
+- The custom `safeRedirect(targetUrl)` helper validates the destination
+  against an `ALLOWED_HOSTS` list. Any redirect that doesn't go through
+  `safeRedirect` is non-conformant.
 - Server actions live in `src/actions/`. They start with `"use server"`
   and must call `auth.has(...)` like API routes.

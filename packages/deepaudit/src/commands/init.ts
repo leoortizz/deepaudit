@@ -216,7 +216,7 @@ function readmeMd(id: string, targetRel: string): string {
 
 This directory holds the [deepaudit](https://www.npmjs.com/package/deepaudit)
 config for the parent repo. Checked into git so teammates inherit
-project context (auth shape, threat model, custom matchers); generated
+project context (conventions, project rules, custom matchers); generated
 scan output is gitignored.
 
 Currently configured project: \`${id}\` (target: \`${targetRel}\`).

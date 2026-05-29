@@ -291,11 +291,11 @@ function printAgentPrompt(id: string, targetRel: string): void {
     `code files, then replace each section of data/${id}/RULES.md.`,
     ``,
     `Keep it SHORT — target 50–100 lines total. Pick 3–5 examples per`,
-    `section, not exhaustive enumeration. Name primitives (auth`,
-    `helpers, middleware) but no line numbers. Skip generic CWE`,
-    `categories — built-in matchers cover those. Cover only what's`,
-    `project-specific. RULES.md is injected into every scan batch;`,
-    `verbose context dilutes signal.`,
+    `section, not exhaustive enumeration. Name primitives (helpers,`,
+    `middleware) but no line numbers. Skip patterns the built-in`,
+    `matchers already cover; document only what's project-specific.`,
+    `RULES.md is injected into every scan batch; verbose context`,
+    `dilutes signal.`,
   ];
   for (const l of lines) console.log(`    ${CYAN}${l}${RESET}`);
 }

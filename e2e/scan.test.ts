@@ -6,7 +6,7 @@ import { listRuns, loadAllFileRecords } from "../packages/core/src/index.js";
 import { scan } from "../packages/scanner/src/index.js";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
+const FIXTURES = path.join(ROOT, "fixtures/sample-app");
 const DATA_DIR = path.join(ROOT, "data");
 const PROJECT_ID = "e2e-test";
 

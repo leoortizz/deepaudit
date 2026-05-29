@@ -22,13 +22,13 @@ describe("createRunMeta", () => {
       projectId: "test-project",
       rootPath: "/tmp/test",
       type: "scan",
-      scannerConfig: { matcherSlugs: ["xss", "rce"] },
+      scannerConfig: { matcherSlugs: ["console-log", "process-env-direct"] },
     });
 
     expect(meta.projectId).toBe("test-project");
     expect(meta.type).toBe("scan");
     expect(meta.phase).toBe("running");
-    expect(meta.scannerConfig?.matcherSlugs).toEqual(["xss", "rce"]);
+    expect(meta.scannerConfig?.matcherSlugs).toEqual(["console-log", "process-env-direct"]);
     expect(meta.stats).toEqual({});
     expect(meta.runId).toMatch(/^\d{14}-[a-f0-9]{16}$/);
   });

@@ -15,7 +15,7 @@
       "!**/.next",
       "!**/coverage",
       "!**/e2e/fixture",
-      "!**/fixtures/vulnerable-app",
+      "!**/fixtures/sample-app",
       "!**/pnpm-lock.yaml"
     ]
   },

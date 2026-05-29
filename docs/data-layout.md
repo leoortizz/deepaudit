@@ -104,8 +104,6 @@ The on-disk path mirrors the source path under `<rootPath>` plus a
 | Field | Type | Purpose |
 |---|---|---|
 | `priority` | `"P0" \| "P1" \| "P2" \| "skip"` | Recommended action bucket. |
-| `exploitability` | `"trivial" \| "moderate" \| "difficult"` | Effort to weaponize. |
-| `impact` | `"critical" \| "high" \| "medium" \| "low"` | Blast radius if exploited. |
 | `reasoning` | `string` | Why this priority. |
 | `triagedAt` | `string` (ISO) | Timestamp. |
 | `model` | `string` | Model used for triage. |

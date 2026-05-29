@@ -61,7 +61,7 @@ function pendingRecord(projectId: string, filePath: string): FileRecord {
     projectId,
     candidates: [
       {
-        ruleSlug: "auth-bypass",
+        ruleSlug: "default-export",
         lineNumbers: [1],
         snippet: "// stub",
         matchedPattern: "test pattern",
@@ -505,11 +505,11 @@ describe("processor with stub agent", () => {
     rec.violations = [
       {
         severity: "HIGH",
-        ruleSlug: "auth-bypass",
-        title: "missing auth on /admin",
-        description: "no withAuthentication wrapper",
+        ruleSlug: "default-export",
+        title: "default export in module",
+        description: "module uses a default export instead of a named export",
         lineNumbers: [10],
-        recommendation: "wrap with withAuthentication",
+        recommendation: "convert to a named export",
         confidence: "high",
       },
     ];
@@ -620,7 +620,7 @@ describe("processor with stub agent", () => {
       r.violations = [
         {
           severity: "HIGH",
-          ruleSlug: "auth-bypass",
+          ruleSlug: "default-export",
           title: `bug in ${f}`,
           description: "x",
           lineNumbers: [1],
@@ -902,7 +902,7 @@ describe("processor with stub agent", () => {
       r.violations = [
         {
           severity: "HIGH",
-          ruleSlug: "auth-bypass",
+          ruleSlug: "default-export",
           title: `bug in ${f}`,
           description: "x",
           lineNumbers: [1],
@@ -956,7 +956,7 @@ describe("processor with stub agent", () => {
     rec.violations = [
       {
         severity: "HIGH",
-        ruleSlug: "auth-bypass",
+        ruleSlug: "default-export",
         title: "already revalidated",
         description: "x",
         lineNumbers: [1],
@@ -1009,7 +1009,7 @@ describe("revalidate() duplicate verdict", () => {
     rec.status = "analyzed";
     rec.violations = titles.map((title) => ({
       severity: "HIGH" as const,
-      ruleSlug: "auth-bypass",
+      ruleSlug: "default-export",
       title,
       description: `desc for ${title}`,
       lineNumbers: [1],

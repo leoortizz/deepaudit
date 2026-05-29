@@ -381,7 +381,7 @@ After your review, output a JSON block with your violations for EACH file. Use t
 \`\`\`
 
 **Severity levels:**
-- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, security regressions, broken builds, leaked secrets).
+- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, broken builds, corrupted state, dropped error handling).
 - **HIGH** — Clear violation with material impact.
 - **MEDIUM** — Real violation but limited blast radius.
 - **NIT** — Minor, subjective, or stylistic. Use sparingly.

@@ -7,6 +7,6 @@
     "src/lib/auth/",
     "src/lib/vault/"
   ],
-  "promptAppend": "Cross-tenant access via missing companyId scoping is the highest-impact bug shape in this codebase. Always check that DB queries filter by req.session.user.companyId.",
+  "promptAppend": "Tenant scoping is the most load-bearing convention in this codebase. Every DB query on a tenant-scoped table must filter by req.session.user.companyId; flag any that don't.",
   "ignorePaths": ["**/legacy/**", "**/migrations/**", "**/seed/**"]
 }

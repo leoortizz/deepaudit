@@ -41,10 +41,11 @@ default backend project-wide via `defaultAgent` in
 ### `claude-opus-4-7` for `process` and `revalidate`
 
 Investigating a candidate site is a multi-step reasoning task: trace
-control flow, recognize an auth boundary, decide whether input is
-attacker-controlled, judge severity. Stronger reasoning models pay for
-themselves in lower FP rate, even at higher per-call cost. Opus is the
-strongest of the Claude family at this kind of code reasoning.
+control flow, understand the surrounding context, decide whether a
+flagged pattern truly violates a rule, and judge how severe the
+violation is. Stronger reasoning models pay for themselves in lower FP
+rate, even at higher per-call cost. Opus is the strongest of the Claude
+family at this kind of code reasoning.
 
 If cost matters more than precision (a 10k-file repo, a quick triaged
 starter list), drop to `claude-sonnet-4-6` — same prompt, ~3× cheaper,
@@ -67,7 +68,7 @@ overkill. Sonnet keeps `triage` at ~1¢/violation.
 ## Refusals
 
 Models occasionally refuse to investigate a candidate — usually when the
-source contains an exploit pattern they read as harmful, or when a path
+source contains a pattern they read as sensitive, or when a path
 trips a content filter. After every batch, deepaudit issues a follow-up
 turn asking the agent whether it skipped or declined anything:
 
@@ -88,7 +89,7 @@ refused batch produces no false negatives — affected files stay
 Violations dedupe across agents, so you don't pay twice.
 
 If a single file consistently triggers a refusal (>5% of batches), it's
-usually one path with a hard-to-disambiguate exploit pattern. Add it to
+usually one path with a hard-to-disambiguate sensitive pattern. Add it to
 `config.json:ignorePaths`, or run that file alone with `--batch-size 1`
 so the refusal doesn't take a batch of otherwise-fine files down with
 it.

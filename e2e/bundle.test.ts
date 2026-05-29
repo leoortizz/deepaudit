@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const BUNDLE = path.join(ROOT, "packages/deepaudit/dist/cli.mjs");
-const FIXTURES = path.join(ROOT, "fixtures/vulnerable-app");
+const FIXTURES = path.join(ROOT, "fixtures/sample-app");
 
 function runBundle(
   args: string[],

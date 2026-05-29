@@ -30,8 +30,8 @@ Convention files often contain prose that is not itself an enforceable rule — 
 
 ## Severity Classification
 
-- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, security regressions, broken builds, leaked secrets). Should block the change.
-- **HIGH** — Clear violation of a stated rule with material impact: wrong abstraction in a hot path, missing validation at a trust boundary, undocumented public API, dead code that masks live bugs.
+- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, broken builds, corrupted state, dropped error handling). Should block the change.
+- **HIGH** — Clear violation of a stated rule with material impact: wrong abstraction in a hot path, missing validation at a module boundary, undocumented public API, dead code that masks live bugs.
 - **MEDIUM** — Real violation but limited blast radius: inconsistent naming in one module, a missing guard that's defensive rather than essential, a soft preference clearly stated in the rules.
 - **NIT** — Minor, subjective, or stylistic. Use sparingly. If you're not sure whether something is worth a nit, skip it.
 
@@ -98,7 +98,7 @@ After your review, output a JSON block with your violations for EACH file. Use t
 ```
 
 **Severity levels:**
-- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, security regressions, broken builds, leaked secrets).
+- **CRITICAL** — Breaks a load-bearing rule in a way that's likely to cause incidents (data loss, broken builds, corrupted state, dropped error handling).
 - **HIGH** — Clear violation with material impact.
 - **MEDIUM** — Real violation but limited blast radius.
 - **NIT** — Minor, subjective, or stylistic. Use sparingly.

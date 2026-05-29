@@ -197,8 +197,6 @@ export type TriagePriority = "P0" | "P1" | "P2" | "skip";
 
 export interface Triage {
   priority: TriagePriority;
-  exploitability: "trivial" | "moderate" | "difficult";
-  impact: "critical" | "high" | "medium" | "low";
   reasoning: string;
   triagedAt: string;
   model: string;
